@@ -12,7 +12,9 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require("express-session")
-const initPassport = require('../config/passport-config')
+const initPassport = require('./config/passport-config')
+
+const checkIfAuthenticated = require('./middleware/checkIfAuthenticated')
 
 const users = []
 
@@ -44,7 +46,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/', indexRouter);
+app.use('/healthCheck', (req,res)=>{
+  res.send("API is healhty. Keep it up")
+});
+app.use('/checkLogin', checkIfAuthenticated, (req,res)=>{
+  res.send(`User is login ${req.user.id}`)
+});
 
 app.use('/successLogin', (req,res)=>{
   res.send("Login success")
