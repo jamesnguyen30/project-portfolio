@@ -1,4 +1,5 @@
 // import NavBar from "./components/nav/Nav";
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 const HomePage = () => {
@@ -11,7 +12,7 @@ const HomePage = () => {
         <br/>
         <Link to="signup">Signup</Link>
     </div>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage

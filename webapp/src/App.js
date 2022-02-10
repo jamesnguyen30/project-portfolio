@@ -1,10 +1,11 @@
-import NavBar from "./components/nav/NavBar";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import LoginPage from './views/LoginPage/LoginPage';
-import SignupPage from './views/SignupPage/SIgnupPage';
+import { React } from 'react'
+import NavBar from './components/nav/NavBar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LoginPage from './views/LoginPage/LoginPage'
+import SignupPage from './views/SignupPage/SIgnupPage'
 import HomePage from './views/HomePage/HomePage'
 
-function App() {
+function App () {
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,7 +19,7 @@ function App() {
       </BrowserRouter>
 
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

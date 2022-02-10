@@ -1,9 +1,10 @@
-import { AppBar, Container, Toolbar, Typography, Box, IconButton, Button } from "@mui/material";
+import { React } from 'react'
+import { AppBar, Container, Toolbar, Typography, Box, IconButton, Button } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
 
-export default function NavBar() {
-    return (
+export default function NavBar () {
+  return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
@@ -40,7 +41,5 @@ export default function NavBar() {
             </Container>
 
         </AppBar>
-    )
+  )
 }
-
-
