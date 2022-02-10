@@ -14,7 +14,7 @@ const flash = require('express-flash')
 const session = require("express-session")
 // const initPassport = require('./config/passport-config')
 
-const checkIfAuthenticated = require('./middleware/checkIfAuthenticated')
+// const checkIfAuthenticated = require('./middleware/checkIfAuthenticated')
 
 const errorHandler = require('./middleware/errorHandler');
 
@@ -50,4 +50,5 @@ app.use((req, res, next) => {
 // pass any unhandled errors to the error handler
 app.use(errorHandler);
 
+app.set('port', process.env.PORT || 3000)
 module.exports = app;
