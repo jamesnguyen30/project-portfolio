@@ -4,11 +4,11 @@ const {initializeApp } = require("firebase/app")
 const firebaseApp = initializeApp(firebaseConfig)
 const {getFirestore} = require('firebase/firestore')
 const {getAuth} = require("firebase/auth");
-const db = getFirestore()
+const firestore = getFirestore()
 const auth = getAuth();
 // initializeApp(firebaseApp)
 
-module.exports = {firebaseApp, auth}
+module.exports = {firebaseApp, firestore, auth}
 // admin.initializeApp({
 
 // });
