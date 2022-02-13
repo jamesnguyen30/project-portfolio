@@ -1,12 +1,6 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const firebaseConfig = require('./secrets/firebaseConfig')
-const {initializeApp } = require("firebase/app")
-// const {getFirestore} = require('firebase/firestore')
-
-
-const firebaseApp = initializeApp(firebaseConfig)
-// const db = getFirestore(firebaseApp)
+const {fireabaseApp} = require('./utils/config')
 
 const app = express();
 
@@ -20,7 +14,7 @@ const {
 
 
 app.use("/healthCheck", healthCheck);
-app.use("/signUp", signUp);
+app.post("/signUp", signUp);
 
 
 // app.get("/screams", (req, res)=>{

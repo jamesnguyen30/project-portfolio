@@ -1,7 +1,5 @@
-// const {firebase} = require("../../utils/config");
-const {getAuth, createUserWithEmailAndPassword} = require("firebase/auth");
-
-const auth = getAuth();
+const {auth} = require("../../utils/config")
+const {createUserWithEmailAndPassword} = require('firebase/auth')
 
 exports.healthCheck = (req, res)=>{
   res.status(200).json("Healthy API");
@@ -13,7 +11,7 @@ exports.signUp = (req, res)=>{
     password: req.body.password,
   };
 
-  console.log(newUser);
+  console.log(newUser)
 
   createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
       .then((data)=>{
