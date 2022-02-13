@@ -1,15 +1,27 @@
-import React from 'react'
+import { React, useCallback } from 'react'
 import { Container, Paper, TextField, Button } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import loginStyles from '../LoginPage/styles'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+
+// import { useSelector, useDispatch } from 'react-redux'
+// import { healthCheck } from '../../api/healthCheck'
+import { signUpAction } from '../../redux/actions/authActions'
 
 const SignupPage = () => {
   const { handleSubmit, control, formState: { errors } } = useForm()
+  const dispatch = useDispatch()
+
+  const signUp = useCallback((email, password) => {
+    // healthCheck().then(data => console.log(data)).catch(err => console.error(err))
+    dispatch(signUpAction(email, password))
+  })
 
   const onSubmit = data => {
     console.log(errors)
-    console.logd(data)
+    console.log(data)
+    signUp(data.email, data.password)
   }
 
   return (

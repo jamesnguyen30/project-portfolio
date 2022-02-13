@@ -1,10 +1,12 @@
-import { React } from 'react'
+import { React, useCallback } from 'react'
 import {
   Container, Paper, TextField, Button, Typography
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import loginStyles from './styles'
+// import { useSelector, useDispatch } from 'react-redux'
+import { healthCheck } from '../../api/healthCheck'
 
 function LoginPage () {
   const { handleSubmit, control, formState: { errors } } = useForm(
@@ -16,8 +18,12 @@ function LoginPage () {
     }
   )
 
-  console.log(errors)
-  const onSubmit = (data) => console.log(data)
+  const signIn = useCallback(() => {
+    healthCheck().then(data => console.log(data)).catch(err => console.error(err))
+  })
+  const onSubmit = (data) => signIn()
+  // const dispatch = useDispatch()
+  // const token = useSelector(state => state.authReducer.token)
 
   return (
     <Container maxWidth="xl" style={loginStyles.LoginPage}>

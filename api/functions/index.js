@@ -2,6 +2,8 @@ const functions = require("firebase-functions");
 const express = require("express");
 const {fireabaseApp} = require('./utils/config')
 const {isSignedIn} = require("./middlewares/auth")
+//Prevent CORS error in client
+const cors = require('cors')
 
 const app = express();
 
@@ -13,7 +15,7 @@ const {
   // updatePassword,
 } = require("./routes/auth/auth");
 
-
+app.use(cors())
 app.use("/healthCheck", healthCheck);
 app.post("/signUp", signUp);
 app.post("/signIn", signIn);

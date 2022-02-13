@@ -18,6 +18,7 @@ exports.signUp = (req, res) => {
     .then((token) => {
       return res.status(200).json({ token: token });
     }).catch((error) => {
+      console.log(error)
       res.status(500).json({ message: error });
     });
 };
