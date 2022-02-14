@@ -9,8 +9,7 @@ const SubmitButton = {
 const LoginPage = {
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'red'
+  alignItems: 'center'
 }
 
 const LoginPaper = {
@@ -26,12 +25,11 @@ const LoginPaper = {
 }
 
 const FormValidationError = {
-  color: constants.red,
+  color: constants.colors.red,
   fontSize: constants.fontSize.small
 }
 
 const LoginIntroContainer = {
-  backgroundColor: 'red'
 }
 
 const loginStyles = {

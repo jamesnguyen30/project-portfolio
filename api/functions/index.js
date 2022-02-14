@@ -19,7 +19,7 @@ app.use(cors())
 app.use("/healthCheck", healthCheck);
 app.post("/signUp", signUp);
 app.post("/signIn", signIn);
-app.post("/signOut", signOut);
+app.get("/signOut", signOut);
 app.get("/isSignedIn", isSignedIn, (req,res)=>{
   res.send("Signed In")
 });

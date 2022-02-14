@@ -1,27 +1,33 @@
-// const SIGN_IN_SUCCESSFUL = 'SIGN_IN_SUCCESSFUL'
-// const SIGN_IN_FAILED = 'SIGN_IN_FAILED';
-const SIGN_UP_SUCCESSFUL = 'SIGN_UP_SUCCESSFUL'
-const SIGN_UP_FAILED = 'SIGN_UP_FAILED'
+import {
+  SIGNED_IN,
+  NOT_SIGNED_IN
+} from '../actions/index'
 
 const initState = {
-  token: null,
   timeStamp: null,
-  type: null
+  type: null,
+  displayName: null,
+  email: null,
+  emailVerified: null
 }
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case SIGN_UP_SUCCESSFUL:
+    case SIGNED_IN:
       return {
-        token: action.payload.token,
         timeStamp: Date.now(),
-        type: action.type
+        type: action.type,
+        displayName: action.payload.displayName,
+        email: action.payload.email,
+        emailVerified: action.payload.emailVerified
       }
-    case SIGN_UP_FAILED:
+    case NOT_SIGNED_IN:
       return {
-        token: null,
         timeStamp: Date.now(),
-        type: action.type
+        type: action.type,
+        displayName: null,
+        email: null,
+        emailVerified: null
       }
     default:
       return state

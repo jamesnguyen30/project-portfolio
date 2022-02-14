@@ -5,4 +5,10 @@ import apiConfig from '../constants/config/apiConfig'
 const signUp = (email, password) => axios.post(`${apiConfig.baseUrl}/signUp`, { email: email, password: password })
   .then((response) => response.data)
 
-export { signUp }
+const signIn = (email, password) => axios.post(`${apiConfig.baseUrl}/signIn`, { email: email, password: password })
+  .then((response) => response.data)
+
+const signOut = () => axios.get(`${apiConfig.baseUrl}/signOut`)
+  .then((response) => response.data)
+
+export { signUp, signIn, signOut }

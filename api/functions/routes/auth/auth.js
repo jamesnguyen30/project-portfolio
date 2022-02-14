@@ -1,9 +1,18 @@
 const { auth } = require("../../utils/config")
-const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} = require('firebase/auth')
+const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require('firebase/auth')
 
 exports.healthCheck = (req, res) => {
   res.status(200).json("Healthy API");
 };
+
+const getAuthResponse = (userCredential) => ({
+  // token: userCredential.user.getIdToken(),
+  displayName: userCredential.user.displayName,
+  email: userCredential.user.email,
+  emailVerified: userCredential.user.emailVerified,
+})
+
+
 
 exports.signUp = (req, res) => {
   const newUser = {
@@ -12,13 +21,12 @@ exports.signUp = (req, res) => {
   };
 
   createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
-    .then((data) => {
-      return data.user.getIdToken();
+    .then((userCredential) => {
+      const data = getAuthResponse(userCredential)
+      return res.status(200).json(data);
     })
-    .then((token) => {
-      return res.status(200).json({ token: token });
-    }).catch((error) => {
-      console.log(error)
+    .catch((error) => {
+      console.error(error)
       res.status(500).json({ message: error });
     });
 };
@@ -28,26 +36,24 @@ exports.signIn = (req, res) => {
     email: req.body.email,
     password: req.body.password,
   };
-  
-  console.log(user)
 
   signInWithEmailAndPassword(auth, user.email, user.password)
-    .then((data) => {
-      return data.user.getIdToken();
-    })
-    .then((token) => {
-      return res.status(200).json({ token: token });
+    .then((userCredential) => {
+      const data = getAuthResponse(userCredential)
+      console.log(data)
+      return res.status(200).json(data);
     })
     .catch((error) => {
-      res.status(403).json({ message: error });
+      console.error(error)
+      res.status(500).json({ message: error });
     });
 };
 
-exports.signOut = (req, res)=>{
-  signOut().then(()=>{
-    return res.status(200).json({message: "Signed out"});
-  }).catch((err)=>{
-    return res.status(500).json({message: err});
+exports.signOut = (req, res) => {
+  signOut(auth).then(() => {
+    return res.status(200).json({ message: "Ok" });
+  }).catch((err) => {
+    return res.status(500).json({ message: err });
   });
 };
 

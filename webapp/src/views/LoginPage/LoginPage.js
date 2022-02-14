@@ -1,29 +1,32 @@
-import { React, useCallback } from 'react'
+import { React, useEffect, useCallback } from 'react'
 import {
   Container, Paper, TextField, Button, Typography
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import loginStyles from './styles'
-// import { useSelector, useDispatch } from 'react-redux'
-import { healthCheck } from '../../api/healthCheck'
+import { useDispatch } from 'react-redux'
+import { signInAction } from '../../redux/actions/authActions'
 
 function LoginPage () {
   const { handleSubmit, control, formState: { errors } } = useForm(
     {
       defaultValues: {
-        firstName: 'Khuong',
-        lastName: 'Nguyen'
+        email: 'Khuong',
+        password: 'Nguyen'
       }
     }
   )
+  const dispatch = useDispatch()
 
-  const signIn = useCallback(() => {
-    healthCheck().then(data => console.log(data)).catch(err => console.error(err))
+  const signIn = useCallback((email, password) => {
+    dispatch(signInAction(email, password))
   })
-  const onSubmit = (data) => signIn()
-  // const dispatch = useDispatch()
-  // const token = useSelector(state => state.authReducer.token)
+
+  useEffect(() => {
+  })
+
+  const onSubmit = (data) => signIn(data.email, data.password)
 
   return (
     <Container maxWidth="xl" style={loginStyles.LoginPage}>
@@ -31,26 +34,32 @@ function LoginPage () {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login Page</h2>
           <Controller
-            name="firstName"
+            name="email"
             control={control}
-            rules={{ required: 'This field is required' }}
+            rules={{
+              required: 'Email missing',
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Invalid email!'
+              }
+            }}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label="First Name" />
+              <TextField onChange={onChange} value={value} label="Email" />
             )}
           />
 
-          <p style={loginStyles.FormValidationError}>{errors.firstName?.message}</p>
+          <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
 
           <Controller
-            name="lastName"
+            name="password"
             control={control}
-            rules={{ required: 'Last name is required' }}
+            rules={{ required: 'Password missing' }}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label="Last Name" />
+              <TextField onChange={onChange} value={value} label="Password" />
             )}
           />
 
-          <p style={loginStyles.FormValidationError}>{errors.lastName?.message}</p>
+          <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
 
           <Button type="submit" variant="contained" style={loginStyles.SubmitButton}>Login</Button>
           <Button variant="contained" style={loginStyles.SubmitButton} component={Link} to="/signup">Sign Up</Button>
