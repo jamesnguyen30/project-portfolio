@@ -1,14 +1,12 @@
 import { React, useEffect, useCallback, useState } from 'react'
 import {
   Container, Paper, TextField, Button, Typography
-  //  Alert, Collapse, Box, IconButton
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { signInAction } from '../../redux/actions/authActions'
-// import CloseIcon from '@mui/icons-material/Close'
 
 import CommonAlert from '../../components/alerts/CommonAlert'
 
@@ -46,15 +44,26 @@ function LoginPage () {
     if (signInState === SIGNED_IN) {
       navigation('/profile')
     } else if (signInState === NOT_SIGNED_IN) {
-      if (errorCode === 'auth/user-not-found') {
-        setOpenErrorAlert(true)
-        setErrorTitle('No account found')
-        setErrorMessage('No account registered with this email. Please sign up :)')
+      switch (errorCode) {
+        case 'auth/user-not-found':
+          setOpenErrorAlert(true)
+          setErrorTitle('No account found')
+          setErrorMessage('No account registered with this email. Please sign up :)')
+          break
+        case 'auth/wrong-password':
+          setOpenErrorAlert(true)
+          setErrorTitle('Wrong password')
+          setErrorMessage('Please try again')
+          break
+        default:
+          break
       }
     }
   }, [timeStamp])
 
-  const onSubmit = (data) => signIn(data.email, data.password)
+  const onSubmit = (data) => {
+    signIn(data.email, data.password)
+  }
 
   return (
     <Container maxWidth="xl" style={loginStyles.LoginPage}>
