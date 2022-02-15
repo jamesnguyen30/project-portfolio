@@ -25,23 +25,13 @@ const authReducer = (state = initState, action) => {
       }
 
     case NOT_SIGNED_IN:
-      var errorMessage
-      console.log(action.payload)
-      switch (action.payload) {
-        case 'auth/wrong-password':
-          errorMessage = 'Wrong email or password, please try again'
-          break
-        default:
-          errorMessage = 'Unknown error, please check log'
-          break
-      }
       return {
         timeStamp: Date.now(),
         type: action.type,
         displayName: null,
         email: null,
         emailVerified: null,
-        errorCode: errorMessage
+        errorCode: action.payload
       }
     default:
       return state

@@ -1,17 +1,28 @@
-import { React, useEffect, useCallback } from 'react'
+import { React, useEffect, useCallback, useState } from 'react'
 import {
   Container, Paper, TextField, Button, Typography
+  //  Alert, Collapse, Box, IconButton
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { signInAction } from '../../redux/actions/authActions'
+// import CloseIcon from '@mui/icons-material/Close'
+
+import CommonAlert from '../../components/alerts/CommonAlert'
+
 import {
+  NOT_SIGNED_IN,
   SIGNED_IN
 } from '../../redux/actions/index'
 
 function LoginPage () {
+  const [openErrorAlert, setOpenErrorAlert] = useState(false)
+  const [errorTitle, setErrorTitle] = useState()
+  const [errorMessage, setErrorMessage] = useState()
+
+  const dispatch = useDispatch()
   const { handleSubmit, control, formState: { errors } } = useForm(
     {
       defaultValues: {
@@ -20,8 +31,10 @@ function LoginPage () {
       }
     }
   )
-  const dispatch = useDispatch()
+
   const signInState = useSelector(state => state.authReducer.type)
+  const errorCode = useSelector(state => state.authReducer.errorCode)
+  const timeStamp = useSelector(state => state.authReducer.timeStamp)
 
   const navigation = useNavigate()
 
@@ -32,8 +45,14 @@ function LoginPage () {
   useEffect(() => {
     if (signInState === SIGNED_IN) {
       navigation('/profile')
+    } else if (signInState === NOT_SIGNED_IN) {
+      if (errorCode === 'auth/user-not-found') {
+        setOpenErrorAlert(true)
+        setErrorTitle('No account found')
+        setErrorMessage('No account registered with this email. Please sign up :)')
+      }
     }
-  })
+  }, [timeStamp])
 
   const onSubmit = (data) => signIn(data.email, data.password)
 
@@ -41,6 +60,10 @@ function LoginPage () {
     <Container maxWidth="xl" style={loginStyles.LoginPage}>
       <Paper style={{ ...loginStyles.LoginPaper, flex: 1 }} elevation={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
+          title={errorTitle}
+          severity='error'
+          message={errorMessage}/>
           <h2>Login Page</h2>
           <Controller
             name="email"
