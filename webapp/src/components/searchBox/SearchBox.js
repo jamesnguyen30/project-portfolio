@@ -35,7 +35,7 @@ const SearchInput = styled(InputBase)({
 export default function SearchBox () {
   return (
     <SearchContainer>
-      <SearchInput placeholder='Something here to search and long'></SearchInput>
+      <SearchInput placeholder='Search book ...'></SearchInput>
       <SearchIconWrapper>
         <IconButton>
           <SearchIcon/>

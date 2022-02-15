@@ -45,7 +45,7 @@ export default function NavBar () {
                     </Typography>
 
                     <Typography>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signup">
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/book">
                             Books
                         </Button>
                     </Typography>
