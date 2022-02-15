@@ -1,12 +1,9 @@
 import { React, useCallback } from 'react'
 import { Container, Paper, TextField, Button } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
-import loginStyles from '../LoginPage/styles'
+import loginStyles from './styles'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-
-// import { useSelector, useDispatch } from 'react-redux'
-// import { healthCheck } from '../../api/healthCheck'
 import { signUpAction } from '../../redux/actions/authActions'
 
 const SignupPage = () => {
@@ -14,13 +11,10 @@ const SignupPage = () => {
   const dispatch = useDispatch()
 
   const signUp = useCallback((email, password) => {
-    // healthCheck().then(data => console.log(data)).catch(err => console.error(err))
     dispatch(signUpAction(email, password))
   })
 
   const onSubmit = data => {
-    console.log(errors)
-    console.log(data)
     signUp(data.email, data.password)
   }
 
@@ -29,6 +23,7 @@ const SignupPage = () => {
             <Paper style={{ ...loginStyles.LoginPaper, flex: 1 }} elevation={3}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <h2>Sign Up Page</h2>
+
                     <Controller
                         name={'username'}
                         control={control}

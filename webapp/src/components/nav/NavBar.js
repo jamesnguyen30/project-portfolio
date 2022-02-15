@@ -26,6 +26,12 @@ export default function NavBar () {
                     </Box>
 
                     <Typography>
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/profile">
+                           Profile
+                        </Button>
+                    </Typography>
+
+                    <Typography>
                         <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/login">
                             Login
                         </Button>
@@ -36,7 +42,6 @@ export default function NavBar () {
                             Sign Up
                         </Button>
                     </Typography>
-
                 </Toolbar>
             </Container>
 

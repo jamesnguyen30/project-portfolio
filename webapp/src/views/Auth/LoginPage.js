@@ -3,27 +3,36 @@ import {
   Container, Paper, TextField, Button, Typography
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { signInAction } from '../../redux/actions/authActions'
+import {
+  SIGNED_IN
+} from '../../redux/actions/index'
 
 function LoginPage () {
   const { handleSubmit, control, formState: { errors } } = useForm(
     {
       defaultValues: {
-        email: 'Khuong',
-        password: 'Nguyen'
+        email: 'a@a.com',
+        password: 'something here12'
       }
     }
   )
   const dispatch = useDispatch()
+  const signInState = useSelector(state => state.authReducer.type)
+
+  const navigation = useNavigate()
 
   const signIn = useCallback((email, password) => {
     dispatch(signInAction(email, password))
   })
 
   useEffect(() => {
+    if (signInState === SIGNED_IN) {
+      navigation('/profile')
+    }
   })
 
   const onSubmit = (data) => signIn(data.email, data.password)
@@ -55,7 +64,7 @@ function LoginPage () {
             control={control}
             rules={{ required: 'Password missing' }}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label="Password" />
+              <TextField onChange={onChange} value={value} label="Password" type='password' />
             )}
           />
 

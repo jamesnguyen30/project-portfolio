@@ -26,8 +26,7 @@ exports.signUp = (req, res) => {
       return res.status(200).json(data);
     })
     .catch((error) => {
-      console.error(error)
-      res.status(500).json({ message: error });
+      return res.status(401).json({error: error.code});
     });
 };
 
@@ -40,12 +39,10 @@ exports.signIn = (req, res) => {
   signInWithEmailAndPassword(auth, user.email, user.password)
     .then((userCredential) => {
       const data = getAuthResponse(userCredential)
-      console.log(data)
       return res.status(200).json(data);
     })
     .catch((error) => {
-      console.error(error)
-      res.status(500).json({ message: error });
+      return res.status(401).json({error: error.code});
     });
 };
 

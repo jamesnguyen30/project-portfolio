@@ -16,7 +16,7 @@ const signUpAction = (email, password) => {
     }).catch(err => {
       dispatch({
         type: NOT_SIGNED_IN,
-        payload: err
+        payload: err.response.data.error
       })
     })
   }
@@ -32,7 +32,7 @@ const signInAction = (email, password) => {
     }).catch(err => {
       dispatch({
         type: NOT_SIGNED_IN,
-        payload: err
+        payload: err.response.data.error
       })
     })
   }
@@ -48,7 +48,7 @@ const signOutAction = () => {
     }).catch(err => {
       dispatch({
         type: NOT_SIGNED_IN,
-        payload: err
+        payload: err.response.error
       })
     })
   }

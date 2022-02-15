@@ -10,3 +10,5 @@ exports.isSignedIn = (req, res, next)=>{
       return next();
     }
   };
+
+exports.verifyIdToken

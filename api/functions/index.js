@@ -15,6 +15,11 @@ const {
   // updatePassword,
 } = require("./routes/auth/auth");
 
+//Books API
+const {
+  searchBooksByName
+} = require('./routes/books_api/index')
+
 app.use(cors())
 app.use("/healthCheck", healthCheck);
 app.post("/signUp", signUp);
@@ -23,5 +28,8 @@ app.get("/signOut", signOut);
 app.get("/isSignedIn", isSignedIn, (req,res)=>{
   res.send("Signed In")
 });
+
+app.get('/searchBooksByName', searchBooksByName)
+
 
 exports.api = functions.https.onRequest(app);
