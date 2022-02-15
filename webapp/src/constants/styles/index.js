@@ -13,7 +13,8 @@ constants.space = {
 
 // Theme colors
 constants.colors = {
-  red: 'red'
+  red: 'red',
+  white: 'white'
 }
 
 // Font size
@@ -25,7 +26,13 @@ constants.fontSize = {
   xlarge: '16pt',
   xxlarge: '18pt',
   xxxlarge: '24pt'
+}
 
+constants.borderRadius = {
+  tiny: '3px',
+  small: '5px',
+  medium: '8px',
+  large: '12px'
 }
 
 export default constants

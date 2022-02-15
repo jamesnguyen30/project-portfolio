@@ -2,6 +2,7 @@ import { React } from 'react'
 import { AppBar, Container, Toolbar, Typography, Box, IconButton, Button } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
+import SearchBox from '../searchBox/SearchBox'
 
 export default function NavBar () {
   return (
@@ -27,7 +28,7 @@ export default function NavBar () {
 
                     <Typography>
                         <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/profile">
-                           Profile
+                            Profile
                         </Button>
                     </Typography>
 
@@ -42,6 +43,14 @@ export default function NavBar () {
                             Sign Up
                         </Button>
                     </Typography>
+
+                    <Typography>
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signup">
+                            Books
+                        </Button>
+                    </Typography>
+
+                    <SearchBox></SearchBox>
                 </Toolbar>
             </Container>
 
