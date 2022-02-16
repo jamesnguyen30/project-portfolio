@@ -14,7 +14,10 @@ constants.space = {
 // Theme colors
 constants.colors = {
   red: 'red',
-  white: 'white'
+  white: '#FFFFFF',
+  ashenWhite: '#F5F7F9',
+  darkAshenWhite: '#CAD1D9'
+
 }
 
 // Font size

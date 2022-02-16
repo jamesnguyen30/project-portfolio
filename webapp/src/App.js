@@ -6,6 +6,7 @@ import SignupPage from './views/Auth/SIgnupPage'
 import HomePage from './views/HomePage/HomePage'
 import ProfilePage from './views/Profile/ProfilePage'
 import BookDetailPage from './views/Books/BookDetailPage'
+import BooksPage from './views/Books/BooksPage'
 
 function App () {
   return (
@@ -19,6 +20,7 @@ function App () {
           <Route path="/home" element={<App />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/book" element={<BookDetailPage />} />
+          <Route path="/main" element={<BooksPage />} />
         </Routes>
       </BrowserRouter>
 
