@@ -3,10 +3,10 @@ import NavBar from './components/nav/NavBar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './views/Auth/LoginPage'
 import SignupPage from './views/Auth/SIgnupPage'
-import HomePage from './views/HomePage/HomePage'
+import PlayGround from './views/HomePage/PlayGround'
 import ProfilePage from './views/Profile/ProfilePage'
 import BookDetailPage from './views/Books/BookDetailPage'
-import BooksPage from './views/Books/BooksPage'
+import HomePage from './views/HomePage/HomePage'
 
 function App () {
   return (
@@ -14,13 +14,13 @@ function App () {
       <BrowserRouter>
         <NavBar></NavBar>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<PlayGround />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/home" element={<App />} />
+          {/* <Route path="/home" element={<App />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/book" element={<BookDetailPage />} />
-          <Route path="/main" element={<BooksPage />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
 

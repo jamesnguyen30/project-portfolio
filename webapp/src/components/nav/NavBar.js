@@ -2,7 +2,7 @@ import { React } from 'react'
 import { AppBar, Container, Toolbar, Typography, Box, IconButton, Button } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
-import SearchBox from '../searchBox/SearchBox'
+// import SearchBox from '../searchBox/SearchBox'
 
 export default function NavBar () {
   return (
@@ -15,7 +15,7 @@ export default function NavBar () {
                         component='div'
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                     >
-                        Logo Goes Here
+                        BookRecap
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -39,8 +39,8 @@ export default function NavBar () {
                     </Typography>
 
                     <Typography>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/main">
-                            Books Feed
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/home">
+                           Home Page
                         </Button>
                     </Typography>
                     <Typography>
@@ -49,7 +49,7 @@ export default function NavBar () {
                         </Button>
                     </Typography>
 
-                    <SearchBox></SearchBox>
+                    {/* <SearchBox></SearchBox> */}
                 </Toolbar>
             </Container>
 

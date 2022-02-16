@@ -3,6 +3,7 @@ import { styled, alpha, InputBase, IconButton } from '@mui/material'
 // import styles from './styles'
 import SearchIcon from '@mui/icons-material/Search'
 import constants from '../../constants/styles/index'
+import PropTypes from 'prop-types'
 
 const SearchContainer = styled('div')(({
   position: 'relative',
@@ -22,19 +23,20 @@ const SearchIconWrapper = styled('div')({
   paddingLeft: constants.space.small,
   diplay: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1
+  justifyContent: 'center'
 })
 
 const SearchInput = styled(InputBase)({
+  width: 'auto',
   marginLeft: constants.space.small,
   paddingLeft: constants.space.small,
-  paddingRight: constants.space.small
+  paddingRight: constants.space.small,
+  flex: 1
 })
 
-export default function SearchBox () {
+const SearchBox = ({ style }) => {
   return (
-    <SearchContainer>
+    <SearchContainer style={style}>
       <SearchInput placeholder='Search book ...'></SearchInput>
       <SearchIconWrapper>
         <IconButton>
@@ -44,3 +46,9 @@ export default function SearchBox () {
     </SearchContainer>
   )
 }
+
+SearchBox.propTypes = {
+  style: PropTypes.object
+}
+
+export default SearchBox
