@@ -27,12 +27,6 @@ export default function NavBar () {
                     </Box>
 
                     <Typography>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/profile">
-                            Profile
-                        </Button>
-                    </Typography>
-
-                    <Typography>
                         <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signin">
                             Login
                         </Button>
@@ -47,6 +41,11 @@ export default function NavBar () {
                     <Typography>
                         <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/main">
                             Books Feed
+                        </Button>
+                    </Typography>
+                    <Typography>
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/">
+                            PlayGround
                         </Button>
                     </Typography>
 
