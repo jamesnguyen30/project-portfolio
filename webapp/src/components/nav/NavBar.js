@@ -33,7 +33,7 @@ export default function NavBar () {
                     </Typography>
 
                     <Typography>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/login">
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signin">
                             Login
                         </Button>
                     </Typography>

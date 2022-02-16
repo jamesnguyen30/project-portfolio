@@ -14,7 +14,7 @@ function App () {
         <NavBar></NavBar>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/home" element={<App />} />
           <Route path="/profile" element={<ProfilePage />} />
