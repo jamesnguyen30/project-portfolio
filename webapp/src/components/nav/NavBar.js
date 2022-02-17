@@ -49,7 +49,6 @@ export default function NavBar () {
                         </Button>
                     </Typography>
 
-                    {/* <SearchBox></SearchBox> */}
                 </Toolbar>
             </Container>
 
