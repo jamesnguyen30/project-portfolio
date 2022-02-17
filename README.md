@@ -1,4 +1,4 @@
-# Project BookRecep
+# Project BookRecap
 
 ### Main idea:
 An application for book lovers to share and recap their favorite books to communities. This help spread main ideas in books to busy people who don't have time to read through the entire book
