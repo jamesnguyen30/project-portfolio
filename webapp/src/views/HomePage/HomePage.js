@@ -1,25 +1,12 @@
 import { React, useState } from 'react'
 import { Typography, Grid, Box, List, ListItem, ImageList, Divider, Link } from '@mui/material'
-import styles from './styles'
+import { MainPageStyle } from './styles'
 import ListView from '../../components/listView/ListView'
 import SearchBox from '../../components/searchBox/SearchBox'
 import constants from '../../constants/styles'
 import TabPanel from './TabPanel'
 import BookSearch from './BookSearch'
 import DetailPage from './DetailPage'
-
-// const allyprops = (index) => {
-//   return {
-//     id: `simple-tab-${index}`,
-//     'aria-controls': `simple-tabpanel-${index}`
-//   }
-// }
-
-// const TestTab = () => (
-//     <div>
-//         Test Tab
-//     </div>
-// )
 
 const HomePage = () => {
   const [tabValue, setTabValue] = useState(0)
@@ -44,9 +31,9 @@ const HomePage = () => {
 
   return (
         <Grid container spacing={2} style={{ padding: '12px' }}>
-            <Grid item sm={3}>
-                <Box style={styles.CommonContainer}>
-                    <SearchBox style={styles.SearchBar}></SearchBox>
+            <Grid xs={6} item sm={2}>
+                <Box style={MainPageStyle.CommonContainer}>
+                    <SearchBox style={MainPageStyle.SearchBar}></SearchBox>
                     <Divider style={{ marginTop: constants.space.medium }} />
                     <Typography variant="h6">
                         <strong>Trending books</strong>
@@ -55,12 +42,12 @@ const HomePage = () => {
                         {booksDummy.map(book => (
                             <ListItem key={book.id}>
                                 <Box style={{ display: 'flex', flexDirection: 'row' }}>
-                                    <Box style={styles.BookCoverContainer}>
+                                    <Box style={MainPageStyle.BookCoverContainer}>
                                         <img
                                             width={60}
                                             src={imagesDummy[0]} />
                                     </Box>
-                                    <Box style={styles.BookInformationContainer}>
+                                    <Box style={MainPageStyle.BookInformationContainer}>
                                         <h3>{book.title} - ^ 36 (uprate metric)</h3>
                                     </Box>
                                 </Box>
@@ -68,7 +55,7 @@ const HomePage = () => {
                         ))}
                     </List>
                 </Box>
-                <Box style={{ ...styles.CommonContainer, marginTop: constants.space.medium }}>
+                <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
                     <Typography variant='h6'><strong>Favorite list (open list button here)</strong></Typography>
                     <ImageList cols={5} rowHeight={100}>
                         {imagesDummy.map(value => (
@@ -76,7 +63,7 @@ const HomePage = () => {
                         ))}
                     </ImageList>
                 </Box>
-                <Box style={{ ...styles.CommonContainer, marginTop: constants.space.medium }}>
+                <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
                     <Typography variant='h6'><strong>Wanted list (open list button here)</strong></Typography>
                     <ImageList cols={5} rowHeight={100}>
                         {imagesDummy.map(value => (
@@ -86,12 +73,7 @@ const HomePage = () => {
                 </Box>
             </Grid>
 
-            <Grid item sm={7}>
-                {/* <Tabs value={tabValue} onChange={handleChange}>
-                    <Tab label="Home Page" {...allyprops(0)} />
-                    <Tab label="Search Page" {...allyprops(1)} />
-                    <Tab label="Detail Page" {...allyprops(2)} />
-                </Tabs> */}
+            <Grid item xs={6} sm={8}>
                 <button onClick={() => { switchTabPanel(0) }}>Home</button>
                 <button onClick={() => { switchTabPanel(1) }}>Search</button>
                 <button onClick={() => { switchTabPanel(2) }}>Detail</button>
@@ -109,11 +91,11 @@ const HomePage = () => {
 
             </Grid>
 
-            <Grid item sm={2}>
+            <Grid item xs={0} sm={2}>
                 <Box style={{ backgroundColor: 'red', height: '800px' }}>
                     <h1>Ads area</h1>
                 </Box>
-                <Box style={styles.AboutMeContainer}>
+                <Box style={MainPageStyle.AboutMeContainer}>
                     <Divider />
                     <Typography>
                         <strong>ABOUT ME</strong>

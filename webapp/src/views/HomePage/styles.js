@@ -42,7 +42,7 @@ const AboutMeContainer = {
   flexDirection: 'column'
 }
 
-const styles = {
+const MainPageStyle = {
   MainFeed: MainFeed,
   SearchBar: SearchBar,
   CommonContainer: CommonContainer,
@@ -51,4 +51,17 @@ const styles = {
   AboutMeContainer: AboutMeContainer
 }
 
-export default styles
+const DetailPageStyle = {
+  BookCoverContainer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  BookInformationContainer: {
+    flex: 1,
+    marginLeft: constants.space.medium,
+    marginRight: constants.space.medium
+
+  }
+}
+
+export { MainPageStyle, DetailPageStyle }
