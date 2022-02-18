@@ -1,13 +1,28 @@
 import { React, useState, useEffect } from 'react'
-import { Typography, Box, Collapse, Grid } from '@mui/material'
+import {
+  Typography, Box, Collapse, Grid, Tabs,
+  Tab, Divider, Breadcrumbs, Link, Stack, Chip
+} from '@mui/material'
 import { bookDetail } from '../../api/playground/detailBook'
 import { DetailPageStyle } from './styles'
+import TabPanel from '../HomePage/TabPanel'
+import PostList from '../../components/post/PostList'
 
 const DetailPage = (props) => {
   const [loading, setLoading] = useState(true)
   const [book, setBook] = useState({})
   const [expand, setExpand] = useState(true)
   //   const [error, setError] = useState(null)
+
+  const [recapPage, setRecapPage] = useState(0)
+
+  const recapPageChange = (event, newValue) => {
+    setRecapPage(newValue)
+  }
+
+  const onChipClicked = () => {
+    console.log('clicked chip')
+  }
 
   useEffect(() => {
     console.log('rendered')
@@ -59,17 +74,36 @@ const DetailPage = (props) => {
             </Box>
           </Grid>
           <Grid item xs = {12}>
-            <h4>Best recap section</h4>
-            <p>Shows most popular, most recent recaps</p>
-          </Grid>
-          <Grid item xs = {12}>
-            <h4>Community</h4>
-            <p>Trending issues and comment with up votes and down votes from community. Use Reddit ranking algorithm</p>
-            <p>View can scroll down to the bottom </p>
-            <p>Use pagination to simplify the code for now</p>
-            <p><strong>1</strong> 2 3 4 5 6 ... 9</p>
-          </Grid>
+            <Divider/>
+            <Box>
+              <Tabs value={recapPage} onChange={recapPageChange}>
+                <Tab label={'Recap'}/>
+                <Tab label={'Community'}/>
+              </Tabs>
+            </Box>
 
+            <TabPanel value={recapPage} index={0}>
+              <Stack direction="row" spacing={1} style={{ display: 'flex', alignItems: 'center' }}>
+                <p style={{ marginRight: '12px' }}><strong>Filter by:</strong></p>
+                <Breadcrumbs separator=" | ">
+                  <Link underline="hover" color="inherit" active>Best</Link>
+                  <Link underline="hover" color="inherit">Most recent</Link>
+                  <Link underline="hover" color="inherit">Most comments</Link>
+                </Breadcrumbs>
+              </Stack>
+              <Stack direction="row" spacing={1}>
+                <Chip variant="outlined" label="Chapter 1" onClick={onChipClicked}/>
+                <Chip variant="outlined" label="Chapter 2" onClick={onChipClicked}/>
+                <Chip variant="outlined" label="Chapter 3" onClick={onChipClicked}/>
+                <Chip variant="outlined" label="Chapter 4" onClick={onChipClicked}/>
+                <Chip variant="outlined" label="Chapter 5" onClick={onChipClicked}/>
+              </Stack>
+              <PostList></PostList>
+            </TabPanel>
+            <TabPanel value={recapPage} index={1}>
+              <PostList></PostList>
+            </TabPanel>
+          </Grid>
         </Grid>
 
       )}

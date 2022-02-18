@@ -56,16 +56,22 @@ const HomePage = () => {
                     </List>
                 </Box>
                 <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
-                    <Typography variant='h6'><strong>Favorite list (open list button here)</strong></Typography>
-                    <ImageList cols={5} rowHeight={100}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                        <Typography variant='h6'><strong>Favorites</strong></Typography>
+                        <button>open</button>
+                    </div>
+                    <ImageList cols={3} rowHeight={100}>
                         {imagesDummy.map(value => (
                             <img key={value} src={value} width={60} />
                         ))}
                     </ImageList>
                 </Box>
                 <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
-                    <Typography variant='h6'><strong>Wanted list (open list button here)</strong></Typography>
-                    <ImageList cols={5} rowHeight={100}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                        <Typography variant='h6'><strong>Wanted</strong></Typography>
+                        <button>open</button>
+                    </div>
+                    <ImageList cols={3} rowHeight={100}>
                         {imagesDummy.map(value => (
                             <img key={value} src={value} width={60} />
                         ))}
@@ -103,6 +109,7 @@ const HomePage = () => {
                     <Link href="/#" underline="hover">Introduction</Link>
                     <Link href="/#" underline="hover">LinkedIn</Link>
                     <Link href="/#" underline="hover">Github</Link>
+                    <Link href="/#" underline="hover">About this app</Link>
                 </Box>
             </Grid>
         </Grid >
