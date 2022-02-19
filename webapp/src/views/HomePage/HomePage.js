@@ -29,11 +29,30 @@ const HomePage = () => {
     setTabValue(newValue)
   }
 
+  const handleResult = (result) => {
+    console.log(result)
+  }
+
+  const handleError = (error) => {
+    console.log(error)
+  }
+
+  const handleClear = () => {
+    console.log('clear results')
+  }
+
   return (
         <Grid container spacing={2} style={{ padding: '12px' }}>
             <Grid xs={6} item sm={2}>
                 <Box style={MainPageStyle.CommonContainer}>
-                    <SearchBox style={MainPageStyle.SearchBar}></SearchBox>
+
+                    <SearchBox
+                        style={MainPageStyle.SearchBar}
+                        handleResult={handleResult}
+                        handleClear={handleClear}
+                        handleError={handleError}
+                        ></SearchBox>
+
                     <Divider style={{ marginTop: constants.space.medium }} />
                     <Typography variant="h6">
                         <strong>Trending books</strong>

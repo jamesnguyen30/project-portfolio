@@ -4,3 +4,7 @@ const {googleBooksAPIKey} = require("../../secrets/api_keys")
 exports.getList = (q, maxResults=10, orderBy='', startIndex = 0 ) => {
     return axios.get(`https://books.googleapis.com/books/v1/volumes?key=${googleBooksAPIKey}&q=${q}&maxResults=${maxResults}&startIndex=${startIndex}`)
 }
+
+exports.getBook = bookId => {
+    return axios.get(`https://books.googleapis.com/books/v1/volumes/${bookId}`)
+}

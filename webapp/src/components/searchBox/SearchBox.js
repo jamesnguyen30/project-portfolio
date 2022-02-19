@@ -1,9 +1,11 @@
-import { React } from 'react'
+import { React, useEffect } from 'react'
 import { styled, alpha, InputBase, IconButton } from '@mui/material'
 // import styles from './styles'
 import SearchIcon from '@mui/icons-material/Search'
 import constants from '../../constants/styles/index'
 import PropTypes from 'prop-types'
+const _ = require('lodash')
+const { search } = require('../../api/books')
 
 const SearchContainer = styled('div')(({
   position: 'relative',
@@ -34,10 +36,30 @@ const SearchInput = styled(InputBase)({
   flex: 1
 })
 
-const SearchBox = ({ style }) => {
+const SearchBox = ({ style, handleResult, handleClear, handleError }) => {
+  useEffect(() => {
+    console.log('rendered search box')
+  }, [])
+
+  const callApi = _.debounce((query) => {
+    search(query).then(response => {
+      handleResult(response.data)
+    }).catch(err => {
+      handleError(err)
+    })
+  }, 200)
+
+  const onChange = (event) => {
+    const newQuery = event.target.value
+    if (newQuery === '') handleClear()
+    else {
+      callApi(newQuery)
+    }
+  }
+
   return (
     <SearchContainer style={style}>
-      <SearchInput placeholder='Search book ...'></SearchInput>
+      <SearchInput placeholder='Search book ...' onChange={onChange}></SearchInput>
       <SearchIconWrapper>
         <IconButton>
           <SearchIcon/>
@@ -48,7 +70,10 @@ const SearchBox = ({ style }) => {
 }
 
 SearchBox.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
+  handleResult: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired,
+  handleError: PropTypes.func.isRequired
 }
 
 export default SearchBox

@@ -17,8 +17,9 @@ const {
 
 //Books API
 const {
-  searchBooksByName
-} = require('./routes/books_api/index')
+ search,
+ getBook
+} = require('./routes/books/search')
 
 app.use(cors())
 app.use("/healthCheck", healthCheck);
@@ -29,7 +30,8 @@ app.get("/isSignedIn", isSignedIn, (req,res)=>{
   res.send("Signed In")
 });
 
-app.get('/searchBooksByName', searchBooksByName)
+app.get('/search', search)
+app.get('/getBook', getBook )
 
 
 exports.api = functions.https.onRequest(app);
