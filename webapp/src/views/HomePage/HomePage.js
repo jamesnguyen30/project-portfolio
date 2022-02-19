@@ -7,10 +7,11 @@ import constants from '../../constants/styles'
 import TabPanel from './TabPanel'
 import BookSearch from './BookSearch'
 import DetailPage from './DetailPage'
+import SearchResultList from '../../components/listView/SearchResultList'
 
 const HomePage = () => {
   const [tabValue, setTabValue] = useState(0)
-
+  const [searchResults, setSearchResults] = useState(null)
   const booksDummy = [
     { id: 1, title: 'Book 1', arthur: 'arthur 1' },
     { id: 2, title: 'Book 1', arthur: 'arthur 1' }
@@ -30,7 +31,19 @@ const HomePage = () => {
   }
 
   const handleResult = (result) => {
-    console.log(result)
+    setTabValue(1)
+    const items = []
+    result.items.forEach(book => {
+      items.push({
+        id: book.id,
+        title: book.volumeInfo.title,
+        subtitle: book.volumeInfo.subtitle,
+        arthors: book.volumeInfo.arthors,
+        thumbnail: book.volumeInfo.imageLinks.thumbnail,
+        smallThumbnail: book.volumeInfo.imageLinks.smallThumbnail
+      })
+    })
+    setSearchResults(items)
   }
 
   const handleError = (error) => {
@@ -38,7 +51,12 @@ const HomePage = () => {
   }
 
   const handleClear = () => {
+    setSearchResults(null)
     console.log('clear results')
+  }
+
+  const setLoading = (value) => {
+    console.log('loading = ' + value)
   }
 
   return (
@@ -51,6 +69,7 @@ const HomePage = () => {
                         handleResult={handleResult}
                         handleClear={handleClear}
                         handleError={handleError}
+                        setLoading={setLoading}
                         ></SearchBox>
 
                     <Divider style={{ marginTop: constants.space.medium }} />
@@ -109,6 +128,7 @@ const HomePage = () => {
                 </TabPanel>
                 <TabPanel value={tabValue} index={1}>
                     <BookSearch title="Search Page"></BookSearch>
+                    <SearchResultList items={searchResults}></SearchResultList>
                 </TabPanel>
                 <TabPanel value={tabValue} index={2}>
                     <DetailPage title="Detail Page"></DetailPage>

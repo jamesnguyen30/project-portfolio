@@ -36,17 +36,19 @@ const SearchInput = styled(InputBase)({
   flex: 1
 })
 
-const SearchBox = ({ style, handleResult, handleClear, handleError }) => {
+const SearchBox = ({ style, handleResult, handleClear, handleError, setLoading }) => {
   useEffect(() => {
     console.log('rendered search box')
   }, [])
 
   const callApi = _.debounce((query) => {
+    setLoading(true)
     search(query).then(response => {
       handleResult(response.data)
     }).catch(err => {
       handleError(err)
     })
+    setLoading(false)
   }, 200)
 
   const onChange = (event) => {
@@ -73,7 +75,8 @@ SearchBox.propTypes = {
   style: PropTypes.object,
   handleResult: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
-  handleError: PropTypes.func.isRequired
+  handleError: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired
 }
 
 export default SearchBox

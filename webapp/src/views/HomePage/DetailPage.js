@@ -12,7 +12,6 @@ const DetailPage = (props) => {
   const [loading, setLoading] = useState(true)
   const [book, setBook] = useState({})
   const [expand, setExpand] = useState(true)
-  //   const [error, setError] = useState(null)
 
   const [recapPage, setRecapPage] = useState(0)
 
