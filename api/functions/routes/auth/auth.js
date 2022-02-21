@@ -13,7 +13,6 @@ const getAuthResponse = (userCredential) => ({
 })
 
 
-
 exports.signUp = (req, res) => {
   const newUser = {
     email: req.body.email,
