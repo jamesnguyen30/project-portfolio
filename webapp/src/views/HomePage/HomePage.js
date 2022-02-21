@@ -11,6 +11,7 @@ import SearchResultList from '../../components/listView/SearchResultList'
 const HomePage = () => {
   const [tabValue, setTabValue] = useState(0)
   const [searchResults, setSearchResults] = useState(null)
+  const [selectedBookId, setSelectedBookId] = useState(null)
   const booksDummy = [
     { id: 1, title: 'Book 1', arthur: 'arthur 1' },
     { id: 2, title: 'Book 1', arthur: 'arthur 1' }
@@ -24,6 +25,22 @@ const HomePage = () => {
     'http://books.google.com/books/content?id=nh0eAQAAIAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api',
     'http://books.google.com/books/content?id=sBk9DQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api'
   ]
+
+  const goToHomePage = () => {
+    switchTabPanel(0)
+  }
+
+  const goToSearch = () => {
+    switchTabPanel(1)
+  }
+  const goToDetail = () => {
+    switchTabPanel(2)
+  }
+
+  const searchResultItemClicked = (bookid) => {
+    goToDetail()
+    setSelectedBookId(bookid)
+  }
 
   const switchTabPanel = (newValue) => {
     setTabValue(newValue)
@@ -117,9 +134,9 @@ const HomePage = () => {
             </Grid>
 
             <Grid item xs={6} sm={8}>
-                <button onClick={() => { switchTabPanel(0) }}>Home</button>
-                <button onClick={() => { switchTabPanel(1) }}>Search</button>
-                <button onClick={() => { switchTabPanel(2) }}>Detail</button>
+                <button onClick={goToHomePage}>Home</button>
+                <button onClick={goToSearch}>Search</button>
+                <button onClick={goToDetail}>Detail</button>
 
                 <TabPanel value={tabValue} index={0}>
                     <ListView>
@@ -128,10 +145,10 @@ const HomePage = () => {
                 <TabPanel value={tabValue} index={1}>
                     <Typography variant='h5'>Search results - page 1 of 113 pages</Typography>
                     <Divider/>
-                    <SearchResultList items={searchResults}></SearchResultList>
+                    <SearchResultList items={searchResults} onItemClicked={searchResultItemClicked}></SearchResultList>
                 </TabPanel>
                 <TabPanel value={tabValue} index={2}>
-                    <DetailPage title="Detail Page"></DetailPage>
+                    <DetailPage title="Detail Page" bookid={selectedBookId}></DetailPage>
                 </TabPanel>
 
             </Grid>

@@ -3,12 +3,15 @@ import {
   Typography, Box, Collapse, Grid, Tabs,
   Tab, Divider, Breadcrumbs, Link, Stack, Chip
 } from '@mui/material'
-import { bookDetail } from '../../api/playground/detailBook'
+// import { bookDetail } from '../../api/playground/detailBook'
+import { getBookById } from '../../api/books'
 import { DetailPageStyle } from './styles'
 import TabPanel from '../HomePage/TabPanel'
 import PostList from '../../components/post/PostList'
+import PropTypes from 'prop-types'
 
 const DetailPage = (props) => {
+  const { bookid } = props
   const [loading, setLoading] = useState(true)
   const [book, setBook] = useState({})
   const [expand, setExpand] = useState(true)
@@ -26,7 +29,7 @@ const DetailPage = (props) => {
   useEffect(() => {
     console.log('rendered')
     if (loading) {
-      bookDetail().then(response => {
+      getBookById(bookid).then(response => {
         const data = {}
         data.title = response.data.volumeInfo.title
         data.subtitle = response.data.volumeInfo.subtitle
@@ -34,6 +37,7 @@ const DetailPage = (props) => {
         data.categories = response.data.volumeInfo.categories
         data.description = response.data.volumeInfo.description
         data.thumbNailUrl = response.data.volumeInfo.imageLinks.thumbnail
+        data.posts = response.data.posts
         console.log(response.data)
         setBook(data)
         setLoading(false)
@@ -115,6 +119,10 @@ const DetailPage = (props) => {
       </Typography>
     </Box>
   )
+}
+
+DetailPage.propTypes = {
+  bookid: PropTypes.string.isRequired
 }
 
 export default DetailPage

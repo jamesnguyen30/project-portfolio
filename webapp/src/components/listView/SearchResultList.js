@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { SearchItemContainer } from './styles'
 // import BookSearch from '../../views/HomePage/BookSearch'
 
-const BookSearchResult = ({ title, subtitle, authors, thumbnail }) => (
+const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) => (
   <div>
     <div style={SearchItemContainer.ResultContainer}>
       <div style={SearchItemContainer.SearchImage}>
@@ -12,11 +12,11 @@ const BookSearchResult = ({ title, subtitle, authors, thumbnail }) => (
       </div>
 
       <div style={SearchItemContainer.InformationContainer}>
-        <Link underline="hover" color="#2d2d2d">
+        <Link underline="hover" color="#2d2d2d" onClick={() => onClick(id)}>
           <h3>{title}</h3>
         </Link>
         {subtitle && <p>{subtitle}</p>}
-        <p>{authors.join(', ')}</p>
+        <p>{authors}</p>
         <p>Rating 4.7 - 315 recaps</p>
         <Stack spacing={2} direction='row'>
           <button>Want to read</button>
@@ -31,23 +31,27 @@ const BookSearchResult = ({ title, subtitle, authors, thumbnail }) => (
 )
 
 BookSearchResult.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   authors: PropTypes.array.isRequired,
   thumbnail: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   subtitle: PropTypes.string
 }
 
-const SearchResultList = ({ items }) => {
+const SearchResultList = ({ items, onItemClicked }) => {
   if (items) {
     return (
       <List>
         {items.map(item => (
             <BookSearchResult
               key={item.id}
+              id={item.id}
               title={item.title}
               subtitle={item.subtitle}
               authors={item.authors}
               thumbnail={item.thumbnail}
+              onClick={onItemClicked}
             >
             </BookSearchResult>
         ))
@@ -62,7 +66,8 @@ const SearchResultList = ({ items }) => {
 }
 
 SearchResultList.propTypes = {
-  items: PropTypes.array
+  items: PropTypes.array.isRequired,
+  onItemClicked: PropTypes.func
 }
 
 export default SearchResultList
