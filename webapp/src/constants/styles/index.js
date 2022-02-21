@@ -16,8 +16,8 @@ constants.colors = {
   red: 'red',
   white: '#FFFFFF',
   ashenWhite: '#F5F7F9',
-  darkAshenWhite: '#CAD1D9'
-
+  darkAshenWhite: '#CAD1D9',
+  darkGray: '#2d2d2d'
 }
 
 // Font size

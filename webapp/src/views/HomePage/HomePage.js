@@ -5,7 +5,6 @@ import ListView from '../../components/listView/ListView'
 import SearchBox from '../../components/searchBox/SearchBox'
 import constants from '../../constants/styles'
 import TabPanel from './TabPanel'
-import BookSearch from './BookSearch'
 import DetailPage from './DetailPage'
 import SearchResultList from '../../components/listView/SearchResultList'
 
@@ -38,7 +37,7 @@ const HomePage = () => {
         id: book.id,
         title: book.volumeInfo.title,
         subtitle: book.volumeInfo.subtitle,
-        arthors: book.volumeInfo.arthors,
+        authors: book.volumeInfo.authors,
         thumbnail: book.volumeInfo.imageLinks.thumbnail,
         smallThumbnail: book.volumeInfo.imageLinks.smallThumbnail
       })
@@ -60,7 +59,7 @@ const HomePage = () => {
   }
 
   return (
-        <Grid container spacing={2} style={{ padding: '12px' }}>
+        <Grid container spacing={2} style={{ padding: '36px' }}>
             <Grid xs={6} item sm={2}>
                 <Box style={MainPageStyle.CommonContainer}>
 
@@ -127,7 +126,8 @@ const HomePage = () => {
                     </ListView>
                 </TabPanel>
                 <TabPanel value={tabValue} index={1}>
-                    <BookSearch title="Search Page"></BookSearch>
+                    <Typography variant='h5'>Search results - page 1 of 113 pages</Typography>
+                    <Divider/>
                     <SearchResultList items={searchResults}></SearchResultList>
                 </TabPanel>
                 <TabPanel value={tabValue} index={2}>
