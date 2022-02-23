@@ -2,7 +2,6 @@ import { React } from 'react'
 import { List, Link, Stack, Divider } from '@mui/material'
 import PropTypes from 'prop-types'
 import { SearchItemContainer } from './styles'
-// import BookSearch from '../../views/HomePage/BookSearch'
 
 const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) => (
   <div>

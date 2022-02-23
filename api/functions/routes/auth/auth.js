@@ -6,12 +6,10 @@ exports.healthCheck = (req, res) => {
 };
 
 const getAuthResponse = (userCredential) => ({
-  // token: userCredential.user.getIdToken(),
   displayName: userCredential.user.displayName,
   email: userCredential.user.email,
   emailVerified: userCredential.user.emailVerified,
 })
-
 
 exports.signUp = (req, res) => {
   const newUser = {

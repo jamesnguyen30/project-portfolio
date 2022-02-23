@@ -15,6 +15,5 @@ const search = (query, maxResults, orderBy, startIndex) => {
 
 const getBookById = (bookid) =>
   axios.get(`http://localhost:5000/booksocialnetwork-4e3b7/us-central1/api/getBook/?id=${bookid}`)
-    .then(response => response)
 
 export { search, getBookById }

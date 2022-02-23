@@ -15,7 +15,6 @@ exports.createPost = (req,res) => {
    }
 
   addDoc(collection(firestore, "posts"), data).then(result => {
-    console.log(result)
     res.send('ok')
   })
   .catch(err=>{

@@ -54,12 +54,11 @@ const DetailPage = (props) => {
         data.description = response.data.volumeInfo.description
         data.thumbNailUrl = response.data.volumeInfo.imageLinks.thumbnail
         data.posts = response.data.posts
-        console.log(response.data)
+        console.log(data.posts)
         setBook(data)
         setLoading(false)
       }).catch(err => {
         console.log('Error: ' + err)
-        // setError('Unknown error')
       })
     }
   }, [])
@@ -175,10 +174,14 @@ const DetailPage = (props) => {
                 <Chip variant="outlined" label="Chapter 4" onClick={onChipClicked}/>
                 <Chip variant="outlined" label="Chapter 5" onClick={onChipClicked}/>
               </Stack>
-              <PostList></PostList>
+              {
+                (book.posts != null && book.posts.length > 0) && (
+                  <PostList posts={book.posts}></PostList>
+                )
+              }
             </TabPanel>
             <TabPanel value={recapPage} index={1}>
-              <PostList></PostList>
+              <PostList posts={book.posts}></PostList>
             </TabPanel>
           </Grid>
         </Grid>

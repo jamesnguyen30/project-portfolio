@@ -3,6 +3,7 @@ const express = require("express");
 const {fireabaseApp} = require('./utils/config')
 const {isSignedIn} = require("./middlewares/auth")
 const {createPost} = require("./routes/books/posts")
+const {seedTest} = require("./utils/seedTest")
 
 //Prevent CORS error in client
 const cors = require('cors')
@@ -24,7 +25,8 @@ const {
 } = require('./routes/books/search')
 
 app.use(cors())
-app.use("/healthCheck", healthCheck);
+app.get("/healthCheck", healthCheck);
+app.get("/seedTest", seedTest);
 app.post("/signUp", signUp);
 app.post("/signIn", signIn);
 app.get("/signOut", signOut);
