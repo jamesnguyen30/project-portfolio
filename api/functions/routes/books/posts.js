@@ -11,9 +11,8 @@ exports.createPost = (req,res) => {
     authorid: uid,
     date: Date.now(),
     upvotes: 0,
-    isrecap: false,
-    section: 'chapter 1'
-  }
+    chapter: req.body.chapter
+   }
 
   addDoc(collection(firestore, "posts"), data).then(result => {
     console.log(result)

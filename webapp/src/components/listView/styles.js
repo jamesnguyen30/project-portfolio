@@ -14,6 +14,12 @@ const SearchItemContainer = {
   },
   InformationContainer: {
     marginLeft: constants.space.medium
+  },
+  PostEditorContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop: constants.space.medium,
+    paddingBottom: constants.space.medium
   }
 
 }

@@ -60,7 +60,25 @@ const DetailPageStyle = {
     flex: 1,
     marginLeft: constants.space.medium,
     marginRight: constants.space.medium
-
+  },
+  PostEditorContainer: {
+    paddingTop: constants.space.medium,
+    paddingBottom: constants.space.medium
+  },
+  NewPostModal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: constants.borderRadius.medium,
+    padding: constants.space.medium,
+    width: '100%'
+  },
+  EditorContainer: {
+    backgroundColor: constants.colors.ashenWhite,
+    padding: constants.space.medium,
+    width: '70%',
+    borderRadius: constants.borderRadius.medium,
+    border: `2px solid ${constants.colors.darkAshenWhite}`
   }
 }
 

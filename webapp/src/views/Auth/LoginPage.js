@@ -25,7 +25,7 @@ function LoginPage () {
     {
       defaultValues: {
         email: 'a@a.com',
-        password: 'something here12'
+        password: 'password'
       }
     }
   )
