@@ -93,12 +93,16 @@ export default function NavBar () {
               open={Boolean(anchorEl)}
               onClose={closeProfileMenu}
             >
-            <MenuItem>
+            <MenuItem component={Link} to={'/profile'}>
               <Typography textAlign={'center'}>Profile</Typography>
             </MenuItem>
 
             <MenuItem>
               <Typography textAlign={'center'}>Notifications</Typography>
+            </MenuItem>
+
+            <MenuItem>
+              <Typography textAlign={'center'}>Settings</Typography>
             </MenuItem>
 
             <Divider/>
