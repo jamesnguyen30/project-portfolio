@@ -42,7 +42,7 @@ function LoginPage () {
 
   useEffect(() => {
     if (signInState === SIGNED_IN) {
-      navigation('/profile')
+      navigation('/home')
     } else if (signInState === NOT_SIGNED_IN) {
       switch (errorCode) {
         case 'auth/user-not-found':

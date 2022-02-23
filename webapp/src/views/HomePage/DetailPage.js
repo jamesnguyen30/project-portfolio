@@ -93,7 +93,7 @@ const DetailPage = (props) => {
           </Grid>
           <Grid item xs = {12}>
 
-            <button onClick={() => setNewPostModal(true)}>open modal</button>
+            <button onClick={() => setNewPostModal(true)}>Create new post</button>
 
             <Modal
               open={newPostModal}
@@ -103,7 +103,7 @@ const DetailPage = (props) => {
               <Box style={DetailPageStyle.EditorContainer}>
                 <div style={DetailPageStyle.PostEditorContainer}>
                   <form>
-                    <h3>Create new post</h3>
+                    <h3>New post</h3>
                     <p>{errors.chapter?.message}</p>
                     <p>{errors.title?.message}</p>
                     <p>{errors.content?.message}</p>

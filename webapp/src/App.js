@@ -17,7 +17,6 @@ function App () {
           <Route path="/" element={<PlayGround />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          {/* <Route path="/home" element={<App />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/book" element={<BookDetailPage />} />
           <Route path="/home" element={<HomePage />} />

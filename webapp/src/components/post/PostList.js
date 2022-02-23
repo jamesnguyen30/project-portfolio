@@ -38,6 +38,7 @@ const PostList = (props) => {
                   content={item.content}
                   date={item.date}
                   upvotes={item.upvotes}
+                  chapter={item.chapter}
                   key={item.id}></Post>
               )
             })}
