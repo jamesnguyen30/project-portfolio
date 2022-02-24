@@ -75,53 +75,52 @@ function LoginPage () {
         {/* <div style={{}}> */}
         <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Box>
-              <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
-                title={errorTitle}
-                severity='error'
-                message={errorMessage} />
+            <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
+              title={errorTitle}
+              severity='error'
+              message={errorMessage} />
           </Box>
-          <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack>
+          <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Typography variant="h4">Create a new account</Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: 'Email missing',
+                    pattern: {
+                      value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: 'Invalid email!'
+                    }
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField onChange={onChange} value={value} label="Email" />
+                  )}
+                />
 
-              <h2>Sign In</h2>
-              <Controller
-                name="email"
-                control={control}
-                rules={{
-                  required: 'Email missing',
-                  pattern: {
-                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'Invalid email!'
-                  }
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField onChange={onChange} value={value} label="Email" />
-                )}
-              />
+                <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
 
-              <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{ required: 'Password missing' }}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField onChange={onChange} value={value} label="Password" type='password' />
+                  )}
+                />
 
-              <Controller
-                name="password"
-                control={control}
-                rules={{ required: 'Password missing' }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField onChange={onChange} value={value} label="Password" type='password' />
-                )}
-              />
-
-              <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
-              <Button type="submit" variant="contained" style={loginStyles.SubmitButton}>Login</Button>
-              <Typography component={Link} to="/signup">
+                <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
+                <Button type="submit" variant="contained" style={loginStyles.SubmitButton}>Sign in</Button>
+                <Button component={Link} to="/signup">
                   Sign up
-              </Typography>
-              <Typography component={Link} to="/#">
+                </Button>
+                <Button component={Link} to="/#">
                   Forgot password
-              </Typography>
+                </Button>
 
-            </Stack>
-          </form>
+              </Stack>
+            </form>
           </Box>
         </Box>
 

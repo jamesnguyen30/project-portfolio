@@ -41,11 +41,13 @@ const signInAction = (email, password) => {
 const signOutAction = () => {
   return dispatch => {
     signOut().then(data => {
+      console.log('logged out')
       dispatch({
         type: NOT_SIGNED_IN,
         payload: data
       })
     }).catch(err => {
+      console.log('error')
       dispatch({
         type: NOT_SIGNED_IN,
         payload: err.response.error

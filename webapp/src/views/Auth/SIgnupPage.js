@@ -1,8 +1,8 @@
 import { React, useRef, useCallback, useEffect, useState } from 'react'
-import { Paper, TextField, Button, Grid, Box } from '@mui/material'
+import { TextField, Button, Grid, Box, Typography } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import loginStyles from './styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { signUpAction } from '../../redux/actions/authActions'
 import { SIGNED_IN, NOT_SIGNED_IN } from '../../redux/actions'
@@ -26,13 +26,18 @@ const SignupPage = () => {
   const errorCode = useSelector(state => state.authReducer.errorCode)
   const timeStamp = useSelector(state => state.authReducer.timeStamp)
 
+  const navigation = useNavigate()
+
   useEffect(() => {
     if (signInState === SIGNED_IN) {
       // show success alert
       setOpenAlert(true)
-      setAlertTitle('Awesome')
-      setAlertMessage('You reigisted a new account. Please navigate back to login')
+      setAlertTitle('Woo hoo! Awesome')
+      setAlertMessage('You created a new account. Redirecting to home page in 3s ')
       setSeverity('success')
+      setTimeout(() => {
+        navigation('/home')
+      }, 3000)
     } else if (signInState === NOT_SIGNED_IN) {
       setAlertTitle('Error')
       setSeverity('error')
@@ -41,7 +46,7 @@ const SignupPage = () => {
           setAlertMessage('Email has already taken')
           break
         case 'auth/weak-password':
-          setAlertMessage('Password is weak, Need more than 6 characters')
+          setAlertMessage('Password needs to be longer (more than 6 characters)')
           break
         default:
           setAlertMessage('Please try again later')
@@ -63,71 +68,69 @@ const SignupPage = () => {
   }
 
   return (
-        <Paper style={{ ...loginStyles.LoginPaper, flex: 1 }} elevation={3}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <CommonAlert
-                            style={{ width: '100px' }}
-                            open={openAlert}
-                            setOpen={setOpenAlert}
-                            message={alertMessage}
-                            title={alertTitle}
-                            severity={severity} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Grid container spacing={2} style={{ height: '100vh' }}>
+      <Grid item xs={12} md ={6}>
+        <Box style={{ backgroundColor: '#f0f8ff', height: '100vh' }}>
+        </Box>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CommonAlert
+            style={{ width: '100px' }}
+            open={openAlert}
+            setOpen={setOpenAlert}
+            message={alertMessage}
+            title={alertTitle}
+            severity={severity} />
 
-                        <form onSubmit={e => e.preventDefault()}>
-                            <h2>Sign Up Page</h2>
+          <Typography variant="h4">Create a new account</Typography>
+          <form onSubmit={e => e.preventDefault()}>
 
-                            <Controller
-                                name={'email'}
-                                control={control}
-                                rules={{ required: 'This field is required' }}
-                                render={({ field: { onChange, value } }) => (
-                                    <TextField onChange={onChange} value={value} label={'Email'} />
-                                )
-                                }
-                            />
+            <Controller
+              name={'email'}
+              control={control}
+              rules={{ required: 'This field is required' }}
+              render={({ field: { onChange, value } }) => (
+                <TextField onChange={onChange} value={value} label={'Email'} />
+              )
+              }
+            />
 
-                            <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
+            <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
 
-                            <Controller
-                                name={'password'}
-                                control={control}
-                                rules={{
-                                  required: 'This field is required',
-                                  validate: value => value === password.current || 'Password does not match'
-                                }}
-                                render={({ field: { onChange, value } }) => (
-                                    <TextField onChange={onChange} value={value} label="Password" type='password'/>
-                                )}
-                            />
+            <Controller
+              name={'password'}
+              control={control}
+              rules={{
+                required: 'This field is required',
+                validate: value => value === password.current || 'Password does not match'
+              }}
+              render={({ field: { onChange, value } }) => (
+                <TextField onChange={onChange} value={value} label="Password" type='password' />
+              )}
+            />
 
-                            <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
+            <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
 
-                            <Controller
-                                name={'repeatPassword'}
-                                control={control}
-                                rules={{
-                                  required: 'This field is required',
-                                  validate: value => value === password.current || 'password must match'
-                                }}
-                                render={({ field: { onChange, value } }) => (
-                                    <TextField onChange={onChange} value={value} label="Repeat password" type='password'/>
-                                )}
-                            />
-                            <p style={loginStyles.FormValidationError}>{errors.repeatPassword?.message}</p>
+            <Controller
+              name={'repeatPassword'}
+              control={control}
+              rules={{
+                required: 'This field is required',
+                validate: value => value === password.current || 'password must match'
+              }}
+              render={({ field: { onChange, value } }) => (
+                <TextField onChange={onChange} value={value} label="Repeat password" type='password' />
+              )}
+            />
+            <p style={loginStyles.FormValidationError}>{errors.repeatPassword?.message}</p>
 
-                            <Button onClick={handleSubmit(onSubmit)} type="submit" variant="contained" style={loginStyles.SubmitButton}>Sign up</Button>
-                            <Button component={Link} to="/signIn">Sign in</Button>
-                        </form>
-                    </Box>
-                </Grid>
-            </Grid>
-        </Paper>
+            <Button onClick={handleSubmit(onSubmit)} type="submit" variant="contained" style={loginStyles.SubmitButton}>Sign up</Button>
+            <Button component={Link} to="/signIn">Sign in</Button>
+          </form>
+        </Box>
+      </Grid>
+    </Grid>
   )
 }
 
