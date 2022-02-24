@@ -1,6 +1,7 @@
 import { React, useEffect, useCallback, useState } from 'react'
 import {
-  Container, Paper, TextField, Button, Typography
+  TextField, Button, Typography,
+  Grid, Box, Stack
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -66,51 +67,68 @@ function LoginPage () {
   }
 
   return (
-        <Container maxWidth="xl" style={loginStyles.LoginPage}>
-            <Paper style={{ ...loginStyles.LoginPaper, flex: 1 }} elevation={3}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
-                        title={errorTitle}
-                        severity='error'
-                        message={errorMessage} />
-                    <h2>Login Page</h2>
-                    <Controller
-                        name="email"
-                        control={control}
-                        rules={{
-                          required: 'Email missing',
-                          pattern: {
-                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            message: 'Invalid email!'
-                          }
-                        }}
-                        render={({ field: { onChange, value } }) => (
-                            <TextField onChange={onChange} value={value} label="Email" />
-                        )}
-                    />
+    <Grid container style={{ height: '100vh' }}>
+      <Grid item sm={0} md={6} style={{ backgroundColor: '#f0f8ff' }}>
+        <Typography variant="h4">BookRecap</Typography>
+      </Grid>
+      <Grid item sm={12} md={6} style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {/* <div style={{}}> */}
+        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Box>
+              <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
+                title={errorTitle}
+                severity='error'
+                message={errorMessage} />
+          </Box>
+          <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack>
 
-                    <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
+              <h2>Sign In</h2>
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: 'Email missing',
+                  pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: 'Invalid email!'
+                  }
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <TextField onChange={onChange} value={value} label="Email" />
+                )}
+              />
 
-                    <Controller
-                        name="password"
-                        control={control}
-                        rules={{ required: 'Password missing' }}
-                        render={({ field: { onChange, value } }) => (
-                            <TextField onChange={onChange} value={value} label="Password" type='password' />
-                        )}
-                    />
+              <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
 
-                    <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
+              <Controller
+                name="password"
+                control={control}
+                rules={{ required: 'Password missing' }}
+                render={({ field: { onChange, value } }) => (
+                  <TextField onChange={onChange} value={value} label="Password" type='password' />
+                )}
+              />
 
-                    <Button type="submit" variant="contained" style={loginStyles.SubmitButton}>Login</Button>
-                    <Button variant="contained" style={loginStyles.SubmitButton} component={Link} to="/signup">Sign Up</Button>
-                    <Typography>
-                        <a href="/*">Forget password</a>
-                    </Typography>
+              <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
+              <Button type="submit" variant="contained" style={loginStyles.SubmitButton}>Login</Button>
+              <Typography component={Link} to="/signup">
+                  Sign up
+              </Typography>
+              <Typography component={Link} to="/#">
+                  Forgot password
+              </Typography>
 
-                </form>
-            </Paper>
-        </Container>
+            </Stack>
+          </form>
+          </Box>
+        </Box>
+
+        {/* </div> */}
+      </Grid>
+
+    </Grid>
   )
 }
 
