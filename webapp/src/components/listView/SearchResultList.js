@@ -25,7 +25,6 @@ const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) 
       </div>
     </div>
     <Divider/>
-
   </div>
 )
 

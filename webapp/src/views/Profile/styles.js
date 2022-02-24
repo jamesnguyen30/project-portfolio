@@ -4,7 +4,8 @@ const ProfilePageStyle = {
   InfoContainer: {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'column', md: 'row' },
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: constants.space.medium
   },
   InfoStack: {
     paddingLeft: constants.space.medium
