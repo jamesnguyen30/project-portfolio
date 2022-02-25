@@ -18,6 +18,11 @@ const {
   // updatePassword,
 } = require("./routes/auth/auth");
 
+const {
+  getProfile,
+  addTestFavorites
+} = require('./routes/profile/profile')
+
 //Books API
 const {
  search,
@@ -37,5 +42,8 @@ app.get("/isSignedIn", isSignedIn, (req,res)=>{
 app.get('/search', search)
 app.get('/getBook', getBook )
 app.post('/createPost', isSignedIn, createPost)
+
+app.get('/profile', isSignedIn, getProfile)
+app.get('/addTestFavorites', isSignedIn, addTestFavorites)
 
 exports.api = functions.https.onRequest(app);

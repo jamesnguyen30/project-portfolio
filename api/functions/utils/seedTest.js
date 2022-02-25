@@ -1,4 +1,4 @@
-const {collection, addDoc, getDoc} = require("firebase/firestore")
+const {doc, collection, addDoc, getDocs, setDoc, query, where} = require("firebase/firestore")
 const {auth, firestore} = require("../utils/config")
 const { createUserWithEmailAndPassword } = require('firebase/auth')
 
@@ -42,3 +42,22 @@ exports.seedTest = async (req,res)=>{
     res.status(200).send('ok')
 }
 
+const favorites = [
+  'GNnxzQEACAAJ',
+  'mA8A4BYWB1IC',
+  '8CHcJQzDPCkC',
+  'lFhbDwAAQBAJ',
+  'eyK309uZ9o8C'
+]
+
+exports.addFavoritesToUser = (uid) => {
+  const profileQuery = query(collection(firestore, 'profiles'), where('uid', '==', uid))
+
+  getDocs(profileQuery).then(snapshots=>{
+    snapshots.forEach(snapshot=>{
+      const profileRef = snapshot.ref
+      setDoc(profileRef, {favorites: favorites}, {merge: true})
+      console.log("added new favorites to profile " + snapshot.id)
+    })
+  })
+}

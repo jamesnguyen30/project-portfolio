@@ -1,4 +1,5 @@
-const { auth } = require("../../utils/config")
+const { auth, firestore} = require("../../utils/config")
+const {collection, addDoc} = require("firebase/firestore")
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require('firebase/auth')
 
 exports.healthCheck = (req, res) => {
@@ -7,11 +8,11 @@ exports.healthCheck = (req, res) => {
 
 const getAuthResponse = (userCredential) => ({
   displayName: userCredential.user.displayName,
-  email: userCredential.user.email,
-  emailVerified: userCredential.user.emailVerified,
+  photoURL: userCredential.user.photoURL,
 })
 
 exports.signUp = (req, res) => {
+
   const newUser = {
     email: req.body.email,
     password: req.body.password,
@@ -19,10 +20,23 @@ exports.signUp = (req, res) => {
 
   createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
     .then((userCredential) => {
-      const data = getAuthResponse(userCredential)
-      return res.status(200).json(data);
+      // const data = getAuthResponse(userCredential)
+      const profile = {
+        uid: userCredential.user.uid,
+        favorites: [],
+        wanted: [],
+      }
+      addDoc(collection(firestore, 'profiles'), profile)
+      .then(result=>{
+        return res.status(200).json({message: "Created new user"});
+      })
+      .catch(err=>{
+        return res.status(500).json({message: err})
+      })
+      // return res.status(500).json({message: err})
     })
     .catch((error) => {
+      console.log(error)
       return res.status(401).json({error: error.code});
     });
 };
@@ -39,6 +53,7 @@ exports.signIn = (req, res) => {
       return res.status(200).json(data);
     })
     .catch((error) => {
+      console.log(error)
       return res.status(401).json({error: error.code});
     });
 };
