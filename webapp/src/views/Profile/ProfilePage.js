@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import {
   Grid, Avatar, Paper, Box, Typography,
   Stack, Chip, Divider,
@@ -6,6 +6,7 @@ import {
   Link
 } from '@mui/material'
 import { ProfilePageStyle } from './styles'
+import { getProfile } from '../../api/profile'
 
 const books = [
   {
@@ -84,6 +85,14 @@ const ProfilePage = () => {
     setEmail(event.target.value)
     setChanges(true)
   }
+
+  useEffect(() => {
+    getProfile().then(data => {
+      console.log(data)
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [])
 
   return (
     <Grid container>
