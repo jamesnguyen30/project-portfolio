@@ -4,6 +4,7 @@ const {fireabaseApp} = require('./utils/config')
 const {isSignedIn} = require("./middlewares/auth")
 const {createPost} = require("./routes/books/posts")
 const {seedTest} = require("./utils/seedTest")
+const {fetchBulk} = require("./routes/books/fetch")
 
 //Prevent CORS error in client
 const cors = require('cors')
@@ -45,5 +46,8 @@ app.post('/createPost', isSignedIn, createPost)
 
 app.get('/profile', isSignedIn, getProfile)
 app.get('/addTestFavorites', isSignedIn, addTestFavorites)
+
+app.post('/fetchBulk', fetchBulk)
+
 
 exports.api = functions.https.onRequest(app);
