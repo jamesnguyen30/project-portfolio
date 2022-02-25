@@ -81,7 +81,7 @@ function LoginPage () {
               message={errorMessage} />
           </Box>
           <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <Typography variant="h4">Create a new account</Typography>
+            <Typography variant="h4">Sign in</Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack>
                 <Controller

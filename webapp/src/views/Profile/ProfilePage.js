@@ -66,6 +66,7 @@ const books = [
 
 const ProfilePage = () => {
   const [displayName, setDisplayName] = useState('Display name')
+  const [email, setEmail] = useState('sample@email.com')
   const [changes, setChanges] = useState(false)
 
   const updateDisplayName = (value) => {
@@ -77,6 +78,11 @@ const ProfilePage = () => {
   const saveChangesClicked = () => {
     // save changes logic here
     setChanges(false)
+  }
+
+  const onEmailChanged = (event) => {
+    setEmail(event.target.value)
+    setChanges(true)
   }
 
   return (
@@ -97,14 +103,22 @@ const ProfilePage = () => {
                   updateDisplayName(event.target.value)
                 }}
               ></Typography>
-              {
-                changes && <button onClick={saveChangesClicked}>Save changes</button>
-              }
             </div>
-            <Typography variant="body1">email@email.com</Typography>
+
+            <Typography
+              variant="body1"
+              component="input"
+              value={email}
+              style={{ border: '0px' }}
+              onChange={onEmailChanged}
+              ></Typography>
+
             <div>
               <Chip label="verified" color='success' />
             </div>
+            {
+              changes && <button onClick={saveChangesClicked}>Save changes</button>
+            }
           </Stack>
         </Box>
         <Divider />
