@@ -43,14 +43,15 @@ exports.seedTest = async (req,res)=>{
 }
 
 const favorites = [
-  'GNnxzQEACAAJ',
-  'mA8A4BYWB1IC',
-  '8CHcJQzDPCkC',
-  'lFhbDwAAQBAJ',
-  'eyK309uZ9o8C'
+  {bookid: 'GNnxzQEACAAJ', createdOn: Date.now(), finished: false},
+  {bookid: 'mA8A4BYWB1IC', createdOn: Date.now(), finished: false},
+  {bookid: '8CHcJQzDPCkC', createdOn: Date.now(), finished: false},
+  {bookid: 'lFhbDwAAQBAJ', createdOn: Date.now(), finished: false},
+  {bookid: 'eyK309uZ9o8C', createdOn: Date.now(), finished: false},
 ]
 
 exports.addFavoritesToUser = (uid) => {
+  console.log(favorites)
   const profileQuery = query(collection(firestore, 'profiles'), where('uid', '==', uid))
 
   getDocs(profileQuery).then(snapshots=>{

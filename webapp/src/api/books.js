@@ -14,6 +14,13 @@ const search = (query, maxResults, orderBy, startIndex) => {
 }
 
 const getBookById = (bookid) =>
-  axios.get(`http://localhost:5000/booksocialnetwork-4e3b7/us-central1/api/getBook/?id=${bookid}`)
+  axios.get(`${apiConfig.baseUrl}/getBook/?id=${bookid}`)
 
-export { search, getBookById }
+const getBooksByIds = (bookids) => {
+  const data = {
+    bookids: JSON.stringify(bookids)
+  }
+  return axios.post(`${apiConfig.baseUrl}/fetchBooks`, data)
+}
+
+export { search, getBookById, getBooksByIds }

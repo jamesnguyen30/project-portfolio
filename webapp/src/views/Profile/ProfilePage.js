@@ -7,68 +7,15 @@ import {
 } from '@mui/material'
 import { ProfilePageStyle } from './styles'
 import { getProfile } from '../../api/profile'
-
-const books = [
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  },
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  },
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  },
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  },
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  },
-  {
-    thumbnail: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564',
-    title: 'Memory',
-    author: 'Angelina Aludo',
-    rating: 4.3,
-    yourRecaps: 3,
-    timeOnShelf: '12 days',
-    finished: true
-  }
-]
+import { getBooksByIds } from '../../api/books'
+import { getDateDifference } from '../../utils/date'
 
 const ProfilePage = () => {
   const [displayName, setDisplayName] = useState('Display name')
   const [email, setEmail] = useState('sample@email.com')
   const [changes, setChanges] = useState(false)
+  // const [books, setBooks] = useState([])
+  const [favorites, setFavorites] = useState([])
 
   const updateDisplayName = (value) => {
     console.log(value)
@@ -88,7 +35,14 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getProfile().then(data => {
-      console.log(data)
+      if (data.favorites != null && data.favorites.length > 0) {
+        getBooksByIds(data.favorites).then(response => {
+          for (let i = 0; i < data.favorites.length; i++) {
+            data.favorites[i].book = response.data[i]
+          }
+          setFavorites(data.favorites)
+        })
+      }
     }).catch(err => {
       console.log(err)
     })
@@ -158,8 +112,8 @@ const ProfilePage = () => {
                       <TableCell>Cover</TableCell>
                       <TableCell>Title</TableCell>
                       <TableCell>Author</TableCell>
+                      <TableCell>Genre</TableCell>
                       <TableCell>Rating</TableCell>
-                      <TableCell>Your recaps</TableCell>
                       <TableCell>Time on shelf</TableCell>
                       <TableCell>Finished?</TableCell>
                     </TableRow>
@@ -167,28 +121,28 @@ const ProfilePage = () => {
 
                   <TableBody>
                     {
-                      books.map((book, index) => (
+                      favorites.map((favorite, index) => (
                         <TableRow key={index}>
                           <TableCell>
-                            <img width="60" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1637012564" />
+                            <img width="60" src={favorite.book.volumeInfo.imageLinks.smallThumbnail}/>
                           </TableCell>
                           <TableCell>
-                            Memory something book
+                            {favorite.book.volumeInfo.title}
                           </TableCell>
                           <TableCell>
-                            Arthur Morgan
+                            {favorite.book.volumeInfo.authors}
                           </TableCell>
                           <TableCell>
-                            4.3
+                            {favorite.book.volumeInfo.categories[0].split('/')[0]}
                           </TableCell>
                           <TableCell>
-                            3
+                            {favorite.book.volumeInfo.averageRating ?? 'No Rating'}
                           </TableCell>
                           <TableCell>
-                            12 day
+                            {getDateDifference(new Date(favorite.createdOn), new Date())}
                           </TableCell>
                           <TableCell>
-                            Finished
+                            {favorite.finished ? 'Yes' : 'No'}
                           </TableCell>
                         </TableRow>
                       ))

@@ -25,7 +25,7 @@ function LoginPage () {
   const { handleSubmit, control, formState: { errors } } = useForm(
     {
       defaultValues: {
-        email: 'a@email.com',
+        email: 'a@a.com',
         password: 'password'
       }
     }
