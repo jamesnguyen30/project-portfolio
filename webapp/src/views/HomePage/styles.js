@@ -10,11 +10,11 @@ const MainFeed = {
 }
 
 const CommonContainer = {
-  backgroundColor: constants.colors.ashenWhite,
+  // backgroundColor: constants.colors.ashenWhite,
   borderRadius: constants.borderRadius.medium,
   paddingLeft: constants.space.medium,
   paddingRight: constants.space.medium,
-  border: `1px solid ${constants.colors.darkAshenWhite}`,
+  // border: `1px solid ${constants.colors.darkAshenWhite}`,
   paddingTop: constants.space.medium,
   paddingBottom: constants.space.medium
 

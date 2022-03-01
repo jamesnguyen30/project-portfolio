@@ -7,20 +7,34 @@ import PlayGround from './views/HomePage/PlayGround'
 import ProfilePage from './views/Profile/ProfilePage'
 import BookDetailPage from './views/Books/BookDetailPage'
 import HomePage from './views/HomePage/HomePage'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#6F58C9'
+    }
+  },
+  typography: {
+    fontFamily: 'IBM Plex Mono'
+  }
+})
 
 function App () {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar></NavBar>
-        <Routes>
-          <Route path="/" element={<PlayGround />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/book" element={<BookDetailPage />} />
-          <Route path="/home" element={<HomePage />} />
-        </Routes>
+        <ThemeProvider theme={theme}>
+          <NavBar></NavBar>
+          <Routes>
+            <Route path="/" element={<PlayGround />} />
+            <Route path="/signin" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/book" element={<BookDetailPage />} />
+            <Route path="/home" element={<HomePage />} />
+          </Routes>
+        </ThemeProvider>
       </BrowserRouter>
 
     </div>
