@@ -75,24 +75,24 @@ export default function NavBar () {
 
         <Stack direction={'row'} spacing={2} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           <Typography>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signin">
+            <Button sx={{ my: 2, display: 'block' }} component={Link} to="/signin" variant="contained">
               Login
             </Button>
           </Typography>
 
-          <Typography>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/signup">
+          <Typography >
+            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/signup" >
               Sign Up
             </Button>
           </Typography>
 
           <Typography>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/home">
+            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/home">
               Home Page
             </Button>
           </Typography>
           <Typography>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/">
+            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/">
               PlayGround
             </Button>
           </Typography>
