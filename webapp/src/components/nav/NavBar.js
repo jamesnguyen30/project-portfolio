@@ -148,7 +148,7 @@ export default function NavBar () {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Sign up or login">
                 <IconButton onClick={openProfileMenu} sx={{ p: 0 }}>
-                  <Avatar src="https://img.icons8.com/doodle/48/000000/user-male-circle.png" />
+                  <Avatar src="https://img.icons8.com/stickers/100/000000/human-head.png"/>
                 </IconButton>
               </Tooltip>
               <Menu

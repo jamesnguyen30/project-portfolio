@@ -1,6 +1,8 @@
 import { React, useState } from 'react'
-import { Typography, Grid, Box, ImageList, Divider, Link } from '@mui/material'
+import { Typography, Grid, Box, ImageList, Divider, Link, Button } from '@mui/material'
 import { MainPageStyle } from './styles'
+import { CommonButton } from '../../styles/Common'
+
 import ListView from '../../components/listView/ListView'
 import SearchBox from '../../components/searchBox/SearchBox'
 import constants from '../../constants/styles'
@@ -22,9 +24,9 @@ const HomePage = () => {
     'http://books.google.com/books/content?id=sBk9DQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api'
   ]
 
-  const goToHomePage = () => {
-    switchTabPanel(0)
-  }
+  // const goToHomePage = () => {
+  //   switchTabPanel(0)
+  // }
 
   const goToSearch = () => {
     switchTabPanel(1)
@@ -108,7 +110,6 @@ const HomePage = () => {
         <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Typography variant='h6'><strong>Favorites</strong></Typography>
-            {/* <button>open</button> */}
           </div>
 
           <Divider/>
@@ -117,24 +118,25 @@ const HomePage = () => {
               <img key={value} src={value} width={60} />
             ))}
           </ImageList>
+          <Button style={CommonButton} variant="contained">Click</Button>
         </Box>
         <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Typography variant='h6'><strong>Wanted</strong></Typography>
-            <button>open</button>
           </div>
           <ImageList cols={3} rowHeight={100}>
             {imagesDummy.map(value => (
               <img key={value} src={value} width={60} />
             ))}
           </ImageList>
+          <Button style={CommonButton} variant="contained">Click</Button>
         </Box>
       </Grid>
 
       <Grid item xs={6} sm={8}>
-        <button onClick={goToHomePage}>Home</button>
-        <button onClick={goToSearch}>Search</button>
-        <button onClick={goToDetail}>Detail</button>
+        {/* <button onClick={goToHomePage}>Home</button>
+        <button onClick={goToSearch}>Search</button> */}
+        {/* <button onClick={goToDetail}>Detail</button> */}
 
         <TabPanel value={tabValue} index={0}>
           <ListView>
@@ -146,7 +148,7 @@ const HomePage = () => {
           <SearchResultList items={searchResults} onItemClicked={searchResultItemClicked}></SearchResultList>
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          <DetailPage title="Detail Page" bookid={selectedBookId}></DetailPage>
+          <DetailPage title="Detail Page" bookid={selectedBookId} onGoBack={goToSearch}></DetailPage>
         </TabPanel>
 
       </Grid>

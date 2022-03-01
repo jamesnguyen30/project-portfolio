@@ -1,7 +1,8 @@
 import { React } from 'react'
-import { List, Link, Stack, Divider } from '@mui/material'
+import { List, Link, Stack, Divider, Button, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 import { SearchItemContainer } from './styles'
+import { CommonButton } from '../../styles/Common'
 
 const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) => (
   <div>
@@ -18,9 +19,8 @@ const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) 
         <p>{authors}</p>
         <p>Rating 4.7 - 315 recaps</p>
         <Stack spacing={2} direction='row'>
-          <button>Want to read</button>
-          <button>Favorite</button>
-          <button>Amazon</button>
+          <Button style={{ ...CommonButton, color: 'red' }} >Favorite</Button>
+          <Typography>You have 3 recaps</Typography>
         </Stack>
       </div>
     </div>

@@ -12,9 +12,11 @@ import PostList from '../../components/post/PostList'
 import PropTypes from 'prop-types'
 import { Controller, useForm } from 'react-hook-form'
 import { createPost } from '../../api/post'
+import { CommonButton } from '../../styles/Common'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const DetailPage = (props) => {
-  const { bookid } = props
+  const { bookid, onGoBack } = props
   const [loading, setLoading] = useState(true)
   const [book, setBook] = useState({})
   const [expand, setExpand] = useState(true)
@@ -65,9 +67,10 @@ const DetailPage = (props) => {
 
   return (
     <Box>
-      <Typography>
+      {/* <Typography>
         Detail Page
-      </Typography>
+      </Typography> */}
+      <Button style={{ ...CommonButton }} onClick={onGoBack} startIcon={<ArrowBackIosIcon/>}>Back to search</Button>
       {!loading && (
         <Grid container spacing={1}>
           <Grid item xs = {12}>
@@ -199,7 +202,8 @@ const DetailPage = (props) => {
 }
 
 DetailPage.propTypes = {
-  bookid: PropTypes.string.isRequired
+  bookid: PropTypes.string.isRequired,
+  onGoBack: PropTypes.func
 }
 
 export default DetailPage
