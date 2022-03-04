@@ -20,7 +20,7 @@ const PlayGround = () => {
         Playground for experiments only
         </Typography>
         <Button color="primary" style={{ borderRadius: '24px', fontSize: 12, fontWeight: 'bold' }} variant="contained">Click</Button>
-        <Box sx={{ height: 200, width: 200, backgroundColor: 'primary.main', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box>
           <MyLink variant="h4">Click</MyLink>
         </Box>
     </div>

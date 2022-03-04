@@ -24,10 +24,6 @@ const HomePage = () => {
     'http://books.google.com/books/content?id=sBk9DQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api'
   ]
 
-  // const goToHomePage = () => {
-  //   switchTabPanel(0)
-  // }
-
   const goToSearch = () => {
     switchTabPanel(1)
   }
@@ -77,7 +73,6 @@ const HomePage = () => {
     <Grid container spacing={2} style={{ padding: '36px' }}>
       <Grid xs={6} item sm={2}>
         <Box style={MainPageStyle.CommonContainer}>
-
           <SearchBox
             style={MainPageStyle.SearchBar}
             handleResult={handleResult}
@@ -85,28 +80,8 @@ const HomePage = () => {
             handleError={handleError}
             setLoading={setLoading}
           ></SearchBox>
-
-          {/* <Divider style={{ marginTop: constants.space.medium }} />
-          <Typography variant="h6">
-            <strong>Trending books</strong>
-          </Typography>
-          <List>
-            {booksDummy.map(book => (
-              <ListItem key={book.id}>
-                <Box style={{ display: 'flex', flexDirection: 'row' }}>
-                  <Box style={MainPageStyle.BookCoverContainer}>
-                    <img
-                      width={60}
-                      src={imagesDummy[0]} />
-                  </Box>
-                  <Box style={MainPageStyle.BookInformationContainer}>
-                    <h3>{book.title} - ^ 36 (uprate metric)</h3>
-                  </Box>
-                </Box>
-              </ListItem>
-            ))}
-          </List> */}
         </Box>
+
         <Box style={{ ...MainPageStyle.CommonContainer, marginTop: constants.space.medium }}>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Typography variant='h6'><strong>Favorites</strong></Typography>
@@ -134,9 +109,6 @@ const HomePage = () => {
       </Grid>
 
       <Grid item xs={6} sm={8}>
-        {/* <button onClick={goToHomePage}>Home</button>
-        <button onClick={goToSearch}>Search</button> */}
-        {/* <button onClick={goToDetail}>Detail</button> */}
 
         <TabPanel value={tabValue} index={0}>
           <ListView>

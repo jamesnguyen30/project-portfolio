@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import {
   AppBar, Container, Toolbar, Typography, Box,
-  IconButton, Button, Tooltip, Avatar, Menu, MenuItem,
+  IconButton, Tooltip, Avatar, Menu, MenuItem,
   Divider, ListItemIcon, Stack
 } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,7 +13,7 @@ import {
   SIGNED_IN
 } from '../../redux/actions/index'
 import { signOutAction } from '../../redux/actions/authActions'
-// import SearchBox from '../searchBox/SearchBox'
+import NavItem from './NavItem'
 
 export default function NavBar () {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -73,29 +73,12 @@ export default function NavBar () {
           BookRecap
         </Typography>
 
-        <Stack direction={'row'} spacing={2} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Typography>
-            <Button sx={{ my: 2, display: 'block' }} component={Link} to="/signin" variant="contained">
-              Login
-            </Button>
-          </Typography>
-
-          <Typography >
-            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/signup" >
-              Sign Up
-            </Button>
-          </Typography>
-
-          <Typography>
-            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/home">
-              Home Page
-            </Button>
-          </Typography>
-          <Typography>
-            <Button sx={{ my: 2, display: 'block' }} variant="contained" component={Link} to="/">
-              PlayGround
-            </Button>
-          </Typography>
+        <Stack direction={'row'} spacing={5} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          {/* <NavItem text={'Profile'} to="/profile"></NavItem> */}
+          <NavItem text={'Sign up'} to="/signup"/>
+          <NavItem text={'Sign in'} to="/signin"/>
+          <NavItem text={'Home'} to="/home"/>
+          <NavItem text={'Playground'} to="/playground"/>
         </Stack>
 
         {

@@ -14,7 +14,6 @@ const ProfilePage = () => {
   const [displayName, setDisplayName] = useState('Display name')
   const [email, setEmail] = useState('sample@email.com')
   const [changes, setChanges] = useState(false)
-  // const [books, setBooks] = useState([])
   const [favorites, setFavorites] = useState([])
 
   const updateDisplayName = (value) => {

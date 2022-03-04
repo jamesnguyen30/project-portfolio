@@ -1,57 +1,34 @@
 import { React } from 'react'
-import { List, Link, Stack, Divider, Button, Typography } from '@mui/material'
+import { List } from '@mui/material'
 import PropTypes from 'prop-types'
-import { SearchItemContainer } from './styles'
-import { CommonButton } from '../../styles/Common'
-
-const BookSearchResult = ({ id, title, subtitle, authors, thumbnail, onClick }) => (
-  <div>
-    <div style={SearchItemContainer.ResultContainer}>
-      <div style={SearchItemContainer.SearchImage}>
-        <img src={thumbnail} width={100}/>
-      </div>
-
-      <div style={SearchItemContainer.InformationContainer}>
-        <Link underline="hover" color="#2d2d2d" onClick={() => onClick(id)}>
-          <h3>{title}</h3>
-        </Link>
-        {subtitle && <p>{subtitle}</p>}
-        <p>{authors}</p>
-        <p>Rating 4.7 - 315 recaps</p>
-        <Stack spacing={2} direction='row'>
-          <Button style={{ ...CommonButton, color: 'red' }} >Favorite</Button>
-          <Typography>You have 3 recaps</Typography>
-        </Stack>
-      </div>
-    </div>
-    <Divider/>
-  </div>
-)
-
-BookSearchResult.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  authors: PropTypes.array.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  subtitle: PropTypes.string
-}
+import BookSearchResult from './BookSearchResult'
+import { saveFavorite } from '../../api/favorite'
 
 const SearchResultList = ({ items, onItemClicked }) => {
+  const onFavoriteClicked = (bookId) => {
+    saveFavorite(bookId).then(response => {
+      console.log(response)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   if (items) {
     return (
       <List>
         {items.map(item => (
-            <BookSearchResult
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              subtitle={item.subtitle}
-              authors={item.authors}
-              thumbnail={item.thumbnail}
-              onClick={onItemClicked}
-            >
-            </BookSearchResult>
+          <BookSearchResult
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            subtitle={item.subtitle}
+            authors={item.authors}
+            thumbnail={item.thumbnail}
+            onClick={onItemClicked}
+            favoriteClicked={onFavoriteClicked}
+            isFavorite={false}
+          >
+          </BookSearchResult>
         ))
         }
       </List>
@@ -65,7 +42,8 @@ const SearchResultList = ({ items, onItemClicked }) => {
 
 SearchResultList.propTypes = {
   items: PropTypes.array.isRequired,
-  onItemClicked: PropTypes.func
+  onItemClicked: PropTypes.func,
+  onFavoriteClicked: PropTypes.func
 }
 
 export default SearchResultList

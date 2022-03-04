@@ -36,6 +36,7 @@ function App () {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/book" element={<BookDetailPage />} />
             <Route path="/home" element={<HomePage />} />
+            <Route path="/playground" element={<PlayGround />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

@@ -30,6 +30,10 @@ const {
  getBook
 } = require('./routes/books/search')
 
+const {
+  addFavorite
+} = require("./routes/books/favorites")
+
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
@@ -47,7 +51,10 @@ app.post('/createPost', isSignedIn, createPost)
 app.get('/profile', isSignedIn, getProfile)
 app.get('/addTestFavorites', isSignedIn, addTestFavorites)
 
+app.post('/favorite', isSignedIn, addFavorite)
+
 app.post('/fetchBooks', fetchBooks)
+
 
 
 exports.api = functions.https.onRequest(app);

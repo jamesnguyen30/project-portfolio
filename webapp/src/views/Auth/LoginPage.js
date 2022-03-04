@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { signInAction } from '../../redux/actions/authActions'
+import { getProfileAction } from '../../redux/actions/profileActions'
 
 import CommonAlert from '../../components/alerts/CommonAlert'
 
@@ -43,6 +44,7 @@ function LoginPage () {
 
   useEffect(() => {
     if (signInState === SIGNED_IN) {
+      dispatch(getProfileAction())
       navigation('/home')
     } else if (signInState === NOT_SIGNED_IN) {
       switch (errorCode) {
