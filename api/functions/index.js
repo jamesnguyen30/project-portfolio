@@ -31,7 +31,8 @@ const {
 } = require('./routes/books/search')
 
 const {
-  addFavorite
+  addFavorite,
+  deleteFavorite
 } = require("./routes/books/favorites")
 
 app.use(cors())
@@ -52,6 +53,7 @@ app.get('/profile', isSignedIn, getProfile)
 app.get('/addTestFavorites', isSignedIn, addTestFavorites)
 
 app.post('/favorite', isSignedIn, addFavorite)
+app.post('/unfavorite', isSignedIn, deleteFavorite)
 
 app.post('/fetchBooks', fetchBooks)
 

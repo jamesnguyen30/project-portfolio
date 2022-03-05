@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Typography, Grid, Box, ImageList, Divider, Link, Button } from '@mui/material'
 import { MainPageStyle } from './styles'
 import { CommonButton } from '../../styles/Common'
@@ -9,6 +9,14 @@ import constants from '../../constants/styles'
 import TabPanel from './TabPanel'
 import DetailPage from './DetailPage'
 import SearchResultList from '../../components/listView/SearchResultList'
+
+import {
+  SIGNED_IN,
+  NOT_SIGNED_IN
+} from '../../redux/actions/index'
+import { signInAction } from '../../redux/actions/authActions'
+import { getProfileAction } from '../../redux/actions/profileActions'
+import { useSelector, useDispatch } from 'react-redux'
 
 const HomePage = () => {
   const [tabValue, setTabValue] = useState(0)
@@ -68,6 +76,18 @@ const HomePage = () => {
   const setLoading = (value) => {
     console.log('loading = ' + value)
   }
+  // Test purposes
+  const signInState = useSelector(state => state.authReducer.type)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log(signInState)
+    if (signInState === null || signInState === NOT_SIGNED_IN) {
+      dispatch(signInAction('a@a.com', 'password'))
+    } if (signInState === SIGNED_IN) {
+      dispatch(getProfileAction())
+    }
+  }, [signInState])
 
   return (
     <Grid container spacing={2} style={{ padding: '36px' }}>

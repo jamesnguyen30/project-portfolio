@@ -2,12 +2,24 @@ import { React } from 'react'
 import { List } from '@mui/material'
 import PropTypes from 'prop-types'
 import BookSearchResult from './BookSearchResult'
-import { saveFavorite } from '../../api/favorite'
+import { saveFavorite, deleteFavorite } from '../../api/favorite'
+import { useSelector } from 'react-redux'
 
 const SearchResultList = ({ items, onItemClicked }) => {
-  const onFavoriteClicked = (bookId) => {
-    saveFavorite(bookId).then(response => {
-      console.log(response)
+  const favorites = useSelector(state => state.profileReducers.favorites)
+  const favoriteLookup = new Set(favorites.map(f => f.bookid))
+
+  const favorite = (bookId) => {
+    return saveFavorite(bookId).then(response => {
+      return response
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  const unfavorite = (bookId) => {
+    return deleteFavorite(bookId).then(response => {
+      return response
     }).catch(err => {
       console.log(err)
     })
@@ -25,8 +37,9 @@ const SearchResultList = ({ items, onItemClicked }) => {
             authors={item.authors}
             thumbnail={item.thumbnail}
             onClick={onItemClicked}
-            favoriteClicked={onFavoriteClicked}
-            isFavorite={false}
+            favoriteClicked={favorite}
+            unfavoriteClicked={unfavorite}
+            isFavorite={(favoriteLookup !== null && favoriteLookup.has(item.id))}
           >
           </BookSearchResult>
         ))
