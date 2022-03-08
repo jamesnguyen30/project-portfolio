@@ -10,4 +10,6 @@ const signIn = (email, password) => axios.post(`${apiConfig.baseUrl}/signIn`, { 
 
 const signOut = () => axios.get(`${apiConfig.baseUrl}/signOut`).then(response => response.data)
 
-export { signUp, signIn, signOut }
+const checkSignin = (email, password) => axios.get(`${apiConfig.baseUrl}/isSignedIn`)
+
+export { signUp, signIn, signOut, checkSignin }

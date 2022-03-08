@@ -3,7 +3,7 @@ import { Typography, Grid, Box, ImageList, Divider, Link, Button } from '@mui/ma
 import { MainPageStyle } from './styles'
 import { CommonButton } from '../../styles/Common'
 
-import ListView from '../../components/listView/ListView'
+// import ListView from '../../components/listView/ListView'
 import SearchBox from '../../components/searchBox/SearchBox'
 import constants from '../../constants/styles'
 import TabPanel from './TabPanel'
@@ -23,6 +23,9 @@ const HomePage = () => {
   const [searchResults, setSearchResults] = useState(null)
   const [selectedBookId, setSelectedBookId] = useState(null)
 
+  const SEARCH_TAB_INDEX = 0
+  const DETAIL_TAB_INDEX = 1
+
   const imagesDummy = [
     'https://books.google.com/books/content?id=GNnxzQEACAAJ&printsec=frontcover&img=1&zoom=5&imgtk=AFLRE73sm8FczIXTFk1NR3ZB2_g6IsvAh4x6fF6w9pH8iHaBvXl_k6qUmmbQKzvxM0-qgF68F23hzKQ_gMOhIk5mg66Uo9n5RTfgsMN_xHwFFNtfgXn0FjuZ_50bD-pzDAsvaZoG9nkg&source=gbs_api',
     'http://books.google.com/books/content?id=yl4dILkcqm4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
@@ -33,10 +36,10 @@ const HomePage = () => {
   ]
 
   const goToSearch = () => {
-    switchTabPanel(1)
+    switchTabPanel(SEARCH_TAB_INDEX)
   }
   const goToDetail = () => {
-    switchTabPanel(2)
+    switchTabPanel(DETAIL_TAB_INDEX)
   }
 
   const searchResultItemClicked = (bookid) => {
@@ -130,16 +133,16 @@ const HomePage = () => {
 
       <Grid item xs={6} sm={8}>
 
-        <TabPanel value={tabValue} index={0}>
+        {/* <TabPanel value={tabValue} index={0}>
           <ListView>
           </ListView>
-        </TabPanel>
-        <TabPanel value={tabValue} index={1}>
+        </TabPanel> */}
+        <TabPanel value={tabValue} index={0}>
           <Typography variant='h5'>Search results - page 1 of 113 pages</Typography>
           <Divider />
           <SearchResultList items={searchResults} onItemClicked={searchResultItemClicked}></SearchResultList>
         </TabPanel>
-        <TabPanel value={tabValue} index={2}>
+        <TabPanel value={tabValue} index={1}>
           <DetailPage title="Detail Page" bookid={selectedBookId} onGoBack={goToSearch}></DetailPage>
         </TabPanel>
 

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 const SearchResultList = ({ items, onItemClicked }) => {
   const favorites = useSelector(state => state.profileReducers.favorites)
-  const favoriteLookup = new Set(favorites.map(f => f.bookid))
+  const favoriteLookup = new Set(favorites !== null ? favorites.map(f => f.bookid) : [])
 
   const favorite = (bookId) => {
     return saveFavorite(bookId).then(response => {
@@ -28,7 +28,7 @@ const SearchResultList = ({ items, onItemClicked }) => {
   if (items) {
     return (
       <List>
-        {items.map(item => (
+        {items && items.map(item => (
           <BookSearchResult
             key={item.id}
             id={item.id}
@@ -44,6 +44,7 @@ const SearchResultList = ({ items, onItemClicked }) => {
           </BookSearchResult>
         ))
         }
+        {(items === null || items.length === 0) && <h3>No search results</h3>}
       </List>
     )
   } else {

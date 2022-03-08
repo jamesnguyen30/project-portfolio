@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import {
   Grid, Avatar, Paper, Box, Typography,
-  Stack, Chip, Divider,
+  Stack, Chip,
   TableContainer, Table, TableHead, TableBody, TableRow, TableCell,
   Link
 } from '@mui/material'
@@ -52,7 +52,7 @@ const ProfilePage = () => {
       <Grid item xs={0} sm={1} md={2} />
       <Grid item sm={10} md={8} sx={{ flex: 1, padding: { xs: '12px' } }}>
         <Box sx={ProfilePageStyle.InfoContainer}>
-          <Avatar src="https://avatarfiles.alphacoders.com/952/95227.jpg"
+          <Avatar src="https://www.aceshowbiz.com/images/photo/the_rock.jpg"
             sx={{ width: 100, height: 100 }} component={Paper} elevation={10}></Avatar>
           <Stack spacing={1} style={ProfilePageStyle.InfoStack}>
             <div>
@@ -83,7 +83,6 @@ const ProfilePage = () => {
             }
           </Stack>
         </Box>
-        <Divider />
         <Box>
           <Grid container>
             <Grid item xs={12} sm={12} md={2}>
