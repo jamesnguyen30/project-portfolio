@@ -16,6 +16,7 @@ const {
   signUp,
   signIn,
   signOut,
+  persistAuth,
   // updatePassword,
 } = require("./routes/auth/auth");
 
@@ -44,6 +45,7 @@ app.get("/signOut", signOut);
 app.get("/isSignedIn", isSignedIn, (req,res)=>{
   res.send("Signed In")
 });
+app.post("/testPersist", persistAuth);
 
 app.get('/search', search)
 app.get('/getBook', getBook )

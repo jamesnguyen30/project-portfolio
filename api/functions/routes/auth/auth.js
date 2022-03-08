@@ -1,6 +1,6 @@
 const { auth, firestore} = require("../../utils/config")
 const {collection, addDoc} = require("firebase/firestore")
-const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require('firebase/auth')
+const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence} = require('firebase/auth')
 
 exports.healthCheck = (req, res) => {
   res.status(200).json("Healthy API");
@@ -65,6 +65,23 @@ exports.signOut = (req, res) => {
     return res.status(500).json({ message: err });
   });
 };
+
+exports.persistAuth = (req,res) => {
+  const user = {
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  setPersistence(auth, browserLocalPersistence)
+  .then(()=>{
+    return signInWithEmailAndPassword(auth,user.email, user.password)
+  })
+  .then(response=>{
+    return res.status(200).send("signed in")
+  }).catch(err=>{
+    console.error(err)
+  })
+}
 
 // exports.updatePassword = (req, res)=>{
 //   const newPassword = req.body.newPassword;
