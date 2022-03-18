@@ -93,7 +93,8 @@ const HomePage = () => {
   }, [signInState])
 
   return (
-    <Grid container spacing={2} style={{ padding: '36px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Grid container spacing={2} style={{ padding: '36px', maxWidth: '80%' }}>
       <Grid xs={6} item sm={2}>
         <Box style={MainPageStyle.CommonContainer}>
           <SearchBox
@@ -110,7 +111,7 @@ const HomePage = () => {
             <Typography variant='h6'><strong>Favorites</strong></Typography>
           </div>
 
-          <Divider/>
+          <Divider />
           <ImageList cols={3} rowHeight={100}>
             {imagesDummy.map(value => (
               <img key={value} src={value} width={60} />
@@ -133,16 +134,12 @@ const HomePage = () => {
 
       <Grid item xs={6} sm={8}>
 
-        {/* <TabPanel value={tabValue} index={0}>
-          <ListView>
-          </ListView>
-        </TabPanel> */}
-        <TabPanel value={tabValue} index={0}>
+        <TabPanel value={tabValue} index={SEARCH_TAB_INDEX}>
           <Typography variant='h5'>Search results - page 1 of 113 pages</Typography>
           <Divider />
           <SearchResultList items={searchResults} onItemClicked={searchResultItemClicked}></SearchResultList>
         </TabPanel>
-        <TabPanel value={tabValue} index={1}>
+        <TabPanel value={tabValue} index={DETAIL_TAB_INDEX}>
           <DetailPage title="Detail Page" bookid={selectedBookId} onGoBack={goToSearch}></DetailPage>
         </TabPanel>
 
@@ -163,7 +160,8 @@ const HomePage = () => {
           <Link href="/#" underline="hover">About this app</Link>
         </Box>
       </Grid>
-    </Grid >
+    </Grid>
+    </div>
   )
 }
 
