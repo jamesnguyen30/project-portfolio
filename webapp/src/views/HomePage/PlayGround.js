@@ -2,6 +2,7 @@
 import React from 'react'
 import { Divider, Stack, Typography, Box, Drawer, Toolbar, List, ListItem } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
+import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
 
 const MyLink = styled(Typography)(({ theme, active }) => ({
@@ -52,6 +53,29 @@ const drawerWidth = 250
 const logoHeight = 80
 
 const PlayGround = () => {
+  const testApiCall = (query) => {
+    console.log(query)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => { resolve([1, 2, 3, 4, 5]) }, 300)
+    })
+  }
+
+  const testHandleResult = (result) => {
+    console.log(result)
+  }
+
+  const testClear = () => {
+    console.log('cleared')
+  }
+
+  const testError = (error) => {
+    console.log(error)
+  }
+
+  const testLoading = (toggle) => {
+    console.log(`loading = ${toggle}`)
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
@@ -62,11 +86,24 @@ const PlayGround = () => {
         >
 
         <Toolbar>
-          <Stack spacing={5} direction="row">
+          <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
             <MyLink active={true}>Headlines</MyLink>
             <MyLink>Latest</MyLink>
             <MyLink>Analysis</MyLink>
             <MyLink>Trends</MyLink>
+          </Stack>
+
+          <SearchBox style={{ marginLeft: 50, marginRight: 50 }}
+            apiCallback={testApiCall}
+            handleResult={testHandleResult}
+            handleClear={testClear}
+            handleError={testError}
+            setLoading={testLoading}
+            placeHolder={'Search news ...'}
+          ></SearchBox>
+
+          <Stack>
+            <MyLink>My_UserName_And_Avatar</MyLink>
           </Stack>
         </Toolbar>
 
@@ -99,6 +136,8 @@ const PlayGround = () => {
             </ListItem>
           ))}
         </List>
+
+        <Divider/>
 
       </Drawer>
 

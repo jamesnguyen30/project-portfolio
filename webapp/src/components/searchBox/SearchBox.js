@@ -1,19 +1,19 @@
-import { React, useEffect } from 'react'
-import { styled, alpha, InputBase, IconButton } from '@mui/material'
+import { React } from 'react'
+import { styled, alpha, InputBase, IconButton, Box } from '@mui/material'
 // import styles from './styles'
 import SearchIcon from '@mui/icons-material/Search'
 import constants from '../../constants/styles/index'
 import PropTypes from 'prop-types'
 const _ = require('lodash')
-const { search } = require('../../api/books')
 
-const SearchContainer = styled('div')(({
+const SearchContainer = styled(Box)(({ theme, active }) => ({
   position: 'relative',
-  backgroundColor: alpha('#fff', 0.15),
-  borderRadius: constants.borderRadius.small,
+  backgroundColor: active ? alpha('#000', 0.05) : theme.palette.primary.white,
+  borderRadius: theme.sizes.borderRadius.large,
+  border: `1px solid ${theme.palette.secondary.gray}`,
   width: 'auto',
-  '&:hover': {
-    backgroundColor: alpha('#fff', 0.25)
+  ':hover': {
+    backgroundColor: alpha('#000', 0.05)
   },
   display: 'flex',
   justifyContent: 'center',
@@ -21,7 +21,6 @@ const SearchContainer = styled('div')(({
 }))
 
 const SearchIconWrapper = styled('div')({
-  // height: '100vp',
   paddingLeft: constants.space.small,
   diplay: 'flex',
   alignItems: 'center',
@@ -36,18 +35,16 @@ const SearchInput = styled(InputBase)({
   flex: 1
 })
 
-const SearchBox = ({ style, handleResult, handleClear, handleError, setLoading }) => {
-  useEffect(() => {
-    console.log('rendered search box')
-  }, [])
-
+const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear, handleError, setLoading }) => {
   const callApi = _.debounce((query) => {
     setLoading(true)
-    search(query).then(response => {
-      handleResult(response.data)
+
+    apiCallback(query).then(data => {
+      handleResult(data)
     }).catch(err => {
       handleError(err)
     })
+
     setLoading(false)
   }, 200)
 
@@ -61,7 +58,7 @@ const SearchBox = ({ style, handleResult, handleClear, handleError, setLoading }
 
   return (
     <SearchContainer style={style}>
-      <SearchInput placeholder='Search book ...' onChange={onChange}></SearchInput>
+      <SearchInput placeholder={placeHolder} onChange={onChange}></SearchInput>
       <SearchIconWrapper>
         <IconButton>
           <SearchIcon/>
@@ -73,10 +70,12 @@ const SearchBox = ({ style, handleResult, handleClear, handleError, setLoading }
 
 SearchBox.propTypes = {
   style: PropTypes.object,
-  handleResult: PropTypes.func.isRequired,
-  handleClear: PropTypes.func.isRequired,
-  handleError: PropTypes.func.isRequired,
-  setLoading: PropTypes.func.isRequired
+  placeHolder: PropTypes.string,
+  apiCallback: PropTypes.func,
+  handleResult: PropTypes.func,
+  handleClear: PropTypes.func,
+  handleError: PropTypes.func,
+  setLoading: PropTypes.func
 }
 
 export default SearchBox

@@ -24,11 +24,39 @@ const theme = createTheme({
       green: '#7BD7BB',
       red: '#FF989A',
       black: '#56575B',
-      white: '#FAFAFA'
+      white: '#FAFAFA',
+      gray: '#e0e0e0'
     }
   },
   typography: {
     fontFamily: 'Roboto'
+  },
+  sizes: {
+    space: {
+      tiny: '8px',
+      small: '10px',
+      medium: '12px',
+      large: '15px',
+      xlarge: '20px',
+      xxlarge: '25px',
+      xxxlarge: '32px'
+    },
+    fontSize: {
+      tiny: '8pt',
+      small: '10pt',
+      medium: '12pt',
+      large: '14pt',
+      xlarge: '16pt',
+      xxlarge: '18pt',
+      xxxlarge: '24pt'
+    },
+    borderRadius: {
+      tiny: '3px',
+      small: '5px',
+      medium: '8px',
+      large: '12px'
+    }
+
   }
 })
 
