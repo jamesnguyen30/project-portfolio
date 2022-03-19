@@ -1,9 +1,23 @@
 // import NavBar from "./components/nav/Nav";
-import React from 'react'
-import { Divider, Stack, Typography, Box, Drawer, Toolbar, List, ListItem } from '@mui/material'
+import React, { useState } from 'react'
+import {
+  Button, Divider, Stack, Typography, Box, Drawer,
+  Toolbar, List, ListItem, ListItemIcon, ListItemButton, ListItemText,
+  Avatar, Menu, MenuItem
+} from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
 import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
+import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
+import PieChartRoundedIcon from '@mui/icons-material/PieChartRounded'
+
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
+import PropTypes from 'prop-types'
+
+const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
 
 const MyLink = styled(Typography)(({ theme, active }) => ({
   color: theme.palette.primary.darkBlack,
@@ -13,6 +27,34 @@ const MyLink = styled(Typography)(({ theme, active }) => ({
     cursor: 'pointer'
   }
 }))
+
+const DrawerButton = styled(ListItemButton)(({ theme }) => ({
+  borderRadius: theme.sizes.borderRadius.medium,
+  ':hover': {
+    backgroundColor: theme.palette.secondary.gray
+  }
+}))
+
+const DrawerItem = ({ active, title, Icon, onClick }) => {
+  return (
+    <DrawerButton onClick={onClick} disableRipple>
+      <ListItemIcon>
+        {/* {active ? <Icon sx={{ color: 'primary.green' }}/> : <Icon />} */}
+        <Icon sx={{ color: active ? 'primary.green' : 'secondary.black' }}/>
+      </ListItemIcon>
+      <ListItemText>
+        {title}
+      </ListItemText>
+    </DrawerButton>
+  )
+}
+
+DrawerItem.propTypes = {
+  active: PropTypes.string,
+  title: PropTypes.string,
+  Icon: PropTypes.object,
+  onClick: PropTypes.func
+}
 
 const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
   backgroundColor: 'white',
@@ -49,10 +91,38 @@ const Content = styled('main')(({ theme, open }) => ({
   })
 }))
 
+const ProfileButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.primary.black,
+  borderRadius: theme.sizes.borderRadius.large,
+  ':hover': {
+    backgroundColor: theme.palette.secondary.gray
+  }
+
+}))
+
 const drawerWidth = 250
 const logoHeight = 80
 
+const drawerItems = [
+  { title: 'Dashboard', icon: DashboardRoundedIcon },
+  { title: 'News', icon: ArticleRoundedIcon },
+  { title: 'Portfolio', icon: PieChartRoundedIcon },
+  { title: 'Watchlist', icon: TimelineRoundedIcon },
+  { title: 'Settings', icon: SettingsRoundedIcon }
+]
+
 const PlayGround = () => {
+  const [page, setPage] = useState(0)
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const openProfileMenu = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const closeProfileMenu = () => {
+    setAnchorEl(null)
+  }
+
   const testApiCall = (query) => {
     console.log(query)
     return new Promise((resolve, reject) => {
@@ -75,6 +145,12 @@ const PlayGround = () => {
   const testLoading = (toggle) => {
     console.log(`loading = ${toggle}`)
   }
+
+  const onDrawerItemClicked = (index) => {
+    setPage(index)
+  }
+
+  console.log('rendered')
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -103,7 +179,40 @@ const PlayGround = () => {
           ></SearchBox>
 
           <Stack>
-            <MyLink>My_UserName_And_Avatar</MyLink>
+            {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
+            <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon/>}
+            startIcon={<Avatar src={THE_ROCK_URL}/>}
+            onClick={openProfileMenu}
+            >
+              My_UserName_And_Avatar
+            </ProfileButton>
+
+            <Menu
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={Boolean(anchorEl)}
+              onClose={closeProfileMenu}
+            >
+
+              <MenuItem>
+                <Typography>Profile</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography>Settings</Typography>
+              </MenuItem>
+              <Divider/>
+              <MenuItem>
+                <Typography>Log out</Typography>
+              </MenuItem>
+            </Menu>
           </Stack>
         </Toolbar>
 
@@ -130,9 +239,9 @@ const PlayGround = () => {
         </Box>
 
         <List>
-          {['Item 1', 'Item 2', 'Item 3', 'Item 4'].map(x => (
-            <ListItem button key={x}>
-              {x}
+          {drawerItems.map((x, index) => (
+            <ListItem key={x.title}>
+              <DrawerItem active={page === index} title={x.title} Icon={x.icon} onClick={() => onDrawerItemClicked(index)}/>
             </ListItem>
           ))}
         </List>
@@ -156,7 +265,6 @@ const PlayGround = () => {
           consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
           sapien faucibus et molestie ac.
         </Typography>
-
       </Content>
 
     </Box>

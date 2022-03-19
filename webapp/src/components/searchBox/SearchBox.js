@@ -12,9 +12,6 @@ const SearchContainer = styled(Box)(({ theme, active }) => ({
   borderRadius: theme.sizes.borderRadius.large,
   border: `1px solid ${theme.palette.secondary.gray}`,
   width: 'auto',
-  ':hover': {
-    backgroundColor: alpha('#000', 0.05)
-  },
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
@@ -57,7 +54,12 @@ const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear,
   }
 
   return (
-    <SearchContainer style={style}>
+    <SearchContainer style={style} sx={{
+      ':hover': {
+        boxShadow: 6
+      }
+    }
+    }>
       <SearchInput placeholder={placeHolder} onChange={onChange}></SearchInput>
       <SearchIconWrapper>
         <IconButton>

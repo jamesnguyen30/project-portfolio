@@ -56,7 +56,6 @@ const theme = createTheme({
       medium: '8px',
       large: '12px'
     }
-
   }
 })
 
