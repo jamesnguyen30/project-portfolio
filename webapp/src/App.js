@@ -7,6 +7,7 @@ import PlayGround from './views/HomePage/PlayGround'
 import ProfilePage from './views/Profile/ProfilePage'
 import BookDetailPage from './views/Books/BookDetailPage'
 import HomePage from './views/HomePage/HomePage'
+import Home from './views/Home/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const theme = createTheme({
@@ -66,7 +67,7 @@ function App () {
         <ThemeProvider theme={theme}>
           {/* <NavBar></NavBar> */}
           <Routes>
-            <Route path="/" element={<PlayGround />} />
+            <Route path="/" element={<Home />} />
             <Route path="/signin" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/profile" element={<ProfilePage />} />
