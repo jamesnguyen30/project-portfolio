@@ -5,7 +5,6 @@ import {
   List, ListItem, ListItemIcon, ListItemButton, ListItemText
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-// import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
@@ -13,6 +12,7 @@ import PieChartRoundedIcon from '@mui/icons-material/PieChartRounded'
 import PropTypes from 'prop-types'
 
 import NewsPage from '../News/NewsPage'
+import PortfolioPage from '../Portfolio/PortfolioPage'
 
 const DrawerButton = styled(ListItemButton)(({ theme }) => ({
   borderRadius: theme.sizes.borderRadius.medium,
@@ -42,41 +42,6 @@ DrawerItem.propTypes = {
   onClick: PropTypes.func
 }
 
-// const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
-//   backgroundColor: 'white',
-//   transition: theme.transitions.create(['margin', 'width'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen
-//   }),
-//   ...(open && {
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     marginLeft: `${drawerWidth}px`,
-//     transition: theme.transitions.create(['margin', 'width'], {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: theme.transitions.duration.enteringScreen
-//     })
-//   })
-// }))
-
-// const Content = styled('main')(({ theme, open }) => ({
-//   flexGrow: 1,
-//   marginTop: logoHeight,
-//   paddingLeft: theme.spacing(3),
-//   paddingRight: theme.spacing(3),
-//   transition: theme.transitions.create(['margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen
-//   }),
-//   marginLeft: `-${drawerWidth}px`,
-//   ...(open && {
-//     transition: theme.transitions.create(['margin'], {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: theme.transitions.duration.enteringScreen
-//     }),
-//     marginLeft: 0
-//   })
-// }))
-
 const drawerWidth = 250
 const logoHeight = 80
 
@@ -89,7 +54,6 @@ const drawerItems = [
 
 const Home = () => {
   const [page, setPage] = useState(0)
-  // const [anchorEl, setAnchorEl] = useState(null)
 
   const onDrawerItemClicked = (index) => {
     setPage(index)
@@ -129,7 +93,10 @@ const Home = () => {
 
       </Drawer>
 
-      <NewsPage/>
+      { page === 0 && <NewsPage/> }
+      { page === 1 && <PortfolioPage/>}
+      { page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
+      { page === 3 && <div><Typography>Settings page in progress</Typography></div>}
     </Box>
   )
 }
