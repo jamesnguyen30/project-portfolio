@@ -5,7 +5,7 @@ import {
   List, ListItem, ListItemIcon, ListItemButton, ListItemText
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
+// import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
@@ -81,7 +81,6 @@ const drawerWidth = 250
 const logoHeight = 80
 
 const drawerItems = [
-  { title: 'Dashboard', icon: DashboardRoundedIcon },
   { title: 'News', icon: ArticleRoundedIcon },
   { title: 'Portfolio', icon: PieChartRoundedIcon },
   { title: 'Watchlist', icon: TimelineRoundedIcon },
@@ -99,8 +98,7 @@ const Home = () => {
   console.log('rendered')
 
   return (
-    <Box sx={{ display: 'flex' }}>
-
+    <Box sx={{ display: 'flex', backgroundColor: 'secondary.white' }}>
       <Drawer
         sx={{
           width: drawerWidth,

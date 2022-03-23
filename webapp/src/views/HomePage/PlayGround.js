@@ -72,25 +72,6 @@ const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
   })
 }))
 
-const Content = styled('main')(({ theme, open }) => ({
-  flexGrow: 1,
-  marginTop: logoHeight,
-  paddingLeft: theme.spacing(3),
-  paddingRight: theme.spacing(3),
-  transition: theme.transitions.create(['margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create(['margin'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginLeft: 0
-  })
-}))
-
 const ProfileButton = styled(Button)(({ theme }) => ({
   color: theme.palette.primary.black,
   borderRadius: theme.sizes.borderRadius.large,
@@ -250,7 +231,7 @@ const PlayGround = () => {
 
       </Drawer>
 
-      <Content open={true}>
+      {/* <Content open={true}>
         <Typography >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -265,7 +246,7 @@ const PlayGround = () => {
           consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
           sapien faucibus et molestie ac.
         </Typography>
-      </Content>
+      </Content> */}
 
     </Box>
   )

@@ -6,7 +6,7 @@ import SignupPage from './views/Auth/SIgnupPage'
 import PlayGround from './views/HomePage/PlayGround'
 import ProfilePage from './views/Profile/ProfilePage'
 import BookDetailPage from './views/Books/BookDetailPage'
-import HomePage from './views/HomePage/HomePage'
+// import HomePage from './views/HomePage/HomePage'
 import Home from './views/Home/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
@@ -65,14 +65,13 @@ function App () {
     <div className="App">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          {/* <NavBar></NavBar> */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/book" element={<BookDetailPage />} />
-            <Route path="/home" element={<HomePage />} />
+            {/* <Route path="/home" element={<HomePage />} /> */}
             <Route path="/playground" element={<PlayGround />} />
           </Routes>
         </ThemeProvider>

@@ -1,12 +1,13 @@
-import { React } from 'react'
-import { Box, Typography } from '@mui/material'
-
-const NewsPage = () => {
-  return (
-    <Box>
-      <Typography>Here</Typography>
-    </Box>
-  )
+const styles = {
+  SearchModal: {
+    position: 'absolute',
+    width: '60%',
+    height: '80%',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white'
+  }
 }
 
-export default NewsPage
+export default styles

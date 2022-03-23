@@ -25,7 +25,8 @@ const ProfileButton = styled(Button)(({ theme }) => ({
   color: theme.palette.primary.black,
   borderRadius: theme.sizes.borderRadius.large,
   ':hover': {
-    backgroundColor: theme.palette.secondary.gray
+    backgroundColor: theme.palette.secondary.gray,
+    cursor: 'pointer'
   }
 }))
 
@@ -40,33 +41,52 @@ const NewsPage = ({ drawerWidth }) => {
     setAnchorEl(null)
   }
 
-  const testApiCall = (query) => {
-    console.log(query)
-    return new Promise((resolve, reject) => {
-      setTimeout(() => { resolve([1, 2, 3, 4, 5]) }, 300)
-    })
+  // const testApiCall = (query) => {
+  //   console.log(query)
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve([
+  //         'This is the test news article 1',
+  //         'This is the test news article 2',
+  //         'This is the test news article 1',
+  //         'This is the test news article 1',
+  //         'This is the test news article 1'
+  //       ])
+  //     }, 300)
+  //   })
+  // }
+
+  // const testHandleResult = (result) => {
+  //   console.log(result)
+  // }
+
+  // const testClear = () => {
+  //   console.log('cleared')
+  // }
+
+  // const testError = (error) => {
+  //   console.log(error)
+  // }
+
+  // const testLoading = (toggle) => {
+  //   console.log(`loading = ${toggle}`)
+  // }
+
+  // // const setSearchResultAnchor = (target) => {
+  // //   console.log(target)
+  // //   setSearchBoxAnchor(target)
+  // // }
+
+  const onSearchBoxFocus = (event) => {
   }
 
-  const testHandleResult = (result) => {
-    console.log(result)
-  }
-
-  const testClear = () => {
-    console.log('cleared')
-  }
-
-  const testError = (error) => {
-    console.log(error)
-  }
-
-  const testLoading = (toggle) => {
-    console.log(`loading = ${toggle}`)
-  }
+  // const onSearchBoxBlur = () => {
+  //   console.log('on blur')
+  // }
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', flexDirection: 'column' }}>
       <AppBar
-        position="fixed"
         sx={{ marginLeft: `-${drawerWidth}px` }}
         open={true}
         elevation={0}
@@ -80,16 +100,19 @@ const NewsPage = ({ drawerWidth }) => {
             <MyLink>Trends</MyLink>
           </Stack>
 
-          <SearchBox style={{ marginLeft: 50, marginRight: 50 }}
-            apiCallback={testApiCall}
-            handleResult={testHandleResult}
-            handleClear={testClear}
-            handleError={testError}
-            setLoading={testLoading}
+          <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
             placeHolder={'Search news ...'}
-          ></SearchBox>
+            onFocus={onSearchBoxFocus}
+            // apiCallback={testApiCall}
+            // handleResult={testHandleResult}
+            // handleClear={testClear}
+            // handleError={testError}
+            // setLoading={testLoading}
+            // onFocus={onSearchBoxFocus}
+            // onBlur={onSearchBoxBlur}
+          />
 
-          <Stack>
+          <Stack >
             {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
             <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon/>}
             startIcon={<Avatar src={THE_ROCK_URL}/>}
@@ -131,7 +154,7 @@ const NewsPage = ({ drawerWidth }) => {
 
       </AppBar>
 
-      <ContentBody open={true} marginTop={80} marginLeft={drawerWidth}>
+      <ContentBody open={true} marginTop={80} marginLeft={drawerWidth} style={{ flex: 1 }}>
         <Typography >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non

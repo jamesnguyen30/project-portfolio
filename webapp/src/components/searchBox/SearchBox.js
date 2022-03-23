@@ -32,7 +32,7 @@ const SearchInput = styled(InputBase)({
   flex: 1
 })
 
-const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear, handleError, setLoading }) => {
+const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear, handleError, setLoading, onFocus, onBlur }) => {
   const callApi = _.debounce((query) => {
     setLoading(true)
 
@@ -58,14 +58,14 @@ const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear,
       ':hover': {
         boxShadow: 6
       }
-    }
-    }>
-      <SearchInput placeholder={placeHolder} onChange={onChange}></SearchInput>
+    }}>
+      <SearchInput onClick={onFocus} placeholder={placeHolder} onChange={onChange} onBlur={onBlur}></SearchInput>
       <SearchIconWrapper>
         <IconButton>
           <SearchIcon/>
         </IconButton>
       </SearchIconWrapper>
+
     </SearchContainer>
   )
 }
@@ -77,7 +77,9 @@ SearchBox.propTypes = {
   handleResult: PropTypes.func,
   handleClear: PropTypes.func,
   handleError: PropTypes.func,
-  setLoading: PropTypes.func
+  setLoading: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func
 }
 
 export default SearchBox
