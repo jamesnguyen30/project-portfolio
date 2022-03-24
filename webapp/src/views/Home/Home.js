@@ -2,65 +2,35 @@
 import React, { useState } from 'react'
 import {
   Divider, Typography, Box, Drawer,
-  List, ListItem, ListItemIcon, ListItemButton, ListItemText
+  List, Stack
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
-import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded'
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import PieChartRoundedIcon from '@mui/icons-material/PieChartRounded'
-import PropTypes from 'prop-types'
-
 import NewsPage from '../News/NewsPage'
 import PortfolioPage from '../Portfolio/PortfolioPage'
+import data from '../../model/mock/aapl'
+import WatchlistItem from '../../components/Watchlist/WatchlistItem'
 
-const DrawerButton = styled(ListItemButton)(({ theme }) => ({
-  borderRadius: theme.sizes.borderRadius.medium,
-  ':hover': {
-    backgroundColor: theme.palette.secondary.gray
-  }
-}))
+let mockData = data.map(x => ({ date: x.date, close: x.close }))
+mockData = mockData.slice(0, 30)
 
-const DrawerItem = ({ active, title, Icon, onClick }) => {
-  return (
-    <DrawerButton onClick={onClick} disableRipple>
-      <ListItemIcon>
-        {/* {active ? <Icon sx={{ color: 'primary.green' }}/> : <Icon />} */}
-        <Icon sx={{ color: active ? 'primary.green' : 'secondary.black' }}/>
-      </ListItemIcon>
-      <ListItemText>
-        {title}
-      </ListItemText>
-    </DrawerButton>
-  )
-}
-
-DrawerItem.propTypes = {
-  active: PropTypes.string,
-  title: PropTypes.string,
-  Icon: PropTypes.object,
-  onClick: PropTypes.func
-}
-
-const drawerWidth = 250
+const drawerWidth = 300
 const logoHeight = 80
 
-const drawerItems = [
-  { title: 'News', icon: ArticleRoundedIcon },
-  { title: 'Portfolio', icon: PieChartRoundedIcon },
-  { title: 'Watchlist', icon: TimelineRoundedIcon },
-  { title: 'Settings', icon: SettingsRoundedIcon }
-]
+// const EditWatchlistButton = styled(Typography)(({ theme }) => ({
+//   textAlign: 'right',
+//   paddingLeft: theme.sizes.space.medium,
+//   paddingRight: theme.sizes.space.medium,
+//   paddingTop: theme.sizes.space.tiny,
+//   paddingBottom: theme.sizes.space.tiny,
+//   borderRadius: theme.sizes.space.medium,
+//   ':hover': {
+//     cursor: 'pointer',
+//     backgroundColor: theme.palette.primary.darkGreen,
+//     color: theme.palette.primary.white
+//   }
+// }))
 
 const Home = () => {
-  const [page, setPage] = useState(0)
-
-  const onDrawerItemClicked = (index) => {
-    setPage(index)
-  }
-
-  console.log('rendered')
-
+  const [page] = useState(0)
   return (
     <Box sx={{ display: 'flex', backgroundColor: 'secondary.white' }}>
       <Drawer
@@ -81,19 +51,39 @@ const Home = () => {
           <Typography variant="h3">LOGO</Typography>
         </Box>
 
+        <Stack direction="row" sx={{ marginLeft: '20px', marginRight: '20px', display: 'flex', alignItems: 'center' }}>
+          <Typography variant={'h6'} sx={{ fontWeight: 'bold', flex: 1 }}>Watchlist</Typography>
+          <Box sx={{
+            textAlign: 'right',
+            paddingLeft: 2,
+            paddingRight: 2,
+            paddingTop: 1,
+            paddingBottom: 1,
+            borderRadius: 3,
+            ':hover': {
+              cursor: 'pointer',
+              backgroundColor: 'primary.darkGreen',
+              color: 'primary.white',
+              boxShadow: 3
+            }
+          }}>
+            <Typography>Edit</Typography>
+          </Box>
+        </Stack>
         <List>
-          {drawerItems.map((x, index) => (
-            <ListItem key={x.title}>
-              <DrawerItem active={page === index} title={x.title} Icon={x.icon} onClick={() => onDrawerItemClicked(index)}/>
-            </ListItem>
-          ))}
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
+            <WatchlistItem data={mockData}/>
         </List>
-
         <Divider/>
 
       </Drawer>
 
-      { page === 0 && <NewsPage/> }
+      { page === 0 && <NewsPage drawerWidth={drawerWidth}/> }
       { page === 1 && <PortfolioPage/>}
       { page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
       { page === 3 && <div><Typography>Settings page in progress</Typography></div>}

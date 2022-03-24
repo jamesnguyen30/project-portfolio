@@ -90,6 +90,7 @@ const NewsPage = ({ drawerWidth }) => {
         sx={{ marginLeft: `-${drawerWidth}px` }}
         open={true}
         elevation={0}
+        drawerWidth={drawerWidth}
         >
 
         <Toolbar>
@@ -179,7 +180,7 @@ NewsPage.propTypes = {
 }
 
 NewsPage.defaultProps = {
-  drawerWidth: 240
+  drawerWidth: 250
 }
 
 export default NewsPage

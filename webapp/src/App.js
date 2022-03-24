@@ -23,7 +23,8 @@ const theme = createTheme({
       red: '#FF989A',
       black: '#56575B',
       white: '#FAFAFA',
-      gray: '#e0e0e0'
+      gray: '#e0e0e0',
+      lightGray: '#f0f0f0'
     }
   },
   typography: {
