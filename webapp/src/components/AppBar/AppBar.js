@@ -1,8 +1,6 @@
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 
-// const drawerWidth = 250
-
 const AppBar = styled(MuiAppBar)(({ theme, open, drawerWidth = 250 }) => ({
   backgroundColor: 'white',
   transition: theme.transitions.create(['margin', 'width'], {

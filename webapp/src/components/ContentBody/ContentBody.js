@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 
 const ContentBody = styled('main')(({ theme, open, marginTop, marginLeft }) => ({
-  flexGrow: 1,
+  flex: 1,
   marginTop: marginTop,
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(3),

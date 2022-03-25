@@ -14,15 +14,15 @@ const dummyData = (count = 50) => {
 const items = dummyData()
 
 const ListView = () => (
-    <List>
-        {items.map(value => {
-          return (
-                <ListItem key={value}>
-                    <ListItemText primary={`List items  ${value}`}></ListItemText>
-                </ListItem>
-          )
-        })}
-    </List>
+  <List>
+    {items.map(value => {
+      return (
+        <ListItem key={value}>
+          <ListItemText primary={`List items  ${value}`}></ListItemText>
+        </ListItem>
+      )
+    })}
+  </List>
 )
 
 export default ListView

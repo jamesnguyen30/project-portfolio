@@ -1,7 +1,8 @@
 import { React, useState } from 'react'
 import {
   Divider, Stack, Typography, Box,
-  Toolbar, Avatar, Menu, MenuItem, Button
+  Toolbar, Avatar, Menu, MenuItem, Button,
+  Grid, Pagination
 } from '@mui/material'
 import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
@@ -9,6 +10,10 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import AppBar from '../../components/AppBar/AppBar'
 import PropTypes from 'prop-types'
 import ContentBody from '../../components/ContentBody/ContentBody'
+
+import HeadlineNews from '../../components/News/HeadlineNews'
+import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
 
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
 
@@ -30,7 +35,30 @@ const ProfileButton = styled(Button)(({ theme }) => ({
   }
 }))
 
-const NewsPage = ({ drawerWidth }) => {
+const HeadlineNextPageButton = ({ icon }) => (
+  <Button sx={{
+    height: 'auto',
+    width: 'auto',
+    color: 'primary.black',
+    ':hover': {
+      backgroundColor: 'secondary.lightGray'
+    },
+    ':onclick': {
+      backgroundColor: 'secondary.gray'
+    }
+  }}
+  disableRipple
+  >
+    {icon}
+  </Button>
+)
+
+HeadlineNextPageButton.propTypes = {
+  icon: PropTypes.object
+}
+
+const NewsPage = (props) => {
+  const { drawerWidth } = props
   const [anchorEl, setAnchorEl] = useState(null)
 
   const openProfileMenu = (event) => {
@@ -85,13 +113,13 @@ const NewsPage = ({ drawerWidth }) => {
   // }
 
   return (
-    <Box style={{ display: 'flex', flexDirection: 'column' }}>
+    <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
       <AppBar
         sx={{ marginLeft: `-${drawerWidth}px` }}
         open={true}
         elevation={0}
         drawerWidth={drawerWidth}
-        >
+      >
 
         <Toolbar>
           <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
@@ -104,20 +132,20 @@ const NewsPage = ({ drawerWidth }) => {
           <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
             placeHolder={'Search news ...'}
             onFocus={onSearchBoxFocus}
-            // apiCallback={testApiCall}
-            // handleResult={testHandleResult}
-            // handleClear={testClear}
-            // handleError={testError}
-            // setLoading={testLoading}
-            // onFocus={onSearchBoxFocus}
-            // onBlur={onSearchBoxBlur}
+          // apiCallback={testApiCall}
+          // handleResult={testHandleResult}
+          // handleClear={testClear}
+          // handleError={testError}
+          // setLoading={testLoading}
+          // onFocus={onSearchBoxFocus}
+          // onBlur={onSearchBoxBlur}
           />
 
           <Stack >
             {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
-            <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon/>}
-            startIcon={<Avatar src={THE_ROCK_URL}/>}
-            onClick={openProfileMenu}
+            <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon />}
+              startIcon={<Avatar src={THE_ROCK_URL} />}
+              onClick={openProfileMenu}
             >
               My_UserName_And_Avatar
             </ProfileButton>
@@ -143,7 +171,7 @@ const NewsPage = ({ drawerWidth }) => {
               <MenuItem>
                 <Typography>Settings</Typography>
               </MenuItem>
-              <Divider/>
+              <Divider />
               <MenuItem>
                 <Typography>Log out</Typography>
               </MenuItem>
@@ -151,25 +179,36 @@ const NewsPage = ({ drawerWidth }) => {
           </Stack>
         </Toolbar>
 
-        <Divider/>
+        <Divider />
 
       </AppBar>
 
       <ContentBody open={true} marginTop={80} marginLeft={drawerWidth} style={{ flex: 1 }}>
-        <Typography >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac. He he he
-        </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Headlines</Typography>
+        <Divider />
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          {/* <IconButton sx={{ height: '50px', width: 'auto' }}><KeyboardArrowLeftRoundedIcon/></IconButton> */}
+          <HeadlineNextPageButton icon={<KeyboardArrowLeftRoundedIcon/>}/>
+          <Grid container sx={{ marginTop: 1 }} spacing={2}>
+                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+                  <HeadlineNews />
+                </Grid>
+                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+                  <HeadlineNews />
+                </Grid>
+                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+                  <HeadlineNews />
+                </Grid>
+                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+                  <HeadlineNews />
+                </Grid>
+          </Grid>
+          <HeadlineNextPageButton icon={<KeyboardArrowRightRoundedIcon/>}/>
+        </Box>
+        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', margin: 2 }}>
+          <Pagination count={5} shape={'rounded'} size={'small'} hideNextButton hidePrevButton/>
+        </Box>
+
       </ContentBody>
     </Box>
   )

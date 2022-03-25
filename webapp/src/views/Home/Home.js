@@ -5,7 +5,6 @@ import {
   List, Stack
 } from '@mui/material'
 import NewsPage from '../News/NewsPage'
-import PortfolioPage from '../Portfolio/PortfolioPage'
 import data from '../../model/mock/aapl'
 import WatchlistItem from '../../components/Watchlist/WatchlistItem'
 
@@ -84,7 +83,6 @@ const Home = () => {
       </Drawer>
 
       { page === 0 && <NewsPage drawerWidth={drawerWidth}/> }
-      { page === 1 && <PortfolioPage/>}
       { page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
       { page === 3 && <div><Typography>Settings page in progress</Typography></div>}
     </Box>
