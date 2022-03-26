@@ -15,6 +15,8 @@ import HeadlineNews from '../../components/News/HeadlineNews'
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
 
+import StickerNews from '../../components/News/StickerNews'
+
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
 
 const MyLink = styled(Typography)(({ theme, active }) => ({
@@ -36,19 +38,19 @@ const ProfileButton = styled(Button)(({ theme }) => ({
 }))
 
 const ChangePageButton = ({ nextPage }) => (
-  <Button sx={{
+  <Button
+  sx={{
     height: 'auto',
     width: 'auto',
     color: 'primary.black',
     ':hover': {
       backgroundColor: 'secondary.lightGray'
     },
-    ':active .icon': {
-      transform: nextPage ? 'translateX(3px)' : 'translateX(-3px)',
+    ':hover .icon': {
+      transform: nextPage ? 'translateX(5px)' : 'translateX(-5px)',
       transition: 'transform 100ms'
     }
   }}
-    disableRipple
   >
     {
       nextPage && (
@@ -226,6 +228,10 @@ const NewsPage = (props) => {
           <Pagination count={5} shape={'rounded'} size={'small'} hideNextButton hidePrevButton />
         </Box>
 
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Watching stickers</Typography>
+
+        <Divider/>
+        <StickerNews/>
       </ContentBody>
     </Box>
   )

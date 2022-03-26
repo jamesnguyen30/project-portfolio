@@ -68,7 +68,7 @@ const Home = () => {
             },
             ':active': {
               transform: 'translateY(3px)',
-              transition: 'transform 100ms',
+              transition: 'transform 50ms',
               boxShadow: 6
             }
           }}>

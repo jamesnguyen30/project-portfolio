@@ -71,7 +71,7 @@ const HeadlineNews = (props) => {
                 },
                 ':active': {
                   transform: 'translateY(3px)',
-                  transition: 'transform 100ms'
+                  transition: 'transform 50ms'
                 }
               }}>
               <ArticleIcon sx={{ color: 'secondary.black' }} />
