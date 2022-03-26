@@ -1,0 +1,18 @@
+.anim-enter { 
+  /* transform: scale(0.9); */
+  /* transform: translateY(-20px); */
+}
+.anim-enter-active { 
+  /* transform: scale(1); */
+  transform: translateY(-20px);
+  transition: transform 300ms;
+}
+.anim-exit { 
+  /* transform: scale(1); */
+  transform: translateY(-20px);
+}
+.anim-exit-active { 
+  /* transform: scale(0.9); */
+  transform: translateY(0px);
+  transition: transform 300ms;
+}

@@ -2,6 +2,7 @@ import { React } from 'react'
 import { Container, Box, Typography, Stack } from '@mui/material'
 import ArticleIcon from '@mui/icons-material/Article'
 // import PropTypes from 'prop-types'
+// import stylesModule from './styles.module.css'
 
 const MOCK_IMAGE = 'https://storage.googleapis.com/afs-prod/media/5377e0cfb7a7492198d9df86189ddfb6/800.jpeg'
 
@@ -43,7 +44,7 @@ const HeadlineNews = (props) => {
           <Box>
             <Typography sx={{
               textAlign: 'right',
-              backgroundColor: 'primary.green',
+              backgroundColor: 'primary.darkGreen',
               color: 'white',
               borderRadius: 2,
               paddingLeft: 1,
@@ -57,22 +58,26 @@ const HeadlineNews = (props) => {
             justifyContent: 'flex-end',
             flex: 1
           }}>
-            <Box sx={{
+            <Box
+            sx={{
               display: 'flex',
               flexDirection: 'row',
               borderRadius: 2,
-              border: 1,
+              // border: 1,
               borderColor: 'white',
               padding: 1,
               ':hover': {
-                borderColor: 'primary.black'
+                backgroundColor: 'secondary.lightGray'
+              },
+              ':active': {
+                backgroundColor: 'secondary.gray',
+                boxShadow: 3
               }
             }}>
-              <ArticleIcon/>
-              <Typography sx={{ fontSize: '14px' }}>Summary</Typography>
+              <ArticleIcon sx={{ color: 'secondary.black' }}/>
+              <Typography sx={{ fontSize: '14px', color: 'secondary.black' }}>Summary</Typography>
             </Box>
           </Box>
-
         </Container>
       </Stack>
     </Container>

@@ -14,20 +14,6 @@ mockData = mockData.slice(0, 30)
 const drawerWidth = 300
 const logoHeight = 80
 
-// const EditWatchlistButton = styled(Typography)(({ theme }) => ({
-//   textAlign: 'right',
-//   paddingLeft: theme.sizes.space.medium,
-//   paddingRight: theme.sizes.space.medium,
-//   paddingTop: theme.sizes.space.tiny,
-//   paddingBottom: theme.sizes.space.tiny,
-//   borderRadius: theme.sizes.space.medium,
-//   ':hover': {
-//     cursor: 'pointer',
-//     backgroundColor: theme.palette.primary.darkGreen,
-//     color: theme.palette.primary.white
-//   }
-// }))
-
 const Home = () => {
   const [page] = useState(0)
   return (
@@ -46,12 +32,30 @@ const Home = () => {
         open={true}
       >
 
-        <Box sx={{ height: logoHeight, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{
+          height: logoHeight,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
           <Typography variant="h3">LOGO</Typography>
         </Box>
 
-        <Stack direction="row" sx={{ marginLeft: '20px', marginRight: '20px', display: 'flex', alignItems: 'center' }}>
-          <Typography variant={'h6'} sx={{ fontWeight: 'bold', flex: 1 }}>Watchlist</Typography>
+        <Stack
+          direction="row"
+          sx={{
+            marginLeft: '20px',
+            marginRight: '20px',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+          <Typography
+            variant={'h6'}
+            sx={{
+              fontWeight: 'bold',
+              flex: 1
+            }}>Watchlist</Typography>
           <Box sx={{
             textAlign: 'right',
             paddingLeft: 2,
@@ -64,27 +68,31 @@ const Home = () => {
               backgroundColor: 'primary.darkGreen',
               color: 'primary.white',
               boxShadow: 3
+            },
+            ':active': {
+              transform: 'translateY(3px)',
+              transition: 'transform 100ms',
+              boxShadow: 6
             }
           }}>
             <Typography>Edit</Typography>
           </Box>
         </Stack>
         <List>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
-            <WatchlistItem data={mockData}/>
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
+          <WatchlistItem data={mockData} />
         </List>
-        <Divider/>
-
+        <Divider />
       </Drawer>
 
-      { page === 0 && <NewsPage drawerWidth={drawerWidth}/> }
-      { page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
-      { page === 3 && <div><Typography>Settings page in progress</Typography></div>}
+      {page === 0 && <NewsPage drawerWidth={drawerWidth} />}
+      {page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
+      {page === 3 && <div><Typography>Settings page in progress</Typography></div>}
     </Box>
   )
 }
