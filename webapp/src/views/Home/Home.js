@@ -58,10 +58,7 @@ const Home = () => {
             }}>Watchlist</Typography>
           <Box sx={{
             textAlign: 'right',
-            paddingLeft: 2,
-            paddingRight: 2,
-            paddingTop: 1,
-            paddingBottom: 1,
+            padding: 1,
             borderRadius: 3,
             ':hover': {
               cursor: 'pointer',

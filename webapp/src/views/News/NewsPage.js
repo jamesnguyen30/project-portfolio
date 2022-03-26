@@ -35,7 +35,7 @@ const ProfileButton = styled(Button)(({ theme }) => ({
   }
 }))
 
-const HeadlineNextPageButton = ({ icon }) => (
+const ChangePageButton = ({ nextPage }) => (
   <Button sx={{
     height: 'auto',
     width: 'auto',
@@ -43,18 +43,35 @@ const HeadlineNextPageButton = ({ icon }) => (
     ':hover': {
       backgroundColor: 'secondary.lightGray'
     },
-    ':onclick': {
-      backgroundColor: 'secondary.gray'
+    ':active .icon': {
+      transform: nextPage ? 'translateX(3px)' : 'translateX(-3px)',
+      transition: 'transform 100ms'
     }
   }}
-  disableRipple
+    disableRipple
   >
-    {icon}
+    {
+      nextPage && (
+        <KeyboardArrowRightRoundedIcon
+          className='icon' />
+      )
+    }
+    {
+      !nextPage && (
+        <KeyboardArrowLeftRoundedIcon
+          className='icon'
+        />
+      )
+    }
   </Button>
 )
 
-HeadlineNextPageButton.propTypes = {
-  icon: PropTypes.object
+ChangePageButton.propTypes = {
+  nextPage: PropTypes.bool
+}
+
+ChangePageButton.defaultValues = {
+  nextPage: false
 }
 
 const NewsPage = (props) => {
@@ -188,25 +205,25 @@ const NewsPage = (props) => {
         <Divider />
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           {/* <IconButton sx={{ height: '50px', width: 'auto' }}><KeyboardArrowLeftRoundedIcon/></IconButton> */}
-          <HeadlineNextPageButton icon={<KeyboardArrowLeftRoundedIcon/>}/>
+          <ChangePageButton />
           <Grid container sx={{ marginTop: 1 }} spacing={2}>
-                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
-                  <HeadlineNews />
-                </Grid>
-                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
-                  <HeadlineNews />
-                </Grid>
-                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
-                  <HeadlineNews />
-                </Grid>
-                <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
-                  <HeadlineNews />
-                </Grid>
+            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+              <HeadlineNews />
+            </Grid>
+            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+              <HeadlineNews />
+            </Grid>
+            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+              <HeadlineNews />
+            </Grid>
+            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+              <HeadlineNews />
+            </Grid>
           </Grid>
-          <HeadlineNextPageButton icon={<KeyboardArrowRightRoundedIcon/>}/>
+          <ChangePageButton nextPage />
         </Box>
         <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', margin: 2 }}>
-          <Pagination count={5} shape={'rounded'} size={'small'} hideNextButton hidePrevButton/>
+          <Pagination count={5} shape={'rounded'} size={'small'} hideNextButton hidePrevButton />
         </Box>
 
       </ContentBody>

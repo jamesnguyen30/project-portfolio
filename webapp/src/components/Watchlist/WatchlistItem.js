@@ -1,6 +1,5 @@
 import { React } from 'react'
 import { Box, Typography, Divider } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import {
   AreaChart,
   Area,
@@ -10,24 +9,30 @@ import {
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 
-const Container = styled(Box)(({ theme }) => ({
-  borderRadius: theme.sizes.borderRadius.medium,
-  ':hover': {
-    backgroundColor: theme.palette.secondary.lightGray,
-    cursor: 'pointer'
-  },
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin: theme.sizes.space.medium
-}))
+// An item in watch list featured a daily stock chart
+// @props [] data (required): daily data for a sticker to render chart
 
 const WatchlistItem = (props) => {
+  // Just a test variable for a straightline
+  // Will use 52-week price instead in production
   const getAverage = _.mean(props.data.map(x => x.close))
-  console.log(getAverage)
   return (
-    <Container>
+    <Box sx={{
+      borderRadius: 3,
+      ':hover': {
+        backgroundColor: 'secondary.lightGray',
+        cursor: 'pointer'
+      },
+      ':active': {
+        transform: 'translateY(3px)',
+        transition: 'transform 100ms'
+      },
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 1
+    }}>
       <div>
         <Typography style={{ fontWeight: 'bold' }}>AAPL</Typography>
         <Typography variant="subtitle1">$190.13</Typography>
@@ -49,20 +54,16 @@ const WatchlistItem = (props) => {
         <Typography variant="subtitle2" sx={{ color: 'primary.darkGreen', textAlign: 'right' }}>$99.9%</Typography>
       </Box>
     <Divider/>
-    </Container>
+    </Box>
   )
 }
 
 WatchlistItem.propTypes = {
-  data: PropTypes.object.isRequired,
-  width: PropTypes.object,
-  height: PropTypes.object
+  data: PropTypes.object.isRequired
 }
 
 WatchlistItem.defaultValues = {
-  data: [],
-  width: 200,
-  height: 100
+  data: []
 }
 
 export default WatchlistItem

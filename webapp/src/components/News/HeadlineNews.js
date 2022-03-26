@@ -27,7 +27,7 @@ const HeadlineNews = (props) => {
         backgroundColor: 'red',
         width: 150,
         objectFit: 'cover'
-      }} component="img" src={MOCK_IMAGE}/>
+      }} component="img" src={MOCK_IMAGE} />
       <Stack sx={{ marginLeft: 1 }}>
         <Typography sx={{
           fontWeight: 'bold',
@@ -59,22 +59,22 @@ const HeadlineNews = (props) => {
             flex: 1
           }}>
             <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              borderRadius: 2,
-              // border: 1,
-              borderColor: 'white',
-              padding: 1,
-              ':hover': {
-                backgroundColor: 'secondary.lightGray'
-              },
-              ':active': {
-                backgroundColor: 'secondary.gray',
-                boxShadow: 3
-              }
-            }}>
-              <ArticleIcon sx={{ color: 'secondary.black' }}/>
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                borderRadius: 2,
+                // border: 1,
+                borderColor: 'white',
+                padding: 1,
+                ':hover': {
+                  backgroundColor: 'secondary.lightGray'
+                },
+                ':active': {
+                  transform: 'translateY(3px)',
+                  transition: 'transform 100ms'
+                }
+              }}>
+              <ArticleIcon sx={{ color: 'secondary.black' }} />
               <Typography sx={{ fontSize: '14px', color: 'secondary.black' }}>Summary</Typography>
             </Box>
           </Box>
