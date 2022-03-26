@@ -4,9 +4,10 @@ import ArticleIcon from '@mui/icons-material/Article'
 
 // @props alt (required): string, in case logoUrl is null
 // @props logoUrl: string, news logo URL (if available)
-const SummaryButton = () => {
+const SummaryButton = (props) => {
   return (
     <Box
+    {...props}
     sx={{
       display: 'flex',
       flexDirection: 'row',

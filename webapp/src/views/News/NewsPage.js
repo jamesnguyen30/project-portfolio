@@ -15,7 +15,7 @@ import HeadlineNews from '../../components/News/HeadlineNews'
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
 
-import StickerNews from '../../components/News/StickerNews'
+import StickerList from '../../components/News/StickerList'
 
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
 
@@ -39,18 +39,18 @@ const ProfileButton = styled(Button)(({ theme }) => ({
 
 const ChangePageButton = ({ nextPage }) => (
   <Button
-  sx={{
-    height: 'auto',
-    width: 'auto',
-    color: 'primary.black',
-    ':hover': {
-      backgroundColor: 'secondary.lightGray'
-    },
-    ':hover .icon': {
-      transform: nextPage ? 'translateX(5px)' : 'translateX(-5px)',
-      transition: 'transform 100ms'
-    }
-  }}
+    sx={{
+      height: 'auto',
+      width: 'auto',
+      color: 'primary.black',
+      ':hover': {
+        backgroundColor: 'secondary.lightGray'
+      },
+      ':hover .icon': {
+        transform: nextPage ? 'translateX(5px)' : 'translateX(-5px)',
+        transition: 'transform 100ms'
+      }
+    }}
   >
     {
       nextPage && (
@@ -209,16 +209,16 @@ const NewsPage = (props) => {
           {/* <IconButton sx={{ height: '50px', width: 'auto' }}><KeyboardArrowLeftRoundedIcon/></IconButton> */}
           <ChangePageButton />
           <Grid container sx={{ marginTop: 1 }} spacing={2}>
-            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+            <Grid item xl={6} lg={12} sx={{ display: 'flex' }}>
               <HeadlineNews />
             </Grid>
-            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+            <Grid item xl={6} lg={12} sx={{ display: 'flex' }}>
               <HeadlineNews />
             </Grid>
-            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+            <Grid item xl={6} lg={12} sx={{ display: { xl: 'flex', lg: 'none', md: 'none', xs: 'none' } }}>
               <HeadlineNews />
             </Grid>
-            <Grid item lg={6} md={12} sx={{ display: 'flex' }}>
+            <Grid item xl={6} lg={12} sx={{ display: { xl: 'flex', lg: 'none', md: 'none', xs: 'none' } }}>
               <HeadlineNews />
             </Grid>
           </Grid>
@@ -230,8 +230,20 @@ const NewsPage = (props) => {
 
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Watching stickers</Typography>
 
-        <Divider/>
-        <StickerNews/>
+        <Divider />
+        <Box>
+          <Grid container>
+            <Grid item xs={12} md={6} lg={4}>
+              <StickerList />
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <StickerList />
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <StickerList />
+            </Grid>
+          </Grid>
+        </Box>
       </ContentBody>
     </Box>
   )

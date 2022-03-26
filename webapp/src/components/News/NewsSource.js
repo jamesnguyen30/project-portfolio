@@ -6,13 +6,17 @@ import PropTypes from 'prop-types'
 // @props logoUrl: string, news logo URL (if available)
 const NewsSource = (props) => {
   return (
-    <Box sx={{
+    <Box
+    {...props}
+    sx={{
+      marginTop: 1,
       marginLeft: 1,
       marginRight: 1,
       paddingLeft: 1,
       paddingRight: 1,
       display: 'flex',
       flexDirection: 'row',
+      flex: 1,
       maxHeight: 25,
       alignItems: 'center'
     }}>
@@ -20,13 +24,13 @@ const NewsSource = (props) => {
 
         <Typography
           sx={{
-            flex: 1,
             color: 'secondary.black',
             fontSize: '12px',
             textAlign: 'right'
           }}>
           30 minutes ago
         </Typography>
+
     </Box>
   )
 }
