@@ -15,7 +15,9 @@ const theme = createTheme({
       red: '#F94144',
       darkBlack: '#303133',
       black: '#3C3D3F',
-      white: '#FFFFFF'
+      white: '#FFFFFF',
+      darkPurple: '#684aff',
+      purple: '#9580ff'
     },
     secondary: {
       main: '#F15156',

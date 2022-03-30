@@ -7,6 +7,7 @@ import {
 import NewsPage from '../News/NewsPage'
 import data from '../../model/mock/aapl'
 import WatchlistItem from '../../components/Watchlist/WatchlistItem'
+import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 
 let mockData = data.map(x => ({ date: x.date, close: x.close }))
 mockData = mockData.slice(0, 30)
@@ -56,24 +57,9 @@ const Home = () => {
               fontWeight: 'bold',
               flex: 1
             }}>Watchlist</Typography>
-          <Box sx={{
-            textAlign: 'right',
-            padding: 1,
-            borderRadius: 3,
-            ':hover': {
-              cursor: 'pointer',
-              backgroundColor: 'primary.darkGreen',
-              color: 'primary.white',
-              boxShadow: 3
-            },
-            ':active': {
-              transform: 'translateY(3px)',
-              transition: 'transform 50ms',
-              boxShadow: 6
-            }
-          }}>
-            <Typography>Edit</Typography>
-          </Box>
+            <UtilityActionButton
+            text={'Edit'}
+            />
         </Stack>
         <List>
           <WatchlistItem data={mockData} />

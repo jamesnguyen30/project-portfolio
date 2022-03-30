@@ -68,7 +68,7 @@ const HeadlineSection = (props) => {
 
   const startChangePageAnimation = () => {
     setPageAnimation(false)
-    setTimeout(() => setPageAnimation(true), 500)
+    setTimeout(() => setPageAnimation(true), 250)
   }
 
   const nextPage = () => {
