@@ -1,7 +1,8 @@
 import { React, useState } from 'react'
 import { Container, Typography, Box } from '@mui/material'
 import ClickActiveAnimation from '../../components/Animations/ClickActiveAnimation/ClickActiveAnimation'
-import StickerNews from '../../components/News/StickerNews'
+import ImportantNews from '../../components/News/ImportantNews'
+import CommonNews from '../../components/News/CommonNews'
 
 const Playground = () => {
   const [open, setOpen] = useState(false)
@@ -25,7 +26,13 @@ const Playground = () => {
         </ClickActiveAnimation>
 
         <Typography>Sticker News Component</Typography>
-        <StickerNews/>
+        <ImportantNews/>
+
+        <Box sx={{ marginTop: 3 }}>
+
+          <CommonNews/>
+        </Box>
+
     </Container>
   )
 }

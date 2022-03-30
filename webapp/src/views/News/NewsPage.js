@@ -1,8 +1,7 @@
 import { React, useState } from 'react'
 import {
   Divider, Stack, Typography, Box,
-  Toolbar, Avatar, Menu, MenuItem, Button,
-  Grid, Pagination
+  Toolbar, Avatar, Menu, MenuItem, Button
 } from '@mui/material'
 import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
@@ -11,11 +10,9 @@ import AppBar from '../../components/AppBar/AppBar'
 import PropTypes from 'prop-types'
 import ContentBody from '../../components/ContentBody/ContentBody'
 
-import HeadlineNews from '../../components/News/HeadlineNews'
-import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
-import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
+import HeadlineSection from '../../components/News/HeadlineSection'
 
-import StickerList from '../../components/News/StickerList'
+import WatchingNewsSection from '../../components/News/WatchingNewsSection'
 
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
 
@@ -36,45 +33,6 @@ const ProfileButton = styled(Button)(({ theme }) => ({
     cursor: 'pointer'
   }
 }))
-
-const ChangePageButton = ({ nextPage }) => (
-  <Button
-    sx={{
-      height: 'auto',
-      width: 'auto',
-      color: 'primary.black',
-      ':hover': {
-        backgroundColor: 'secondary.lightGray'
-      },
-      ':hover .icon': {
-        transform: nextPage ? 'translateX(5px)' : 'translateX(-5px)',
-        transition: 'transform 100ms'
-      }
-    }}
-  >
-    {
-      nextPage && (
-        <KeyboardArrowRightRoundedIcon
-          className='icon' />
-      )
-    }
-    {
-      !nextPage && (
-        <KeyboardArrowLeftRoundedIcon
-          className='icon'
-        />
-      )
-    }
-  </Button>
-)
-
-ChangePageButton.propTypes = {
-  nextPage: PropTypes.bool
-}
-
-ChangePageButton.defaultValues = {
-  nextPage: false
-}
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
@@ -207,42 +165,14 @@ const NewsPage = (props) => {
         <Divider />
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           {/* <IconButton sx={{ height: '50px', width: 'auto' }}><KeyboardArrowLeftRoundedIcon/></IconButton> */}
-          <ChangePageButton />
-          <Grid container sx={{ marginTop: 1 }} spacing={2}>
-            <Grid item xl={6} lg={12} sx={{ display: 'flex' }}>
-              <HeadlineNews />
-            </Grid>
-            <Grid item xl={6} lg={12} sx={{ display: 'flex' }}>
-              <HeadlineNews />
-            </Grid>
-            <Grid item xl={6} lg={12} sx={{ display: { xl: 'flex', lg: 'none', md: 'none', xs: 'none' } }}>
-              <HeadlineNews />
-            </Grid>
-            <Grid item xl={6} lg={12} sx={{ display: { xl: 'flex', lg: 'none', md: 'none', xs: 'none' } }}>
-              <HeadlineNews />
-            </Grid>
-          </Grid>
-          <ChangePageButton nextPage />
-        </Box>
-        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', margin: 2 }}>
-          <Pagination count={5} shape={'rounded'} size={'small'} hideNextButton hidePrevButton />
+          <HeadlineSection />
         </Box>
 
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Watching stickers</Typography>
 
         <Divider />
         <Box>
-          <Grid container>
-            <Grid item xs={12} md={6} lg={4}>
-              <StickerList />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <StickerList />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <StickerList />
-            </Grid>
-          </Grid>
+          <WatchingNewsSection />
         </Box>
       </ContentBody>
     </Box>

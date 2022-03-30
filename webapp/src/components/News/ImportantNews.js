@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Box, Typography, Tooltip, Modal, Fade, Divider, List, ListItem, Button } from '@mui/material'
 import NewsSource from './NewsSource'
 import SummaryButton from './SummaryButton'
+import PropTypes from 'prop-types'
 
 const MOCK_URL = 'https://s.yimg.com/uu/api/res/1.2/umgx_Y8MT6e2Z0LvuwSMqw--~B/Zmk9c3RyaW07aD0zMjA7dz01NzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2022-03/2b7bbc10-ac60-11ec-b498-7d6d499b02df.cf.webp'
-const StickerNews = () => {
+
+const ImportantNews = (props) => {
   const [openSummary, setOpenSummary] = useState(false)
   const onModalClose = () => {
     setOpenSummary(false)
@@ -16,13 +18,13 @@ const StickerNews = () => {
   return (
     <Box
       sx={{
+        ...props.sx,
         width: 300,
         height: 360,
         border: 1,
         borderColor: 'secondary.gray',
         backgroundColor: 'primary.white',
         borderRadius: 3,
-        marginTop: 5,
         display: 'flex',
         flexDirection: 'column',
         ':hover': {
@@ -60,7 +62,7 @@ const StickerNews = () => {
           WebkitBoxOrient: 'vertical',
           WebkitLineClamp: 3,
           overflow: 'hidden',
-          maxHeight: '150',
+          maxHeight: 150,
           fontSize: '15px',
           fontWeight: 'bold',
           margin: 2
@@ -157,4 +159,8 @@ const StickerNews = () => {
   )
 }
 
-export default StickerNews
+ImportantNews.propTypes = {
+  sx: PropTypes.object
+}
+
+export default ImportantNews

@@ -10,8 +10,8 @@ const NewsSource = (props) => {
     {...props}
     sx={{
       marginTop: 1,
-      marginLeft: 1,
-      marginRight: 1,
+      // marginLeft: 1,
+      // marginRight: 1,
       paddingLeft: 1,
       paddingRight: 1,
       display: 'flex',
