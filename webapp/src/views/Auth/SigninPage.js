@@ -10,20 +10,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { signInAction } from '../../redux/actions/authActions'
 import { getProfileAction } from '../../redux/actions/profileActions'
 import CommonAlert from '../../components/alerts/CommonAlert'
-// import PropTypes from 'prop-types'
 
 import {
-  NOT_SIGNED_IN,
-  SIGNED_IN
+  SIGNED_IN,
+  SIGNED_IN_ERROR
 } from '../../redux/actions/index'
-
-// const mapStateToProps = (state) => {
-//   auth: state.authReducer
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   signInAction: (email, password) => signInAction(email, password)
-// }
 
 const SigninPage = (props) => {
   const [openErrorAlert, setOpenErrorAlert] = useState(false)
@@ -40,22 +31,21 @@ const SigninPage = (props) => {
     }
   )
 
-  const signInState = useSelector(state => state.authReducer.type)
-  const errorCode = useSelector(state => state.authReducer.errorCode)
-  const timeStamp = useSelector(state => state.authReducer.timeStamp)
+  const authState = useSelector(state => state.authReducer)
 
   const navigation = useNavigate()
 
   const signIn = useCallback((email, password) => {
+    setOpenErrorAlert(false)
     dispatch(signInAction(email, password))
   })
 
   useEffect(() => {
-    if (signInState === SIGNED_IN) {
+    if (authState.type === SIGNED_IN) {
       dispatch(getProfileAction())
       navigation('/home')
-    } else if (signInState === NOT_SIGNED_IN) {
-      switch (errorCode) {
+    } else if (authState.type === SIGNED_IN_ERROR) {
+      switch (authState.error) {
         case 'auth/user-not-found':
           setOpenErrorAlert(true)
           setErrorTitle('No account found')
@@ -63,14 +53,14 @@ const SigninPage = (props) => {
           break
         case 'auth/wrong-password':
           setOpenErrorAlert(true)
-          setErrorTitle('Wrong password')
+          setErrorTitle('Wrong email or password')
           setErrorMessage('Please try again')
           break
         default:
           break
       }
     }
-  }, [timeStamp])
+  }, [authState])
 
   const onSubmit = (data) => {
     signIn(data.email, data.password)
