@@ -7,14 +7,6 @@ import UtilityActionButton from '../buttons/UtilityActionButton'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const StickerHeader = (props) => {
-  const getTitle = () => {
-    if (props.full) {
-      return `${props.assetFullname} (${props.sticker})`
-    } else {
-      return `${props.sticker}`
-    }
-  }
-
   return (
     <Box sx={{
       flexDirection: 'row',
@@ -51,7 +43,7 @@ const StickerHeader = (props) => {
             fontWeight: 'bold',
             marginRight: 2
           }}
-        >${getTitle()}</Typography>
+        >{props.assetFullname} ({props.sticker})</Typography>
         <Typography
           sx={{
             fontSize: '15px',
@@ -68,11 +60,8 @@ const StickerHeader = (props) => {
           }}
         >+${props.change} (+99.9%)</Typography>
       </Box>
-      {
-        props.full && (
-          <UtilityActionButton text={'Add to watch list'} icon={<AddRoundedIcon/>}/>
-        )
-      }
+      <UtilityActionButton text={'Add to watch list'} icon={<AddRoundedIcon/>}/>
+
     </Box>
   )
 }
@@ -81,12 +70,10 @@ StickerHeader.propTypes = {
   assetFullname: PropTypes.string.isRequired,
   sticker: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  change: PropTypes.number.isRequired,
-  full: PropTypes.bool
+  change: PropTypes.number.isRequired
 }
 
 StickerHeader.defaultProps = {
-  full: false
 }
 
 export default StickerHeader

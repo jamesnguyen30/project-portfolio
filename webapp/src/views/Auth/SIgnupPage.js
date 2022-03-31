@@ -1,5 +1,5 @@
 import { React, useRef, useCallback, useEffect, useState } from 'react'
-import { TextField, Button, Grid, Box, Typography } from '@mui/material'
+import { TextField, Button, Box, Typography } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import loginStyles from './styles'
 import { Link, useNavigate } from 'react-router-dom'
@@ -68,13 +68,13 @@ const SignupPage = () => {
   }
 
   return (
-    <Grid container spacing={2} style={{ height: '100vh' }}>
-      <Grid item xs={12} md ={6}>
-        <Box style={{ backgroundColor: '#f0f8ff', height: '100vh' }}>
-        </Box>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh'
+        }}>
           <CommonAlert
             style={{ width: '100px' }}
             open={openAlert}
@@ -129,8 +129,6 @@ const SignupPage = () => {
             <Button component={Link} to="/signIn">Sign in</Button>
           </form>
         </Box>
-      </Grid>
-    </Grid>
   )
 }
 

@@ -4,6 +4,28 @@ import ImportantNews from './ImportantNews'
 import PropTypes from 'prop-types'
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
+import StickerHeaderGroup from '../../components/News/StickerHeaderGroup'
+
+// const mockSticker = [
+//   {
+//     assetFullname: 'APPLE, Inc',
+//     sticker: 'AAPL',
+//     price: 1313.9,
+//     change: 1.9
+//   },
+//   {
+//     assetFullname: 'Tesla, Inc',
+//     sticker: 'TSLA',
+//     price: 9999.9,
+//     change: 99.9
+//   },
+//   {
+//     assetFullname: 'Dow Jon Industrial',
+//     sticker: 'DJI',
+//     price: 9999.9,
+//     change: 99.9
+//   }
+// ]
 
 const ChangePageButton = (props) => (
   <Button
@@ -116,15 +138,15 @@ const HeadlineSection = (props) => {
               alignItems: 'center'
             }}>
             <Box>
-              <StickerInfo />
+              <StickerHeaderGroup/>
               <ImportantNews />
             </Box>
             <Box>
-              <StickerInfo />
+              <StickerHeaderGroup/>
               <ImportantNews />
             </Box>
             <Box>
-              <StickerInfo />
+              <StickerHeaderGroup/>
               <ImportantNews />
             </Box>
           </Stack>

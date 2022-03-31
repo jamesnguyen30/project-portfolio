@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Box, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
-// import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const UtilityActionButton = props => {
   return (

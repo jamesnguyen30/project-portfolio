@@ -1,15 +1,13 @@
 import {
   SIGNED_IN,
-  NOT_SIGNED_IN
+  NOT_SIGNED_IN,
+  SIGNED_IN_ERROR
 } from '../actions/index'
 
 const initState = {
   timeStamp: null,
   type: null,
-  errorCode: null,
-  displayName: null,
-  email: null,
-  emailVerified: null
+  error: null
 }
 
 const authReducer = (state = initState, action) => {
@@ -19,20 +17,22 @@ const authReducer = (state = initState, action) => {
         ...state,
         timeStamp: Date.now(),
         type: action.type,
-        displayName: action.payload.displayName,
-        email: action.payload.email,
-        emailVerified: action.payload.emailVerified
+        error: null
       }
 
     case NOT_SIGNED_IN:
       return {
         timeStamp: Date.now(),
         type: action.type,
-        displayName: null,
-        email: null,
-        emailVerified: null,
-        errorCode: action.payload
+        error: null
       }
+    case SIGNED_IN_ERROR:
+      return {
+        timeStamp: Date.now(),
+        type: action.type,
+        error: action.payload
+      }
+
     default:
       return state
   }

@@ -1,37 +1,55 @@
 import React from 'react'
-import { Stack, Typography } from '@mui/material'
+import { Stack, Divider } from '@mui/material'
 // import PropTypes from 'prop-types'
 import ImportantNews from './ImportantNews'
 import CommonNews from './CommonNews'
 
-const StickerList = (props) => {
+// Render News according to received data
+const WatchingNewsSection = (props) => {
   return (
     <React.Fragment>
-      <Typography>
-        Header
-      </Typography>
-      <Stack
-        spacing={3}
-        direction="row"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        >
-        <ImportantNews/>
-        <Stack spacing={2}>
-          <CommonNews />
-          <CommonNews />
+      <Stack spacing={2}>
+        <Stack
+          spacing={3}
+          direction="row"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          >
+          <ImportantNews/>
+          <Stack spacing={2}>
+            <CommonNews />
+            <CommonNews />
+          </Stack>
+          <ImportantNews />
         </Stack>
-        <ImportantNews />
+        <Divider/>
+        <Stack
+          spacing={3}
+          direction="row"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          >
+          <Stack spacing={2}>
+            <CommonNews />
+            <CommonNews />
+          </Stack>
+          <ImportantNews/>
+          <ImportantNews />
+        </Stack>
+
       </Stack>
     </React.Fragment>
   )
 }
 
-StickerList.propTypes = {
+WatchingNewsSection.propTypes = {
 
 }
 
-export default StickerList
+export default WatchingNewsSection

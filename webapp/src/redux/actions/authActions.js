@@ -1,6 +1,7 @@
 import {
   SIGNED_IN,
-  NOT_SIGNED_IN
+  NOT_SIGNED_IN,
+  SIGNED_IN_ERROR
 //   SIGN_OUT
 } from './index'
 
@@ -31,7 +32,7 @@ const signInAction = (email, password) => {
       })
     }).catch(err => {
       dispatch({
-        type: NOT_SIGNED_IN,
+        type: SIGNED_IN_ERROR,
         payload: err.response.data.error
       })
     })

@@ -1,7 +1,7 @@
 import { React } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import LoginPage from './views/Auth/LoginPage'
-import SignupPage from './views/Auth/SIgnupPage'
+import SigninPage from './views/Auth/SigninPage'
+import SignupPage from './views/Auth/SignupPage'
 import Playground from './views/Playground/Playground'
 import Home from './views/Home/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -67,7 +67,7 @@ function App () {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/signin" element={<LoginPage />} />
+            <Route path="/signin" element={<SigninPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/playground" element={<Playground />} />
           </Routes>

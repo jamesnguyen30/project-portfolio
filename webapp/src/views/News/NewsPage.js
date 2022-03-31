@@ -9,12 +9,19 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import AppBar from '../../components/AppBar/AppBar'
 import PropTypes from 'prop-types'
 import ContentBody from '../../components/ContentBody/ContentBody'
-
 import HeadlineSection from '../../components/News/HeadlineSection'
-
 import WatchingNewsSection from '../../components/News/WatchingNewsSection'
+import StickerHeader from '../../components/News/StickerHeader'
+import { useNavigate } from 'react-router-dom'
 
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
+const mockSticker =
+  {
+    assetFullname: 'APPLE, Inc',
+    sticker: 'AAPL',
+    price: 1313.9,
+    change: 1.9
+  }
 
 const MyLink = styled(Typography)(({ theme, active }) => ({
   color: theme.palette.primary.darkBlack,
@@ -37,6 +44,7 @@ const ProfileButton = styled(Button)(({ theme }) => ({
 const NewsPage = (props) => {
   const { drawerWidth } = props
   const [anchorEl, setAnchorEl] = useState(null)
+  const navigate = useNavigate()
 
   const openProfileMenu = (event) => {
     setAnchorEl(event.currentTarget)
@@ -44,6 +52,10 @@ const NewsPage = (props) => {
 
   const closeProfileMenu = () => {
     setAnchorEl(null)
+  }
+
+  const goTo = (path) => {
+    navigate(path)
   }
 
   // const testApiCall = (query) => {
@@ -149,8 +161,11 @@ const NewsPage = (props) => {
                 <Typography>Settings</Typography>
               </MenuItem>
               <Divider />
+              <MenuItem onClick={() => goTo('/signin')}>
+                <Typography>Sign in</Typography>
+              </MenuItem>
               <MenuItem>
-                <Typography>Log out</Typography>
+                <Typography>Sin up</Typography>
               </MenuItem>
             </Menu>
           </Stack>
@@ -168,10 +183,11 @@ const NewsPage = (props) => {
           <HeadlineSection />
         </Box>
 
-        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Watching stickers</Typography>
+        {/* <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Watching stickers</Typography> */}
+        <StickerHeader full {...mockSticker}/>
 
         <Divider />
-        <Box>
+        <Box sx={{ marginTop: 1 }}>
           <WatchingNewsSection />
         </Box>
       </ContentBody>

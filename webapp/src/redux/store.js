@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 })
 
 const composeEnhancer = composeWithDevTools({
-  name: 'BookSocialApp'
+  name: 'NewsApp'
 })
 
 const enhancers = composeEnhancer(applyMiddleware(thunk))
