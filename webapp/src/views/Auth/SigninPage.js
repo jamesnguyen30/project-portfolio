@@ -41,7 +41,7 @@ const SigninPage = (props) => {
 
   useEffect(() => {
     if (authState.type === SIGNED_IN) {
-      navigation('/home')
+      navigation('/')
     } else if (authState.type === SIGNED_IN_ERROR) {
       switch (authState.error) {
         case 'auth/user-not-found':

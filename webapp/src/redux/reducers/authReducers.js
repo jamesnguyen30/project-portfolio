@@ -1,7 +1,8 @@
 import {
   SIGNED_IN,
   NOT_SIGNED_IN,
-  SIGNED_IN_ERROR
+  SIGNED_IN_ERROR,
+  SIGN_OUT_ERROR
 } from '../actions/index'
 
 const initState = {
@@ -19,20 +20,18 @@ const authReducer = (state = initState, action) => {
         type: action.type,
         error: null
       }
-
     case NOT_SIGNED_IN:
       return {
         timeStamp: Date.now(),
         type: action.type,
         error: null
       }
-    case SIGNED_IN_ERROR:
+    case SIGNED_IN_ERROR: case SIGN_OUT_ERROR:
       return {
         timeStamp: Date.now(),
         type: action.type,
         error: action.payload
       }
-
     default:
       return state
   }

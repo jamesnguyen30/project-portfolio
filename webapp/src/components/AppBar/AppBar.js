@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProfileAction } from '../../redux/actions/profileActions'
+import { signOutAction } from '../../redux/actions/authActions'
 
 const AppBarContainer = styled(MuiAppBar)(({ theme, open, drawerWidth = 250 }) => ({
   backgroundColor: 'white',
@@ -60,7 +61,7 @@ const AppBar = (props) => {
     { title: 'Profile' },
     { title: 'Settings' },
     { type: 'DIVIDER' },
-    { title: 'Sign out', onClick: () => goTo('/signout') }
+    { title: 'Sign out', onClick: () => signOutClicked() }
   ]
 
   const anonymousMenu = [
@@ -80,6 +81,11 @@ const AppBar = (props) => {
 
   const goTo = (path) => {
     navigate(path)
+  }
+
+  const signOutClicked = () => {
+    dispatch(signOutAction())
+    setAnchorEl(null)
   }
 
   useEffect(() => {
@@ -133,7 +139,7 @@ const AppBar = (props) => {
                 startIcon={<Avatar src={PERSON_ICON} />}
                 onClick={openProfileMenu}
               >
-                Sign in/Sign up
+                Sign in
               </ProfileButton>
             )
           }
@@ -160,7 +166,7 @@ const AppBar = (props) => {
                     return (<Divider key={index}/>)
                   } else {
                     return (
-                      <MenuItem key={index}>
+                      <MenuItem key={index} onClick={ item.onClick ?? item.onClick}>
                         <Typography>{item.title}</Typography>
                       </MenuItem>
                     )
@@ -171,7 +177,7 @@ const AppBar = (props) => {
             {
               !props.isSignedIn && (
                 anonymousMenu.map((item, index) => (
-                  <MenuItem key={index}>
+                  <MenuItem key={index} onClick={ item.onClick ?? item.onClick}>
                     <Typography>{item.title}</Typography>
                   </MenuItem>)
                 )

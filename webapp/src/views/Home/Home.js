@@ -36,6 +36,7 @@ const Home = props => {
       setIsSignedIn(true)
     } else if (authState.type === NOT_SIGNED_IN) {
       setCheckingAuth(false)
+      setIsSignedIn(false)
     }
   }, [authState])
 

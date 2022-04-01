@@ -1,7 +1,8 @@
 import {
   SIGNED_IN,
   NOT_SIGNED_IN,
-  SIGNED_IN_ERROR
+  SIGNED_IN_ERROR,
+  SIGN_OUT_ERROR
 //   SIGN_OUT
 } from './index'
 
@@ -42,14 +43,12 @@ const signInAction = (email, password) => {
 const signOutAction = () => {
   return dispatch => {
     signOut().then(data => {
-      console.log('logged out')
       dispatch({
         type: NOT_SIGNED_IN
       })
     }).catch(err => {
-      console.log('error')
       dispatch({
-        type: NOT_SIGNED_IN,
+        type: SIGN_OUT_ERROR,
         payload: err.response.error
       })
     })
