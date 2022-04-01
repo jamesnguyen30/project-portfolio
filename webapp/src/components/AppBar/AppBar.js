@@ -163,26 +163,29 @@ const AppBar = (props) => {
               props.isSignedIn && (
                 userMenu.map((item, index) => {
                   if (item.type === 'DIVIDER') {
-                    return (<Divider key={index}/>)
+                    return (<Divider key={index} />)
                   } else {
                     return (
-                      <MenuItem key={index} onClick={ item.onClick ?? item.onClick}>
+                      <MenuItem key={index} onClick={item.onClick ?? item.onClick}>
                         <Typography>{item.title}</Typography>
                       </MenuItem>
                     )
                   }
-                })
-              )
+                }))
             }
             {
               !props.isSignedIn && (
-                anonymousMenu.map((item, index) => (
-                  <MenuItem key={index} onClick={ item.onClick ?? item.onClick}>
-                    <Typography>{item.title}</Typography>
-                  </MenuItem>)
-                )
-
-              )
+                anonymousMenu.map((item, index) => {
+                  if (item.type === 'DIVIDER') {
+                    return (<Divider key={index} />)
+                  } else {
+                    return (
+                      <MenuItem key={index} onClick={item.onClick ?? item.onClick}>
+                        <Typography>{item.title}</Typography>
+                      </MenuItem>
+                    )
+                  }
+                }))
             }
           </Menu>
         </Stack>

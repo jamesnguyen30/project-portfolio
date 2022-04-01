@@ -2,7 +2,8 @@ import {
   SIGNED_IN,
   NOT_SIGNED_IN,
   SIGNED_IN_ERROR,
-  SIGN_OUT_ERROR
+  SIGN_OUT_ERROR,
+  SIGNED_UP_ERROR
 //   SIGN_OUT
 } from './index'
 
@@ -12,12 +13,11 @@ const signUpAction = (email, password) => {
   return dispatch => {
     signUp(email, password).then(data => {
       dispatch({
-        type: SIGNED_IN,
-        payload: data
+        type: SIGNED_IN
       })
     }).catch(err => {
       dispatch({
-        type: NOT_SIGNED_IN,
+        type: SIGNED_UP_ERROR,
         payload: err.response.data.error
       })
     })
@@ -28,8 +28,7 @@ const signInAction = (email, password) => {
   return dispatch => {
     signIn(email, password).then(data => {
       dispatch({
-        type: SIGNED_IN,
-        payload: data
+        type: SIGNED_IN
       })
     }).catch(err => {
       dispatch({

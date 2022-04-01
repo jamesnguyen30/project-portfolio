@@ -5,7 +5,6 @@ const {updateProfile}  = require('firebase/auth')
 exports.getProfile = (req,res) => {
   const user = auth.currentUser
   if(user != null){
-    console.log(user)
     const data = {
       displayName: user.displayName,
       email: user.email,
@@ -32,7 +31,7 @@ exports.updateProfile = (req,res) => {
         message: "Updated profile"
       })
     }).catch(err=>{
-      console.log(err)
+      console.error(err)
       return res.status(500).json({
         error: "Error while updating profile. Please check log"
       })

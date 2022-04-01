@@ -83,7 +83,7 @@ const SigninPage = (props) => {
         <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
           <Typography variant="h4">Sign in</Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack>
+            <Stack spacing={1}>
               <Controller
                 name="email"
                 control={control}

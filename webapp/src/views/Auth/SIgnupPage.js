@@ -1,11 +1,14 @@
 import { React, useRef, useCallback, useEffect, useState } from 'react'
-import { TextField, Button, Box, Typography } from '@mui/material'
+import { TextField, Button, Box, Typography, Stack } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import loginStyles from './styles'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { signUpAction } from '../../redux/actions/authActions'
-import { SIGNED_IN, NOT_SIGNED_IN } from '../../redux/actions'
+import { signUpAction, resetAuthState } from '../../redux/actions/authActions'
+import {
+  SIGNED_IN,
+  SIGNED_UP_ERROR
+} from '../../redux/actions'
 import CommonAlert from '../../components/alerts/CommonAlert'
 
 const SignupPage = () => {
@@ -22,26 +25,23 @@ const SignupPage = () => {
   const [alertMessage, setAlertMessage] = useState('')
   const [severity, setSeverity] = useState('')
 
-  const signInState = useSelector(state => state.authReducer.type)
-  const errorCode = useSelector(state => state.authReducer.errorCode)
-  const timeStamp = useSelector(state => state.authReducer.timeStamp)
+  const authState = useSelector(state => state.authReducer)
 
   const navigation = useNavigate()
 
   useEffect(() => {
-    if (signInState === SIGNED_IN) {
-      // show success alert
+    if (authState.type === SIGNED_IN) {
       setOpenAlert(true)
       setAlertTitle('Woo hoo! Awesome')
       setAlertMessage('You created a new account. Redirecting to home page in 3s ')
       setSeverity('success')
       setTimeout(() => {
-        navigation('/home')
+        navigation('/')
       }, 3000)
-    } else if (signInState === NOT_SIGNED_IN) {
+    } else if (authState.type === SIGNED_UP_ERROR) {
       setAlertTitle('Error')
       setSeverity('error')
-      switch (errorCode) {
+      switch (authState.error) {
         case 'auth/email-already-in-use':
           setAlertMessage('Email has already taken')
           break
@@ -53,8 +53,9 @@ const SignupPage = () => {
           break
       }
       setOpenAlert(true)
+      dispatch(resetAuthState())
     }
-  }, [timeStamp])
+  }, [authState])
 
   const password = useRef()
   password.current = watch('password', '')
@@ -68,67 +69,90 @@ const SignupPage = () => {
   }
 
   return (
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh'
-        }}>
-          <CommonAlert
-            style={{ width: '100px' }}
-            open={openAlert}
-            setOpen={setOpenAlert}
-            message={alertMessage}
-            title={alertTitle}
-            severity={severity} />
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh'
+    }}>
+      <CommonAlert
+        style={{ width: '100px' }}
+        open={openAlert}
+        setOpen={setOpenAlert}
+        message={alertMessage}
+        title={alertTitle}
+        severity={severity} />
 
-          <Typography variant="h4">Create a new account</Typography>
-          <form onSubmit={e => e.preventDefault()}>
+      <Typography variant="h4">Create a new account</Typography>
+      <form onSubmit={e => e.preventDefault()}>
 
-            <Controller
-              name={'email'}
-              control={control}
-              rules={{ required: 'This field is required' }}
-              render={({ field: { onChange, value } }) => (
-                <TextField onChange={onChange} value={value} label={'Email'} />
-              )
+        <Stack spacing={1}>
+          <Controller
+            name={'email'}
+            control={control}
+            rules={{ required: 'This field is required' }}
+            render={({ field: { onChange, value } }) => (
+              <TextField onChange={onChange} value={value} label={'Email'} />
+            )
+            }
+          />
+
+          <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
+
+          <Controller
+            name={'password'}
+            control={control}
+            rules={{
+              required: 'This field is required',
+              validate: value => value === password.current || 'Password does not match'
+            }}
+            render={({ field: { onChange, value } }) => (
+              <TextField onChange={onChange} value={value} label="Password" type='password' />
+            )}
+          />
+
+          <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
+
+          <Controller
+            name={'repeatPassword'}
+            control={control}
+            rules={{
+              required: 'This field is required',
+              validate: value => value === password.current || 'password must match'
+            }}
+            render={({ field: { onChange, value } }) => (
+              <TextField onChange={onChange} value={value} label="Repeat password" type='password' />
+            )}
+          />
+          <p style={loginStyles.FormValidationError}>{errors.repeatPassword?.message}</p>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            type="submit"
+            variant="contained"
+            disableRipple
+            sx={{
+              marginTop: 1,
+              marginBottom: 1,
+              flex: 1,
+              backgroundColor: 'primary.darkGreen',
+              ':hover': {
+                backgroundColor: 'primary.green',
+                transition: 'backgroundColor 100ms'
+              },
+              ':active': {
+                transform: 'translateY(5px)',
+                transition: 'transform 50ms'
               }
-            />
+            }}
+          >
+            Create new account
+          </Button>
+          <Button component={Link} to="/signIn">Sign in</Button>
 
-            <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
-
-            <Controller
-              name={'password'}
-              control={control}
-              rules={{
-                required: 'This field is required',
-                validate: value => value === password.current || 'Password does not match'
-              }}
-              render={({ field: { onChange, value } }) => (
-                <TextField onChange={onChange} value={value} label="Password" type='password' />
-              )}
-            />
-
-            <p style={loginStyles.FormValidationError}>{errors.password?.message}</p>
-
-            <Controller
-              name={'repeatPassword'}
-              control={control}
-              rules={{
-                required: 'This field is required',
-                validate: value => value === password.current || 'password must match'
-              }}
-              render={({ field: { onChange, value } }) => (
-                <TextField onChange={onChange} value={value} label="Repeat password" type='password' />
-              )}
-            />
-            <p style={loginStyles.FormValidationError}>{errors.repeatPassword?.message}</p>
-
-            <Button onClick={handleSubmit(onSubmit)} type="submit" variant="contained" style={loginStyles.SubmitButton}>Sign up</Button>
-            <Button component={Link} to="/signIn">Sign in</Button>
-          </form>
-        </Box>
+        </Stack>
+      </form>
+    </Box>
   )
 }
 

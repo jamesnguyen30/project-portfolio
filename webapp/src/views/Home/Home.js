@@ -29,6 +29,7 @@ const Home = props => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    console.log('Checking sign in ')
     if (authState.type === null) {
       dispatch(checkSignInAction())
     } else if (authState.type === SIGNED_IN) {
