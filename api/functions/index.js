@@ -1,10 +1,7 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const {fireabaseApp} = require('./utils/config')
 const {isSignedIn} = require("./middlewares/auth")
-const {createPost} = require("./routes/books/posts")
 const {seedTest} = require("./utils/seedTest")
-const {fetchBooks} = require("./routes/books/fetch")
 
 //Prevent CORS error in client
 const cors = require('cors')
@@ -25,17 +22,6 @@ const {
   addTestFavorites
 } = require('./routes/profile/profile')
 
-//Books API
-const {
- search,
- getBook
-} = require('./routes/books/search')
-
-const {
-  addFavorite,
-  deleteFavorite
-} = require("./routes/books/favorites")
-
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
@@ -47,18 +33,6 @@ app.get("/isSignedIn", isSignedIn, (req,res)=>{
 });
 app.post("/testPersist", persistAuth);
 
-app.get('/search', search)
-app.get('/getBook', getBook )
-app.post('/createPost', isSignedIn, createPost)
-
 app.get('/profile', isSignedIn, getProfile)
-app.get('/addTestFavorites', isSignedIn, addTestFavorites)
-
-app.post('/favorite', isSignedIn, addFavorite)
-app.post('/unfavorite', isSignedIn, deleteFavorite)
-
-app.post('/fetchBooks', fetchBooks)
-
-
 
 exports.api = functions.https.onRequest(app);

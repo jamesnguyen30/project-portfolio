@@ -44,8 +44,7 @@ const signOutAction = () => {
     signOut().then(data => {
       console.log('logged out')
       dispatch({
-        type: NOT_SIGNED_IN,
-        payload: data
+        type: NOT_SIGNED_IN
       })
     }).catch(err => {
       console.log('error')
@@ -57,4 +56,12 @@ const signOutAction = () => {
   }
 }
 
-export { signUpAction, signInAction, signOutAction }
+const resetAuthState = () => {
+  return dispatch => {
+    dispatch({
+      type: NOT_SIGNED_IN
+    })
+  }
+}
+
+export { signUpAction, signInAction, signOutAction, resetAuthState }

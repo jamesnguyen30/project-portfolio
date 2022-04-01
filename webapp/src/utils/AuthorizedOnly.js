@@ -1,26 +1,40 @@
-import React from 'react'
-import { Box } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, CircularProgress } from '@mui/material'
 import { checkSignin } from '../api/auth'
 import PropTypes from 'prop-types'
 
 const AuthorizedOnly = (props) => {
-  let isSignedIn = false
+  const [loading, setLoading] = useState(true)
+  const [isSignedIn, setIsSignedIn] = useState()
+  console.log(`rendered loading = ${loading}, signin = ${isSignedIn}`)
 
-  checkSignin().then(response => {
-    isSignedIn = true
-  }).catch(_ => {
-    isSignedIn = false
-  })
+  useEffect(() => {
+    console.log('use effect')
+    checkSignin().then(response => {
+      console.log('signed in')
+      setIsSignedIn(true)
+      setLoading(false)
+    }).catch(_ => {
+      console.log('NOT signed in')
+      setIsSignedIn(false)
+      setLoading(false)
+    })
+  }, [loading])
 
   return (
     <Box>
       {
-        isSignedIn && (
+        loading && (
+          <CircularProgress/>
+        )
+      }
+      {
+        loading === false && isSignedIn && (
           <props.Component {...props}/>
         )
       }
       {
-        isSignedIn === false && (
+        loading === false && isSignedIn === false && (
           <props.ErrorComponent {...props}/>
         )
       }

@@ -7,8 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
 import { useSelector, useDispatch } from 'react-redux'
-import { signInAction } from '../../redux/actions/authActions'
-import { getProfileAction } from '../../redux/actions/profileActions'
+import { signInAction, resetAuthState } from '../../redux/actions/authActions'
 import CommonAlert from '../../components/alerts/CommonAlert'
 
 import {
@@ -42,7 +41,6 @@ const SigninPage = (props) => {
 
   useEffect(() => {
     if (authState.type === SIGNED_IN) {
-      dispatch(getProfileAction())
       navigation('/home')
     } else if (authState.type === SIGNED_IN_ERROR) {
       switch (authState.error) {
@@ -59,6 +57,7 @@ const SigninPage = (props) => {
         default:
           break
       }
+      dispatch(resetAuthState())
     }
   }, [authState])
 
