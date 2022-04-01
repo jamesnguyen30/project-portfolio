@@ -9,6 +9,8 @@ import MuiAppBar from '@mui/material/AppBar'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
+import { useSelector, useDispatch } from 'react-redux'
+import { getProfileAction } from '../../redux/actions/profileActions'
 
 const AppBarContainer = styled(MuiAppBar)(({ theme, open, drawerWidth = 250 }) => ({
   backgroundColor: 'white',
@@ -45,11 +47,28 @@ const ProfileButton = styled(Button)(({ theme }) => ({
 }))
 
 const THE_ROCK_URL = 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc5NjIyODM0ODM2ODc0Mzc3/dwayne-the-rock-johnson-gettyimages-1061959920.jpg'
+const PERSON_ICON = 'https://img.icons8.com/color/452/person-male.png'
 
 const AppBar = (props) => {
   const [anchorEl, setAnchorEl] = useState(null)
-
   const navigate = useNavigate()
+
+  const profileState = useSelector(state => state.profileReducer)
+  const dispatch = useDispatch()
+
+  const userMenu = [
+    { title: 'Profile' },
+    { title: 'Settings' },
+    { type: 'DIVIDER' },
+    { title: 'Sign out', onClick: () => goTo('/signout') }
+  ]
+
+  const anonymousMenu = [
+    { title: 'About Me' },
+    { type: 'DIVIDER' },
+    { title: 'Sign in', onClick: () => goTo('/signin') },
+    { title: 'Sign up', onClick: () => goTo('/signup') }
+  ]
 
   const openProfileMenu = (event) => {
     setAnchorEl(event.currentTarget)
@@ -64,85 +83,115 @@ const AppBar = (props) => {
   }
 
   useEffect(() => {
-
-  })
+    if (profileState.type === null) {
+      dispatch(getProfileAction())
+    }
+  }, [profileState])
 
   return (
-      <AppBarContainer
-        sx={{ marginLeft: `-${props.drawerWidth}px` }}
-        open={true}
-        elevation={0}
-        drawerWidth={props.drawerWidth}
-      >
-        <Toolbar>
-          <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
-            <MyLink active={true}>Headlines</MyLink>
-            <MyLink>Latest</MyLink>
-            <MyLink>Analysis</MyLink>
-            <MyLink>Trends</MyLink>
-          </Stack>
+    <AppBarContainer
+      sx={{ marginLeft: `-${props.drawerWidth}px` }}
+      open={true}
+      elevation={0}
+      drawerWidth={props.drawerWidth}
+    >
+      <Toolbar>
+        <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
+          <MyLink active={true}>Headlines</MyLink>
+          <MyLink>Latest</MyLink>
+          <MyLink>Analysis</MyLink>
+          <MyLink>Trends</MyLink>
+        </Stack>
 
-          <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
-            placeHolder={'Search news ...'}
-            // onFocus={onSearchBoxFocus}
-          // apiCallback={testApiCall}
-          // handleResult={testHandleResult}
-          // handleClear={testClear}
-          // handleError={testError}
-          // setLoading={testLoading}
-          // onFocus={onSearchBoxFocus}
-          // onBlur={onSearchBoxBlur}
-          />
+        <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
+          placeHolder={'Search news ...'}
+        // onFocus={onSearchBoxFocus}
+        // apiCallback={testApiCall}
+        // handleResult={testHandleResult}
+        // handleClear={testClear}
+        // handleError={testError}
+        // setLoading={testLoading}
+        // onFocus={onSearchBoxFocus}
+        // onBlur={onSearchBoxBlur}
+        />
 
-          <Stack >
-            {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
-            <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon />}
-              startIcon={<Avatar src={THE_ROCK_URL} />}
-              onClick={openProfileMenu}
-            >
-              My_UserName_And_Avatar
-            </ProfileButton>
+        <Stack >
+          {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
+          {
+            props.isSignedIn && (
+              <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon />}
+                startIcon={<Avatar src={profileState.photoURL ? THE_ROCK_URL : PERSON_ICON} />}
+                onClick={openProfileMenu}
+              >
+                {profileState.displayName ? profileState.displayName : 'No_Name_User'}
+              </ProfileButton>
+            )
+          }
+          {
+            !props.isSignedIn && (
+              <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon />}
+                startIcon={<Avatar src={PERSON_ICON} />}
+                onClick={openProfileMenu}
+              >
+                Sign in/Sign up
+              </ProfileButton>
+            )
+          }
 
-            <Menu
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              open={Boolean(anchorEl)}
-              onClose={closeProfileMenu}
-            >
+          <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            open={Boolean(anchorEl)}
+            onClose={closeProfileMenu}
+          >
 
-              <MenuItem>
-                <Typography>Profile</Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography>Settings</Typography>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => goTo('/signin')}>
-                <Typography>Sign in</Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography>Sin up</Typography>
-              </MenuItem>
-            </Menu>
-          </Stack>
-        </Toolbar>
+            {
+              props.isSignedIn && (
+                userMenu.map((item, index) => {
+                  if (item.type === 'DIVIDER') {
+                    return (<Divider key={index}/>)
+                  } else {
+                    return (
+                      <MenuItem key={index}>
+                        <Typography>{item.title}</Typography>
+                      </MenuItem>
+                    )
+                  }
+                })
+              )
+            }
+            {
+              !props.isSignedIn && (
+                anonymousMenu.map((item, index) => (
+                  <MenuItem key={index}>
+                    <Typography>{item.title}</Typography>
+                  </MenuItem>)
+                )
 
-        <Divider />
+              )
+            }
+          </Menu>
+        </Stack>
+      </Toolbar>
 
-      </AppBarContainer>
+      <Divider />
+
+    </AppBarContainer>
   )
 }
 
 AppBar.propTypes = {
-  drawerWidth: PropTypes.number
+  drawerWidth: PropTypes.number,
+  isSignedIn: PropTypes.bool,
+  isCheckingAuth: PropTypes.bool
 }
 
-export default AppBar
+export default React.memo(AppBar)

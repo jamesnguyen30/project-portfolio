@@ -19,10 +19,12 @@ const mockSticker =
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
+  console.log('rendered NewsPage')
+  console.log(props)
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
-      <AppBar drawerWidth={drawerWidth}/>
+      <AppBar drawerWidth={drawerWidth} {...props}/>
 
       <ContentBody open={true} marginTop={80} marginLeft={drawerWidth} style={{ flex: 1 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Headlines</Typography>
@@ -43,11 +45,15 @@ const NewsPage = (props) => {
 }
 
 NewsPage.propTypes = {
-  drawerWidth: PropTypes.number
+  drawerWidth: PropTypes.number,
+  isCheckingAuth: PropTypes.bool,
+  isSignedIn: PropTypes.bool
 }
 
 NewsPage.defaultProps = {
-  drawerWidth: 250
+  drawerWidth: 250,
+  isCheckingAuth: false,
+  isSignedIn: false
 }
 
 export default NewsPage

@@ -1,6 +1,6 @@
 import {
   PROFILE_FETCHED,
-  PROFILE_FETCHED_FAILED
+  PROFILE_FETCHED_ERROR
 } from './index'
 
 import { getProfile } from '../../api/profile'
@@ -16,7 +16,7 @@ const getProfileAction = () => {
     }).catch(err => {
       console.error(err)
       dispatch({
-        type: PROFILE_FETCHED_FAILED,
+        type: PROFILE_FETCHED_ERROR,
         payload: err
       })
     })

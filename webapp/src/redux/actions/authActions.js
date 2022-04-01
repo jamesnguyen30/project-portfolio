@@ -5,7 +5,7 @@ import {
 //   SIGN_OUT
 } from './index'
 
-import { signUp, signIn, signOut } from '../../api/auth'
+import { signUp, signIn, signOut, checkSignin } from '../../api/auth'
 
 const signUpAction = (email, password) => {
   return dispatch => {
@@ -64,4 +64,19 @@ const resetAuthState = () => {
   }
 }
 
-export { signUpAction, signInAction, signOutAction, resetAuthState }
+const checkSignInAction = () => {
+  return dispatch => {
+    checkSignin().then(() => {
+      dispatch({
+        type: SIGNED_IN
+      })
+    }).catch(err => {
+      dispatch({
+        type: NOT_SIGNED_IN,
+        payload: err.response.error
+      })
+    })
+  }
+}
+
+export { signUpAction, signInAction, signOutAction, resetAuthState, checkSignInAction }

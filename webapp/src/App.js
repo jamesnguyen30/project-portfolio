@@ -4,9 +4,7 @@ import SigninPage from './views/Auth/SigninPage'
 import SignupPage from './views/Auth/SignupPage'
 import Playground from './views/Playground/Playground'
 import Home from './views/Home/Home'
-// import UnauthorizedErrorPage from './views/Error/UnauthorizedErrorPage'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-// import AuthorizedOnly from './utils/AuthorizedOnly'
 import ProtectedPlayground from './views/Playground/index'
 
 const theme = createTheme({

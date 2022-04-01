@@ -1,41 +1,52 @@
 import {
   PROFILE_FETCHED,
-  PROFILE_FETCHED_FAILED
+  PROFILE_NOT_FETCHED,
+  PROFILE_FETCHED_ERROR
 } from '../actions/index'
 
 const profileState = {
-  timeStamp: null,
+  type: null,
   displayName: null,
   email: null,
   emailVerified: null,
-  favorites: null
+  photoURL: null
 }
 
-const profileReducers = (state = profileState, action) => {
+const profileReducer = (state = profileState, action) => {
   switch (action.type) {
     case PROFILE_FETCHED: {
       return {
         ...state,
-        timeStamp: Date.now(),
+        type: action.type,
         displayName: action.payload.displayName,
         email: action.payload.email,
         emailVerified: action.payload.emailVerified,
-        favorites: action.payload.favorites
+        photoURL: action.payload.photoURL
       }
     }
 
-    case PROFILE_FETCHED_FAILED:
+    case PROFILE_NOT_FETCHED:
       return {
         ...state,
-        timeStamp: Date.now(),
+        type: action.type,
         displayName: null,
         email: null,
         emailVerified: null,
-        favorites: null
+        photoURL: null
+      }
+
+    case PROFILE_FETCHED_ERROR:
+      return {
+        ...state,
+        type: action.type,
+        displayName: null,
+        email: null,
+        emailVerified: null,
+        photoURL: null
       }
     default:
       return state
   }
 }
 
-export default profileReducers
+export default profileReducer
