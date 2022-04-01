@@ -19,7 +19,7 @@ const {
 
 const {
   getProfile,
-  addTestFavorites
+  updateProfile
 } = require('./routes/profile/profile')
 
 app.use(cors())
@@ -34,5 +34,6 @@ app.get("/isSignedIn", isSignedIn, (req,res)=>{
 app.post("/testPersist", persistAuth);
 
 app.get('/profile', isSignedIn, getProfile)
+app.post('/profile', isSignedIn, updateProfile)
 
 exports.api = functions.https.onRequest(app);

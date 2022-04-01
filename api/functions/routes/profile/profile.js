@@ -1,41 +1,44 @@
 const {auth, firestore} = require('../../utils/config')
 const {addFavoritesToUser} = require('../../utils/seedTest')
-const {collection, getDocs, query, where} = require("firebase/firestore")
+const {updateProfile}  = require('firebase/auth')
 
 exports.getProfile = (req,res) => {
   const user = auth.currentUser
   if(user != null){
+    console.log(user)
     const data = {
       displayName: user.displayName,
       email: user.email,
       photoUrl: user.photoUrl,
       emailVerified: user.emailVerified,
+      photoURL: user.photoURL
     }
-
-    const profileQuery = query(collection(firestore, 'profiles'), where('uid', '==', user.uid))
-    getDocs(profileQuery).then(snapshots => {
-      snapshots.forEach(snapshot=>{
-        const profile = snapshot.data()
-        data.favorites = profile.favorites
-        data.wanted = profile.wanted
-        return res.status(200).json(data)
-      })
-    }).catch(err=>{
-      console.log(err)
-      return res.status(500).json({message: "Error while fetching profile!"})
-    })
+    return res.status(200).json(data)
   } else {
     return res.status(403).json({'message': "Unauthorized request"})
   }
 }
 
-exports.addTestFavorites = (req,res) => {
+exports.updateProfile = (req,res) => {
   const user = auth.currentUser
-  if(user != null){
-    addFavoritesToUser(user.uid)
-    res.status(200).json("ok")
+  if(user!=null){
+    const updateData = {
+      displayName: req.body.displayName,
+      photoURL: req.body.photoURL
+    } 
+
+    updateProfile(user, updateData).then(()=>{
+      return res.status(200).json({
+        message: "Updated profile"
+      })
+    }).catch(err=>{
+      console.log(err)
+      return res.status(500).json({
+        error: "Error while updating profile. Please check log"
+      })
+    })
   } else {
-    res.status(403).json({'message': "Unauthorized request"})
+    return res.status(403).json({'message': "Unauthorized request"})
   }
-} 
+}
 
