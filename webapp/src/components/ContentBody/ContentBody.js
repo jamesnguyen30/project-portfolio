@@ -9,7 +9,6 @@ const ContentBody = styled('main')(({ theme, open, marginTop, marginLeft }) => (
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
-  marginLeft: `-${marginLeft}px`,
   ...(open && {
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.easeOut,

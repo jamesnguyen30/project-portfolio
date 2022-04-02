@@ -3,6 +3,11 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
+// Utility button component
+// @props
+// icon: component, pass to props like icon ={<Icon/>}
+// children: component, Should be text
+
 const UtilityActionButton = props => {
   return (
     <Box
@@ -28,7 +33,7 @@ const UtilityActionButton = props => {
       }}
     >
       <Typography sx={{ fontSize: '15px' }}>
-        {props.text}
+        {props.children}
       </Typography>
       {
         props.icon !== null && (props.icon)
@@ -40,7 +45,7 @@ const UtilityActionButton = props => {
 UtilityActionButton.propTypes = {
   sx: PropTypes.object,
   icon: PropTypes.object,
-  text: PropTypes.string
+  children: PropTypes.string
 }
 
 UtilityActionButton.defaultProps = {

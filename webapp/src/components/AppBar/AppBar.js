@@ -96,7 +96,10 @@ const AppBar = (props) => {
 
   return (
     <AppBarContainer
-      sx={{ marginLeft: `-${props.drawerWidth}px` }}
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.80)',
+        backdropFilter: 'blur(20px)'
+      }}
       open={true}
       elevation={0}
       drawerWidth={props.drawerWidth}

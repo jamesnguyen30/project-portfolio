@@ -26,7 +26,7 @@ const NewsPage = (props) => {
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
       <AppBar drawerWidth={drawerWidth} {...props}/>
 
-      <ContentBody open={true} marginTop={80} marginLeft={drawerWidth} style={{ flex: 1 }}>
+      <ContentBody open={true} marginTop={65} style={{ flex: 1 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Headlines</Typography>
         <Divider />
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>

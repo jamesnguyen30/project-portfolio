@@ -32,7 +32,20 @@ const SearchInput = styled(InputBase)({
   flex: 1
 })
 
-const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear, handleError, setLoading, onFocus, onBlur }) => {
+// Search box component
+// @ props
+// @ placeHolder string: place holder string
+// @ apiCallback function: api call function from parent
+// @ handleResult function: handle result function from parent
+// @ handleClear function: Happens when text input is empty
+// @ handleError function: Called when error is thrown while calling api funciton
+// @ setLoading function: indicate if waiting for api result
+// @ onFocus function: called when text input box is focused
+// @ onBlur function: called when text input box lost focus
+
+const SearchBox = (props) => {
+  const { placeHolder, apiCallback, handleResult, handleClear, handleError, setLoading, onFocus, onBlur, autoComplete } = props
+
   const callApi = _.debounce((query) => {
     setLoading(true)
 
@@ -49,12 +62,13 @@ const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear,
     const newQuery = event.target.value
     if (newQuery === '') handleClear()
     else {
-      callApi(newQuery)
+      if (autoComplete) callApi(newQuery)
     }
   }
 
   return (
-    <SearchContainer style={style} sx={{
+    <SearchContainer sx={{
+      ...props.sx,
       ':hover': {
         boxShadow: 6
       }
@@ -71,6 +85,7 @@ const SearchBox = ({ style, placeHolder, apiCallback, handleResult, handleClear,
 }
 
 SearchBox.propTypes = {
+  sx: PropTypes.object,
   style: PropTypes.object,
   placeHolder: PropTypes.string,
   apiCallback: PropTypes.func,
@@ -79,7 +94,12 @@ SearchBox.propTypes = {
   handleError: PropTypes.func,
   setLoading: PropTypes.func,
   onFocus: PropTypes.func,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  autoComplete: PropTypes.bool
+}
+
+SearchBox.defaultProps = {
+  autoComplete: false
 }
 
 export default SearchBox

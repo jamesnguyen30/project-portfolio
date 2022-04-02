@@ -60,7 +60,7 @@ const StickerHeader = (props) => {
           }}
         >+${props.change} (+99.9%)</Typography>
       </Box>
-      <UtilityActionButton text={'Add to watch list'} icon={<AddRoundedIcon/>}/>
+      <UtilityActionButton icon={<AddRoundedIcon/>}>Add to watch list</UtilityActionButton>
 
     </Box>
   )
