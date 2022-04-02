@@ -11,7 +11,8 @@ import UtilityActionButton from '../buttons/UtilityActionButton'
 
 const StickerSearchResult = props => {
   return (
-    <Box sx={{
+    <Box
+    sx={{
       display: 'flex'
     }}>
       <Typography
@@ -22,7 +23,7 @@ const StickerSearchResult = props => {
           flex: 1
         }}
       >{props.name}</Typography>
-      <Button>
+      <Button onClick={props.onClick}>
         Add
       </Button>
 
@@ -32,7 +33,8 @@ const StickerSearchResult = props => {
 
 StickerSearchResult.propTypes = {
   name: PropTypes.string.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
+  onClick: PropTypes.func
 }
 
 const SecondaryDrawer = props => {
@@ -59,7 +61,7 @@ const SecondaryDrawer = props => {
   }
 
   const handleResult = result => {
-    console.log(result)
+    // console.log(result)
     setStickers(result)
   }
 
@@ -70,6 +72,10 @@ const SecondaryDrawer = props => {
   const handleClear = () => {
     setStickers([])
     // console.log('Search result cleared')
+  }
+
+  const handleAdd = (item) => {
+    props.handleAdd(item)
   }
 
   const setLoading = isLoading => {
@@ -150,6 +156,7 @@ const SecondaryDrawer = props => {
                 stickers.map((sticker, index) => {
                   return (
                     <StickerSearchResult
+                      onClick={() => handleAdd(sticker)}
                       key={index}
                       name={sticker.name}
                     />
@@ -173,7 +180,8 @@ SecondaryDrawer.propTypes = {
   drawerWidth: PropTypes.number,
   logoHeight: PropTypes.number,
   show: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  handleAdd: PropTypes.func
 }
 
 export default SecondaryDrawer

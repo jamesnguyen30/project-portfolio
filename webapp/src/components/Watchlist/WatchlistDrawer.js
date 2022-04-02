@@ -1,24 +1,36 @@
 import React, { useState } from 'react'
 import {
   Divider, Typography, Box, Drawer,
-  List, Stack
+  List, Stack, Collapse
 } from '@mui/material'
 import data from '../../model/mock/aapl'
 import WatchlistItem from './WatchlistItem'
 import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
 import SecondaryDrawer from '../../components/Watchlist/SecondaryDrawer'
+import { TransitionGroup } from 'react-transition-group'
 
 let mockData = data.map(x => ({ date: x.date, close: x.close }))
 mockData = mockData.slice(0, 30)
 
 const WatchlistDrawer = props => {
-  const [openSecondary, setOpenSecondary] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [stickers, setStickers] = useState([1, 2, 3, 4])
 
-  const openDrawer = () => {
-    console.log('clicked openDrawer')
-    setOpenSecondary(true)
+  console.log('rendered')
+
+  const startEditing = () => {
+    setEditing(true)
   }
+
+  const stopEditing = () => {
+    setEditing(false)
+  }
+
+  const onAddNewSticker = (sticker) => {
+    setStickers([...stickers, stickers.length + 1])
+  }
+
   return (
     <Drawer
       sx={{
@@ -38,8 +50,11 @@ const WatchlistDrawer = props => {
       <SecondaryDrawer
         drawerWidth={props.drawerWidth}
         logoHeight={props.logoHeight}
-        show={openSecondary}
-        onClose={() => setOpenSecondary(false)} />
+        show={editing}
+        onClose={stopEditing}
+        handleAdd={onAddNewSticker}
+
+      />
 
       <Box sx={{
         backgroundColor: 'primary.white',
@@ -71,17 +86,19 @@ const WatchlistDrawer = props => {
               flex: 1
             }}>Watchlist</Typography>
           <UtilityActionButton
-            onClick={openDrawer}
-          >Edit</UtilityActionButton>
+            onClick={editing ? stopEditing : startEditing}
+          >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
         </Stack>
         <List sx={{ backgroundColor: 'primary.white' }}>
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
-          <WatchlistItem data={mockData} />
+          <TransitionGroup>
+            {
+              stickers.map((x, index) => (
+                <Collapse key={index}>
+                  <WatchlistItem data={mockData} editing={editing}/>
+                </Collapse>
+              ))
+            }
+          </TransitionGroup>
         </List>
         <Divider />
 
