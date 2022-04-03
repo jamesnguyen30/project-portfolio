@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const DraggableY = props => {
   const [state, setState] = useState({
+    originalIndex: props.index,
     index: props.index,
     y: 0,
     dragging: false,
@@ -16,6 +17,7 @@ const DraggableY = props => {
 
   const resetState = (state) => {
     state.index = props.index
+    state.originalIndex = props.index
     state.y = 0
     state.dragging = false
     state.offset = 0
@@ -99,7 +101,8 @@ const DraggableY = props => {
       state.movementDirection = state.y > oldY ? 1 : -1
       const k = findSwapIndex(state.breakpoints, state.index, ref.current.offsetTop + Math.floor(ref.current.offsetHeight / 2))
       if (k !== state.index) {
-        console.log(`moved from ${state.index} to ${k}`)
+        // swap element
+        // props.swapRow(k, state.index)
         state.index = k
       }
 
@@ -111,7 +114,8 @@ const DraggableY = props => {
 
   const onMouseUp = (event) => {
     if (state.dragging) {
-      console.log('Final set to ' + state.index)
+      console.log(`Final set from ${state.originalIndex} ${state.index}`)
+      props.changeIndex(state.originalIndex, state.index)
       resetState(state)
       setState({ ...state })
       event.stopPropagation()
@@ -141,7 +145,8 @@ DraggableY.propTypes = {
   children: PropTypes.object,
   parentRef: PropTypes.object,
   listRef: PropTypes.object,
-  index: PropTypes.number
+  index: PropTypes.number,
+  changeIndex: PropTypes.func
 }
 
 export default DraggableY

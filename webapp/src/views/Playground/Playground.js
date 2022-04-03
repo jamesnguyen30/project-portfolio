@@ -18,9 +18,18 @@ const mockCompany = {
 
 const Playground = props => {
   const [open, setOpen] = useState(false)
-  const [data] = useState([0, 1, 2, 3, 4])
+  const [data, setData] = useState([0, 1, 2, 3, 4])
   const boxRef = useRef()
   const listRef = useRef()
+
+  const changeIndex = (oldIdx, newIdx) => {
+    // setData(data.map(x => x))
+    console.log(`Changed item from ${oldIdx} to ${newIdx} index`)
+    const toInsert = data[oldIdx]
+    data.splice(oldIdx, 1)
+    data.splice(newIdx, 0, toInsert)
+    setData([...data])
+  }
 
   return (
     <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -42,7 +51,7 @@ const Playground = props => {
           {
             data.map((x, index) => {
               return (
-              <DraggableY parentRef={boxRef} listRef={listRef} key={index} index={index}>
+              <DraggableY parentRef={boxRef} listRef={listRef} key={index} index={index} changeIndex={changeIndex}>
                 <ListItem
                   key={index}
                   onMouseDown={() => console.log('mouse down')}
