@@ -2,37 +2,75 @@ import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 const DraggableY = props => {
-  const getDefaultState = () => ({
+  const [state, setState] = useState({
+    index: props.index,
     y: 0,
     dragging: false,
     offset: 0,
-    listChildrenTops: [],
-    fromIndex: 0,
-    toIndex: 0
+    breakpoints: [],
+    // fromIndex: 0,
+    // toIndex: 0,
+    movementDirection: 0
   })
+  const ref = useRef()
 
-  const getListChildren = () => {
+  const resetState = (state) => {
+    state.index = props.index
+    state.y = 0
+    state.dragging = false
+    state.offset = 0
+    state.breakpoints = []
+    state.prevMousePos = 0
+    state.movementDirection = 0
+  }
+
+  const getBreakpoints = () => {
     if (props.listRef.current != null) {
-      return Array.from(props.listRef.current.children).map(x => x.offsetTop)
+      return Array.from(props.listRef.current.children).map(x => x.offsetTop + Math.floor(x.offsetHeight / 2))
     } else {
       return []
     }
   }
 
-  // Using offsets and currentOffset
-  // find the nth child
-  const findNthChild = (offsets, currentOffset) => {
-    for (let i = 0; i <= offsets.length; i++) {
-      if (currentOffset < offsets[i]) {
-        return i
-      }
-    }
-    return offsets.length - 1
-  }
+  // find index to swap with
+  // IMPORTANT This function needs some improvement for better UX
+  // it'll give a 'not-pleasant' result if users drag up and drag down then release
+  // if users drag in 1 direction and release it should be good
+  const findSwapIndex = (breakpoints, index, value) => {
+    const n = breakpoints.length
+    const left = index > 0 ? index - 1 : index
+    const right = index < n - 1 ? index + 1 : index
+    // debug, turn on if in development
+    // console.log(`left = ${left}, right = ${right}, index = ${index}, value = ${value}, leftValue = ${breakpoints[left]}, rightValue = ${breakpoints[right]} , array = [${breakpoints}]`)
 
-  const [state, setState] = useState(getDefaultState())
-  const ref = useRef()
-  console.log(state)
+    if (value > breakpoints[right]) {
+      return right
+    }
+    if (value < breakpoints[left]) {
+      return left
+    }
+    return index
+
+    // const n = breakpoints.length
+    // const m = state.index
+    // if (direction > 0) {
+    //   for (let i = m + 1; i < n; i++) {
+    //     if (i === state.index) continue
+    //     if (breakpoints[i] > value) return i - 1
+    //   }
+    //   return n - 1
+    // } else {
+    //   for (let i = m - 1; i >= 0; i--) {
+    //     if (i === state.index) continue
+    //     if (breakpoints[i] < value) return i + 1
+    //   }
+    //   return 0
+    // }
+    // const cloned = breakpoints.map(x => { return x })
+    // cloned.push(value)
+    // cloned.sort((a, b) => (a - b))
+    // return cloned.findIndex(x => x === value)
+  }
 
   const onMouseDown = (event) => {
     if (state.dragging === false) {
@@ -40,9 +78,9 @@ const DraggableY = props => {
       props.parentRef.current.addEventListener('mouseup', onMouseUp, false)
       props.parentRef.current.addEventListener('mousemove', onMouseMove, false)
       state.offset = state.y - event.pageY
+      state.prevMousePos = event.pageY
       state.dragging = true
-      state.listChildrenTops = getListChildren()
-      state.fromIndex = findNthChild(state.listChildrenTops, ref.current.offsetTop)
+      state.breakpoints = getBreakpoints()
       event.stopPropagation()
       event.preventDefault()
       setState({ ...state })
@@ -51,10 +89,20 @@ const DraggableY = props => {
 
   const onMouseMove = (event) => {
     if (state.dragging) {
+      const oldY = state.y
       state.y = event.pageY + state.offset
-      const k = findNthChild(state.listChildrenTops, ref.current.offsetTop)
-      state.toIndex = k
-      console.log('Moved to position ' + k)
+      if (state.y === oldY) {
+        event.stopPropagation()
+        event.preventDefault()
+        return
+      }
+      state.movementDirection = state.y > oldY ? 1 : -1
+      const k = findSwapIndex(state.breakpoints, state.index, ref.current.offsetTop + Math.floor(ref.current.offsetHeight / 2))
+      if (k !== state.index) {
+        console.log(`moved from ${state.index} to ${k}`)
+        state.index = k
+      }
+
       setState({ ...state })
       event.stopPropagation()
       event.preventDefault()
@@ -63,9 +111,8 @@ const DraggableY = props => {
 
   const onMouseUp = (event) => {
     if (state.dragging) {
-      state.y = 0
-      state.offset = 0
-      state.dragging = false
+      console.log('Final set to ' + state.index)
+      resetState(state)
       setState({ ...state })
       event.stopPropagation()
       event.preventDefault()
@@ -93,7 +140,8 @@ const DraggableY = props => {
 DraggableY.propTypes = {
   children: PropTypes.object,
   parentRef: PropTypes.object,
-  listRef: PropTypes.object
+  listRef: PropTypes.object,
+  index: PropTypes.number
 }
 
 export default DraggableY

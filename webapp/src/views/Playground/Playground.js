@@ -18,7 +18,7 @@ const mockCompany = {
 
 const Playground = props => {
   const [open, setOpen] = useState(false)
-  const [data] = useState([1, 2, 3, 4, 5])
+  const [data] = useState([0, 1, 2, 3, 4])
   const boxRef = useRef()
   const listRef = useRef()
 
@@ -40,8 +40,9 @@ const Playground = props => {
       <Box ref={boxRef} sx={{ padding: 10, backgroundColor: 'red' }}>
         <List ref={listRef}>
           {
-            data.map((x, index) => (
-              <DraggableY parentRef={boxRef} listRef={listRef} key={index}>
+            data.map((x, index) => {
+              return (
+              <DraggableY parentRef={boxRef} listRef={listRef} key={index} index={index}>
                 <ListItem
                   key={index}
                   onMouseDown={() => console.log('mouse down')}
@@ -62,7 +63,8 @@ const Playground = props => {
                   <Typography>Item {x}</Typography>
                 </ListItem>
               </DraggableY>
-            ))
+              )
+            })
           }
 
         </List>
