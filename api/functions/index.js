@@ -22,6 +22,13 @@ const {
   updateProfile
 } = require('./routes/profile/profile')
 
+const {
+  searchSymbol,
+  getWatchlist,
+  saveWatchlist,
+  deleteFromWatchlist
+} = require("./routes/market/market")
+
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
@@ -35,5 +42,10 @@ app.post("/testPersist", persistAuth);
 
 app.get('/profile', isSignedIn, getProfile)
 app.post('/profile', isSignedIn, updateProfile)
+
+app.post("/searchSymbol", isSignedIn, searchSymbol)
+app.get("/watchlist", isSignedIn, getWatchlist)
+app.post("/watchlist", isSignedIn, saveWatchlist)
+app.delete("/watchlist", isSignedIn, deleteFromWatchlist)
 
 exports.api = functions.https.onRequest(app);

@@ -23,8 +23,7 @@ exports.signUp = (req, res) => {
       // const data = getAuthResponse(userCredential)
       const profile = {
         uid: userCredential.user.uid,
-        favorites: [],
-        wanted: [],
+        watchlist: [],
       }
       addDoc(collection(firestore, 'profiles'), profile)
       .then(result=>{
