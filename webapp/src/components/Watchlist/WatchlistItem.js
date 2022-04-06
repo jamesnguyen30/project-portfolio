@@ -54,7 +54,7 @@ const WatchlistItem = (props) => {
         )
       }
       <Box sx={{ flex: props.editing ? 1 : 0 }}>
-        <Typography style={{ fontWeight: 'bold' }}>AAPL</Typography>
+        <Typography style={{ fontWeight: 'bold' }}>AAPL {props.index}</Typography>
         <Typography variant="subtitle1">$190.13</Typography>
       </Box>
       {
@@ -98,7 +98,10 @@ const WatchlistItem = (props) => {
 
 WatchlistItem.propTypes = {
   data: PropTypes.object.isRequired,
-  editing: PropTypes.bool
+  editing: PropTypes.bool,
+  // Testing purpose
+  index: PropTypes.number
+
 }
 
 WatchlistItem.defaultValues = {

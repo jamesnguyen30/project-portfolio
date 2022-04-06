@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   Divider, Typography, Box, Drawer,
   List, Stack, Collapse
@@ -9,6 +9,7 @@ import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
 import SecondaryDrawer from '../../components/Watchlist/SecondaryDrawer'
 import { TransitionGroup } from 'react-transition-group'
+import DraggableY from '../../utils/Draggable/DraggableY'
 
 let mockData = data.map(x => ({ date: x.date, close: x.close }))
 mockData = mockData.slice(0, 30)
@@ -16,6 +17,8 @@ mockData = mockData.slice(0, 30)
 const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
   const [stickers, setStickers] = useState([1, 2, 3, 4])
+  const drawerRef = useRef()
+  const listRef = useRef()
 
   console.log('rendered')
 
@@ -29,6 +32,14 @@ const WatchlistDrawer = props => {
 
   const onAddNewSticker = (sticker) => {
     setStickers([...stickers, stickers.length + 1])
+  }
+
+  const changeIndex = (oldIdx, newIdx) => {
+    const toInsert = stickers[oldIdx]
+    stickers.splice(oldIdx, 1)
+    stickers.splice(newIdx, 0, toInsert)
+    console.log(stickers)
+    setStickers([...stickers])
   }
 
   return (
@@ -56,11 +67,13 @@ const WatchlistDrawer = props => {
 
       />
 
-      <Box sx={{
-        backgroundColor: 'primary.white',
-        flex: 1,
-        zIndex: 1
-      }}>
+      <Box
+        ref={drawerRef}
+        sx={{
+          backgroundColor: 'primary.white',
+          flex: 1,
+          zIndex: 1
+        }}>
         <Box sx={{
           height: props.logoHeight,
           width: '100%',
@@ -70,12 +83,12 @@ const WatchlistDrawer = props => {
         }}>
           <Typography variant="h3">LOGO</Typography>
         </Box>
-
         <Stack
           direction="row"
           sx={{
             marginLeft: 2,
             marginRight: 2,
+            marginBottom: 1,
             display: 'flex',
             alignItems: 'center'
           }}>
@@ -89,12 +102,33 @@ const WatchlistDrawer = props => {
             onClick={editing ? stopEditing : startEditing}
           >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
         </Stack>
-        <List sx={{ backgroundColor: 'primary.white' }}>
+        <List
+          sx={{ backgroundColor: 'primary.white' }}
+          ref={listRef}
+        >
           <TransitionGroup>
             {
               stickers.map((x, index) => (
                 <Collapse key={index}>
-                  <WatchlistItem data={mockData} editing={editing}/>
+                  {
+                    !editing && (
+                      <WatchlistItem data={mockData} editing={editing} />
+                    )
+                  }
+                  {
+                    editing && (
+                      <DraggableY
+                        parentRef={drawerRef}
+                        listRef={listRef}
+                        index={index}
+                        changeIndex={changeIndex}>
+                        <WatchlistItem
+                          data={mockData}
+                          index={x}
+                          editing={editing} />
+                      </DraggableY>
+                    )
+                  }
                 </Collapse>
               ))
             }

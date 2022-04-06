@@ -6,6 +6,7 @@ import CommonNews from '../../components/News/CommonNews'
 import StickerHeader from '../../components/News/StickerHeader'
 import StickerHeaderGroup from '../../components/News/StickerHeaderGroup'
 import DraggableY from '../../utils/Draggable/DraggableY'
+import { TransitionGroup } from 'react-transition-group'
 
 import PropTypes from 'prop-types'
 
@@ -23,8 +24,6 @@ const Playground = props => {
   const listRef = useRef()
 
   const changeIndex = (oldIdx, newIdx) => {
-    // setData(data.map(x => x))
-    console.log(`Changed item from ${oldIdx} to ${newIdx} index`)
     const toInsert = data[oldIdx]
     data.splice(oldIdx, 1)
     data.splice(newIdx, 0, toInsert)
@@ -34,47 +33,50 @@ const Playground = props => {
   return (
     <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
 
-      {/* <Box sx={{ padding: 10, backgroundColor: 'red' }} ref={boxRef}>
-        <DraggableY parentRef = {boxRef}>
-          <div style={{ backgroundColor: 'green', padding: '10px' }}>
-            <p>Draggable component</p>
-          </div>
-        </DraggableY>
-      </Box> */}
-
       <Typography>
         Reordering list animation
       </Typography>
 
       <Box ref={boxRef} sx={{ padding: 10, backgroundColor: 'red' }}>
+        <button onClick={() => console.log(listRef)}>test ref</button>
         <List ref={listRef}>
-          {
-            data.map((x, index) => {
-              return (
-              <DraggableY parentRef={boxRef} listRef={listRef} key={index} index={index} changeIndex={changeIndex}>
-                <ListItem
-                  key={index}
-                  onMouseDown={() => console.log('mouse down')}
-                  onMouseUp={() => console.log('mouse up')}
-                  sx={{
-                    backgroundColor: 'gray',
-                    margin: 1,
-                    width: '200px',
-                    ':hover': {
-                      backgroundColor: 'green'
-                    },
-                    ':active': {
-                      backgroundColor: 'yellow',
-                      boxShadow: 3
-                    }
-                  }}
-                >
-                  <Typography>Item {x}</Typography>
-                </ListItem>
-              </DraggableY>
-              )
-            })
-          }
+          <TransitionGroup>
+            {
+              data.map((x, index) => {
+                return (
+                  <DraggableY
+                    parentRef={boxRef}
+                    listRef={listRef}
+                    // breakpoints={getBreakpoints(listRef)}
+                    key={index}
+                    index={index}
+                    changeIndex={changeIndex}>
+                    <ListItem
+                      key={index}
+                      onMouseDown={() => console.log('mouse down')}
+                      onMouseUp={() => console.log('mouse up')}
+                      sx={{
+                        backgroundColor: 'gray',
+                        margin: 1,
+                        width: '200px',
+                        height: '50px',
+                        ':hover': {
+                          backgroundColor: 'green'
+                        },
+                        ':active': {
+                          backgroundColor: 'yellow',
+                          boxShadow: 3
+                        }
+                      }}
+                    >
+                      <Typography>Item {x}</Typography>
+                    </ListItem>
+                  </DraggableY>
+                )
+              })
+            }
+
+          </TransitionGroup>
 
         </List>
       </Box>
@@ -85,7 +87,7 @@ const Playground = props => {
       <ClickActiveAnimation
         in={open}
       >
-        <Box sx={{ backgroundColor: 'red', alignSelf: 'baseline', display: 'flex' }}>
+        <Box sx={{ backgroundColor: 'red', alignSelf: 'baseline', display: 'flex', height: '200px' }}>
           <Typography>Hello World</Typography>
           <button onClick={() => {
             console.log('closed')

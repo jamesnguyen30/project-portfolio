@@ -9,8 +9,6 @@ const DraggableY = props => {
     dragging: false,
     offset: 0,
     breakpoints: [],
-    // fromIndex: 0,
-    // toIndex: 0,
     movementDirection: 0
   })
   const ref = useRef()
@@ -27,23 +25,17 @@ const DraggableY = props => {
   }
 
   const getBreakpoints = () => {
-    if (props.listRef.current != null) {
-      return Array.from(props.listRef.current.children).map(x => x.offsetTop + Math.floor(x.offsetHeight / 2))
+    if (props.listRef != null) {
+      return Array.from(props.listRef.current.children[0].children).map(x => x.offsetTop + Math.floor(x.offsetHeight / 2))
     } else {
       return []
     }
   }
 
-  // find index to swap with
-  // IMPORTANT This function needs some improvement for better UX
-  // it'll give a 'not-pleasant' result if users drag up and drag down then release
-  // if users drag in 1 direction and release it should be good
   const findSwapIndex = (breakpoints, index, value) => {
     const n = breakpoints.length
     const left = index > 0 ? index - 1 : index
     const right = index < n - 1 ? index + 1 : index
-    // debug, turn on if in development
-    // console.log(`left = ${left}, right = ${right}, index = ${index}, value = ${value}, leftValue = ${breakpoints[left]}, rightValue = ${breakpoints[right]} , array = [${breakpoints}]`)
 
     if (value > breakpoints[right]) {
       return right
@@ -52,26 +44,6 @@ const DraggableY = props => {
       return left
     }
     return index
-
-    // const n = breakpoints.length
-    // const m = state.index
-    // if (direction > 0) {
-    //   for (let i = m + 1; i < n; i++) {
-    //     if (i === state.index) continue
-    //     if (breakpoints[i] > value) return i - 1
-    //   }
-    //   return n - 1
-    // } else {
-    //   for (let i = m - 1; i >= 0; i--) {
-    //     if (i === state.index) continue
-    //     if (breakpoints[i] < value) return i + 1
-    //   }
-    //   return 0
-    // }
-    // const cloned = breakpoints.map(x => { return x })
-    // cloned.push(value)
-    // cloned.sort((a, b) => (a - b))
-    // return cloned.findIndex(x => x === value)
   }
 
   const onMouseDown = (event) => {
@@ -101,8 +73,6 @@ const DraggableY = props => {
       state.movementDirection = state.y > oldY ? 1 : -1
       const k = findSwapIndex(state.breakpoints, state.index, ref.current.offsetTop + Math.floor(ref.current.offsetHeight / 2))
       if (k !== state.index) {
-        // swap element
-        // props.swapRow(k, state.index)
         state.index = k
       }
 
@@ -145,6 +115,7 @@ DraggableY.propTypes = {
   children: PropTypes.object,
   parentRef: PropTypes.object,
   listRef: PropTypes.object,
+  // breakpoints: PropTypes.array,
   index: PropTypes.number,
   changeIndex: PropTypes.func
 }
