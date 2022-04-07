@@ -1,8 +1,10 @@
 const {auth, firestore} = require('../../utils/config')
 const {
   searchSymbol, 
+  candleData,
   historicalData
-} = require('../../lib/finnhub')
+} = require('../../lib/marketApi')
+
 const {collection, getDocs, query, where, arrayUnion, arrayRemove, updateDoc} = require('firebase/firestore')
 
 exports.searchSymbol = (req,res) => {
@@ -22,8 +24,12 @@ exports.getWatchlist = (req,res) => {
   getDocs(profileQuery).then(snapshots => {
     snapshots.forEach(snapshot=>{
       const watchlist = snapshot.data().watchlist
-      console.log()
-      return res.status(200).json(watchlist)
+      historicalData(watchlist).then(response=>{
+        return res.status(200).json(response.data)
+      }).catch(err=>{
+        console.error(err)
+        return res.status(500).json({message: 'Server error'})
+      })
     })
   }).catch(err=>{
     console.error(err)
@@ -76,7 +82,6 @@ exports.reorderWatchlist = (req,res) => {
   const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
   const {oldIdx, newIdx} = req.body
 
-
   getDocs(profileQuery).then(snapshots => {
     snapshots.forEach(snapshot => {
       let watchlist = snapshot.data().watchlist
@@ -102,13 +107,12 @@ exports.reorderWatchlist = (req,res) => {
   })
 }
 
-exports.getHistorialData = (req,res) => {
+exports.getCandleData = (req,res) => {
   const {symbol, days} = req.body
-  historicalData(symbol, days!== null ? days: 30).then(response=>{
+  candleData(symbol, days!== null ? days: 30).then(response=>{
     return res.status(200).json(response.data)
   }).catch(err=>{
     console.error(err)
     return res.status(500).json({messge: "Server error"})
   })
 }
-

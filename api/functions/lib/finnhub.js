@@ -5,10 +5,10 @@ const { finnhubApiKey } = require("../secrets/api_keys")
 const FINNHUB_URL = 'https://finnhub.io/api/v1'
 
 exports.searchSymbol = (q) => {
-  return axios.get(`${FINNHUB_URL}/search?q=aapl&token=${finnhubApiKey}`)
+  return axios.get(`${FINNHUB_URL}/search?q=${q}&token=${finnhubApiKey}`)
 }
 
-exports.historicalData = (symbol, days = 30) => {
+exports.candleData = (symbol, days = 30) => {
   var a = new Date()
   //to UNIX Timestamp
   const to = Math.floor(a.getTime() / 1000)
@@ -16,3 +16,4 @@ exports.historicalData = (symbol, days = 30) => {
   const from = Math.floor(a.getTime() / 1000)
   return axios.get(`${FINNHUB_URL}/stock/candle?symbol=${symbol}&resolution=D&from=${from}&to=${to}&token=${finnhubApiKey}`)
 }
+

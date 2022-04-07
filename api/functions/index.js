@@ -28,7 +28,7 @@ const {
   addToWatchlist,
   deleteFromWatchlist,
   reorderWatchlist,
-  getHistorialData
+  getCandleData
 } = require("./routes/market/market")
 
 app.use(cors())
@@ -50,6 +50,6 @@ app.get("/watchlist", isSignedIn, getWatchlist)
 app.post("/watchlist", isSignedIn, addToWatchlist)
 app.delete("/watchlist", isSignedIn, deleteFromWatchlist)
 app.put("/watchlist", isSignedIn, reorderWatchlist)
-app.get("/historicalData", isSignedIn, getHistorialData)
+app.post("/candleData", isSignedIn, getCandleData)
 
 exports.api = functions.https.onRequest(app);
