@@ -7,7 +7,8 @@ import data from '../../model/mock/aapl'
 import WatchlistItem from './WatchlistItem'
 import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
-import SecondaryDrawer from '../../components/Watchlist/SecondaryDrawer'
+import LookupSymbolDrawer from './LookupSymbolDrawer'
+import CompanyInformationDrawer from './CompanyInformationDrawer'
 import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
 
@@ -16,6 +17,7 @@ mockData = mockData.slice(0, 30)
 
 const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
+  const [showingCompnay, setShowingCompany] = useState(false)
   const [stickers, setStickers] = useState([1, 2, 3, 4])
   const drawerRef = useRef()
   const listRef = useRef()
@@ -32,6 +34,15 @@ const WatchlistDrawer = props => {
 
   const onAddNewSticker = (sticker) => {
     setStickers([...stickers, stickers.length + 1])
+  }
+
+  const onShowCompanyDrawer = () => {
+    console.log(showingCompnay)
+    setShowingCompany(true)
+  }
+
+  const onCloseCompanyDrawer = () => {
+    setShowingCompany(false)
   }
 
   const changeIndex = (oldIdx, newIdx) => {
@@ -58,13 +69,20 @@ const WatchlistDrawer = props => {
       anchor="left"
       open={true}
     >
-      <SecondaryDrawer
+
+      <CompanyInformationDrawer
+        drawerWidth={props.drawerWidth}
+        logoHeight={props.logoHeight}
+        show={showingCompnay}
+        onClose={onCloseCompanyDrawer}
+      />
+
+      <LookupSymbolDrawer
         drawerWidth={props.drawerWidth}
         logoHeight={props.logoHeight}
         show={editing}
         onClose={stopEditing}
         handleAdd={onAddNewSticker}
-
       />
 
       <Box
@@ -112,7 +130,10 @@ const WatchlistDrawer = props => {
                 <Collapse key={index}>
                   {
                     !editing && (
-                      <WatchlistItem data={mockData} editing={editing} />
+                      <WatchlistItem
+                      data={mockData}
+                      editing={editing}
+                      onClick={onShowCompanyDrawer}/>
                     )
                   }
                   {

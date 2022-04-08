@@ -37,7 +37,7 @@ StickerSearchResult.propTypes = {
   onClick: PropTypes.func
 }
 
-const SecondaryDrawer = props => {
+const LookupSymbolDrawer = props => {
   const [stickers, setStickers] = useState([])
 
   const errorApi = false
@@ -134,7 +134,6 @@ const SecondaryDrawer = props => {
             }}
             icon={<CloseRoundedIcon/>}
           >
-
           </UtilityActionButton>
         </Box>
         <SearchBox
@@ -176,7 +175,7 @@ const SecondaryDrawer = props => {
   )
 }
 
-SecondaryDrawer.propTypes = {
+LookupSymbolDrawer.propTypes = {
   drawerWidth: PropTypes.number,
   logoHeight: PropTypes.number,
   show: PropTypes.bool,
@@ -184,4 +183,4 @@ SecondaryDrawer.propTypes = {
   handleAdd: PropTypes.func
 }
 
-export default SecondaryDrawer
+export default LookupSymbolDrawer

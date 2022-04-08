@@ -21,6 +21,7 @@ const WatchlistItem = (props) => {
   const getAverage = _.mean(props.data.map(x => x.close))
   return (
     <Box
+      {...props}
       sx={{
         borderRadius: 3,
         ':hover':
@@ -99,7 +100,7 @@ const WatchlistItem = (props) => {
 WatchlistItem.propTypes = {
   data: PropTypes.object.isRequired,
   editing: PropTypes.bool,
-  // Testing purpose
+  onClick: PropTypes.func,
   index: PropTypes.number
 
 }
