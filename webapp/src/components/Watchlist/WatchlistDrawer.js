@@ -22,8 +22,6 @@ const WatchlistDrawer = props => {
   const drawerRef = useRef()
   const listRef = useRef()
 
-  console.log('rendered')
-
   const startEditing = () => {
     setEditing(true)
   }

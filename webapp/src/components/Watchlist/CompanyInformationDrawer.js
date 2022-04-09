@@ -7,11 +7,12 @@ import {
   Divider,
   Stack
 } from '@mui/material'
-// import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
-// import SearchBox from '../searchBox/SearchBox'
+import DetailPriceChart from './DetailPriceChart'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import UtilityActionButton from '../buttons/UtilityActionButton'
+import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import tsla from '../../model/mock/tsla'
 
 const company = {
   companyName: 'Snap, Inc',
@@ -24,6 +25,19 @@ const company = {
     founded: 2010
   }
 }
+
+const processMockTsla = () => {
+  const chartData = []
+  for (let i = 0; i < tsla.c.length; i++) {
+    chartData.push({
+      date: tsla.t[i],
+      close: tsla.c[i]
+    })
+  }
+  return chartData
+}
+
+const chartData = processMockTsla()
 
 const CompanyInformationDrawer = props => {
   // const [stickers, setStickers] = useState([])
@@ -72,27 +86,44 @@ const CompanyInformationDrawer = props => {
         </Box>
         <Box
           sx={{
-            flex: 1,
-            backgroundColor: 'red'
+            flex: 1
           }}
         >
-          <p>Candle chart here</p>
+          <DetailPriceChart data={chartData}/>
         </Box>
         <Box
           sx={{
-            flex: 2
+            flex: 2,
+            marginTop: 3
           }}
         >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+          >
           <Typography
           sx={{
             fontSize: '20px',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            flex: 1
           }}
-          >{company.companyName} - ({company.symbol})</Typography>
+          >{company.companyName} - ({company.symbol})
+          </Typography>
 
+          <UtilityActionButton
+          sx={{
+            backgroundColor: 'primary.darkGreen'
+          }}
+          icon={<AddRoundedIcon/>}>
+            Add to watchlist
+          </UtilityActionButton>
+
+          </Box>
           <Typography>
           {company.description}
-          <button>More</button>
           </Typography>
           <Stack direction={'row'} spacing={3}
           sx={{
@@ -162,14 +193,7 @@ const CompanyInformationDrawer = props => {
           >
           Statistics
           </Typography>
-        </Box>
-        <Box
-          sx={{
-            flex: 0.5,
-            backgroundColor: 'yellow'
-          }}
-        >
-        <Typography>Button Group</Typography>
+          <p>Add a table of trading info here</p>
         </Box>
       </Box>
 

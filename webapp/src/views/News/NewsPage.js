@@ -19,8 +19,6 @@ const mockSticker =
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
-  console.log('rendered NewsPage')
-  console.log(props)
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
