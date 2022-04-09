@@ -86,10 +86,37 @@ const CompanyInformationDrawer = props => {
         </Box>
         <Box
           sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 2,
+            marginBottom: 2
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              flex: 1
+            }}
+          >{company.companyName} - ({company.symbol})
+          </Typography>
+
+          <UtilityActionButton
+            sx={{
+              backgroundColor: 'primary.darkGreen'
+            }}
+            icon={<AddRoundedIcon />}>
+            Add to watchlist
+          </UtilityActionButton>
+
+        </Box>
+        <Box
+          sx={{
             flex: 1
           }}
         >
-          <DetailPriceChart data={chartData}/>
+          <DetailPriceChart data={chartData} />
         </Box>
         <Box
           sx={{
@@ -97,103 +124,87 @@ const CompanyInformationDrawer = props => {
             marginTop: 3
           }}
         >
-          <Box
+          <Typography
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center'
+              fontSize: '18px',
+              fontWeight: 'bold'
             }}
           >
+            Statistics
+          </Typography>
+          <p>Add a table of trading info here</p>
+          <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
           <Typography
           sx={{
-            fontSize: '20px',
+            fontSize: '18px',
             fontWeight: 'bold',
-            flex: 1
+            marginBottom: 1
           }}
-          >{company.companyName} - ({company.symbol})
+          >
+            Description
           </Typography>
-
-          <UtilityActionButton
-          sx={{
-            backgroundColor: 'primary.darkGreen'
-          }}
-          icon={<AddRoundedIcon/>}>
-            Add to watchlist
-          </UtilityActionButton>
-
-          </Box>
           <Typography>
-          {company.description}
+            {company.description}
           </Typography>
           <Stack direction={'row'} spacing={3}
-          sx={{
-            marginTop: 3,
-            marginBottom: 3
-          }}
+            sx={{
+              marginTop: 3,
+              marginBottom: 3
+            }}
           >
             <Box>
               <Typography
-              sx={{
-                fontSize: '13px',
-                fontWeight: 'bold'
-              }}
+                sx={{
+                  fontSize: '13px',
+                  fontWeight: 'bold'
+                }}
               >CEO</Typography>
               <Typography
-              sx={{
-                fontSize: '13px'
-              }}
+                sx={{
+                  fontSize: '13px'
+                }}
               >{company.info.ceo}</Typography>
             </Box>
             <Box>
               <Typography
-              sx={{
-                fontSize: '13px',
-                fontWeight: 'bold'
-              }}
+                sx={{
+                  fontSize: '13px',
+                  fontWeight: 'bold'
+                }}
               >Employees</Typography>
               <Typography
-              sx={{
-                fontSize: '13px'
-              }}
+                sx={{
+                  fontSize: '13px'
+                }}
               >{company.info.employees}</Typography>
             </Box>
             <Box>
               <Typography
-              sx={{
-                fontSize: '13px',
-                fontWeight: 'bold'
-              }}
+                sx={{
+                  fontSize: '13px',
+                  fontWeight: 'bold'
+                }}
               >Headquarter</Typography>
               <Typography
-              sx={{
-                fontSize: '13px'
-              }}
+                sx={{
+                  fontSize: '13px'
+                }}
               >{company.info.headQuarters}</Typography>
             </Box>
             <Box>
               <Typography
-              sx={{
-                fontSize: '13px',
-                fontWeight: 'bold'
-              }}
+                sx={{
+                  fontSize: '13px',
+                  fontWeight: 'bold'
+                }}
               >Founded</Typography>
               <Typography
-              sx={{
-                fontSize: '13px'
-              }}
+                sx={{
+                  fontSize: '13px'
+                }}
               >{company.info.founded}</Typography>
             </Box>
           </Stack>
-          <Divider sx={{ marginTop: 1, marginBottom: 1 }}/>
-          <Typography
-          sx={{
-            fontSize: '20px',
-            fontWeight: 'bold'
-          }}
-          >
-          Statistics
-          </Typography>
-          <p>Add a table of trading info here</p>
         </Box>
       </Box>
 

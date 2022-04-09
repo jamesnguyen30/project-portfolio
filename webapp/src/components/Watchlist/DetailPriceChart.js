@@ -2,9 +2,6 @@ import React from 'react'
 import {
   Box, Typography, Stack
 } from '@mui/material'
-// import {
-//   getCandleData
-// } from '../../api/market'
 
 import {
   AreaChart,
@@ -25,7 +22,8 @@ const CustomTooltip = ({ active, payload }) => {
     <Box sx={{
       backgroundColor: 'primary.white',
       padding: 1,
-      boxShadow: 3
+      boxShadow: 3,
+      borderRadius: 3
     }}>
       <Stack direction="row" spacing={2}>
         <Typography>
@@ -58,16 +56,23 @@ const DetailPriceChart = (props) => {
   return (
     <Box>
       <AreaChart width={450} height={250} data={props.data}>
-        <CartesianGrid strokeDasharray={'4 4'} stroke="#eee"/>
+        <CartesianGrid strokeDasharray={'5 5'} stroke="#eee"/>
         <linearGradient id={'areaColor'} x1='0' y1='0' x2='0' y2='1'>
           <stop offset="5%" stopColor="#43AA8B" stopOpacity={0.8} />
           <stop offset="95%" stopColor="#43AA8B" stopOpacity={0.05} />
         </linearGradient>
-        <XAxis axisLine={false} type="number" dataKey="date" tickFormatter={axisXTickerFormatter} tickCount={5} domain={['dateMin', 'dateMax']}/>
-        <YAxis axisLine={false} type="number" tickFormatter={axisYTickerFormatter} domain={['auto', 'auto']}/>
+        <XAxis axisLine={false} type="number" dataKey="date" tickFormatter={axisXTickerFormatter} tickCount={6} domain={['auto', 'auto']}/>
+        <YAxis width={35} axisLine={false} type="number" tickFormatter={axisYTickerFormatter} domain={['auto', 'auto']}/>
         <Area type="monotone" dataKey="close" stroke="#43AA8B" fill="url(#areaColor)" fillOpacity={1} />
         <Tooltip content={<CustomTooltip/>} position={{ y: 255 }}/>
       </AreaChart>
+
+      <Stack direction={'row'} spacing={3} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <button>1 year</button>
+        <button>1 month</button>
+        <button>1 week</button>
+        <button>today</button>
+      </Stack>
     </Box>
 
   )
