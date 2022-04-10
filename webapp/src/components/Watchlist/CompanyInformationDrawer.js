@@ -90,7 +90,7 @@ const CompanyInformationDrawer = props => {
             flexDirection: 'row',
             alignItems: 'center',
             marginTop: 2,
-            marginBottom: 2
+            marginBottom: 1
           }}
         >
           <Typography
@@ -109,8 +109,15 @@ const CompanyInformationDrawer = props => {
             icon={<AddRoundedIcon />}>
             Add to watchlist
           </UtilityActionButton>
-
         </Box>
+        <Typography
+        sx={{
+          marginBottom: 1,
+          fontSize: '18px',
+          fontWeight: 'bold',
+          color: 'primary.darkGreen'
+        }}
+        >$1234.43</Typography>
         <Box
           sx={{
             flex: 1
