@@ -71,6 +71,7 @@ const WatchlistItem = (props) => {
         {
           props.editing && (
             <UtilityActionButton
+              onClick={() => props.onRemove(props.symbol)}
               sx={{
                 paddingLeft: 1,
                 marginLeft: 1,
@@ -91,7 +92,8 @@ WatchlistItem.propTypes = {
   price: PropTypes.number.isRequired,
   change: PropTypes.number.isRequired,
   editing: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  onRemove: PropTypes.func
 }
 
 WatchlistItem.defaultValues = {

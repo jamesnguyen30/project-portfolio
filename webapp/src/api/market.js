@@ -25,4 +25,30 @@ const getWatchlist = () => {
   })
 }
 
-export { searchSymbol, getCandleData, getWatchlist }
+const addWatchlistItem = (symbol) => {
+  return axios.post(`${apiConfig.baseUrl}/watchlist`, { symbol: symbol }).then(response => {
+    return response.data
+  })
+}
+
+const removeWatchlistItem = (symbol) => {
+  return axios.delete(`${apiConfig.baseUrl}/watchlist`,
+    { data: { symbol: symbol } })
+    .then(response => {
+      return response.data
+    })
+}
+
+const getQuote = (symbol) => {
+  return axios.post(`${apiConfig.baseUrl}/quote`, { symbol: symbol }).then(response =>
+    (response.data))
+}
+
+export {
+  searchSymbol,
+  getCandleData,
+  getWatchlist,
+  addWatchlistItem,
+  removeWatchlistItem,
+  getQuote
+}

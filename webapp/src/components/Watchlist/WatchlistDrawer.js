@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import {
   Divider, Typography, Box, Drawer,
-  List, Stack, Collapse
+  List, Stack, Collapse, CircularProgress
 } from '@mui/material'
 import WatchlistItem from './WatchlistItem'
 import UtilityActionButton from '../../components/buttons/UtilityActionButton'
@@ -11,11 +11,18 @@ import CompanyInformationDrawer from './CompanyInformationDrawer'
 import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
 import { useSelector, useDispatch } from 'react-redux'
-import { getWatchlistAction } from '../../redux/actions/watchlistActions'
+import {
+  getWatchlistAction,
+  addWatchlistAction,
+  removeWatchlistAction
+} from '../../redux/actions/watchlistActions'
 import {
   WATCHLIST_FETCHED,
-  WATCHLIST_FETCH_FAILED
+  WATCHLIST_FETCH_FAILED,
+  WATCHLIST_UPDATED,
+  WATCHLIST_UPDATE_FAILED
 } from '../../redux/actions'
+// import { getQuote } from '../../api/market'
 
 const defaultStickers = [
   { name: 'Apple', symbol: 'AAPL', c: 199.99, d: 0.99 },
@@ -34,6 +41,7 @@ const defaultStickers = [
 // t(pin):1649448004
 
 const WatchlistDrawer = props => {
+  const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(false)
   const [showingCompany, setShowingCompany] = useState(false)
   const [stickers, setStickers] = useState(defaultStickers)
@@ -52,10 +60,17 @@ const WatchlistDrawer = props => {
   }
 
   const onAddNewSticker = (sticker) => {
-    console.log(sticker)
     const result = stickers.find(x => x.name === sticker.name)
     if (result === undefined) {
-      setStickers([...stickers, sticker])
+      dispatch(addWatchlistAction(sticker.name))
+    }
+  }
+
+  const onRemovedSticker = (name) => {
+    console.log('removing ' + name)
+    const result = stickers.find(x => x.name === name)
+    if (result !== undefined) {
+      dispatch(removeWatchlistAction(name))
     }
   }
 
@@ -77,12 +92,18 @@ const WatchlistDrawer = props => {
   }
 
   useEffect(() => {
-    if (watchlistState.type === null) {
+    setLoading(true)
+    if (watchlistState.type === null || watchlistState.type === WATCHLIST_UPDATED) {
       dispatch(getWatchlistAction())
     } else if (watchlistState.type === WATCHLIST_FETCHED) {
       setStickers(watchlistState.watchlist)
+      setLoading(false)
     } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
       setStickers([])
+      setLoading(false)
+    } else if (watchlistState.type === WATCHLIST_UPDATE_FAILED) {
+      console.error('update watchlist failed')
+      setLoading(false)
     }
   }, [watchlistState])
 
@@ -155,6 +176,22 @@ const WatchlistDrawer = props => {
             onClick={editing ? stopEditing : startEditing}
           >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
         </Stack>
+        {
+          loading && (
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <CircularProgress sx={{ color: 'primary.purple' }}/>
+            <Typography>Loading ... </Typography>
+
+          </Box>
+
+          )
+
+        }
         <List
           sx={{ backgroundColor: 'primary.white' }}
           ref={listRef}
@@ -187,6 +224,7 @@ const WatchlistDrawer = props => {
                           change={data.d}
                           data={data}
                           index={index}
+                          onRemove={onRemovedSticker}
                           editing={editing} />
                       </DraggableY>
                     )

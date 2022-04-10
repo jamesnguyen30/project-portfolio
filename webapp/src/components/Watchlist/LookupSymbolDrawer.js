@@ -130,7 +130,7 @@ const LookupSymbolDrawer = props => {
     })
     result.result.splice(0, 0, {
       description: 'Nvidia Inc',
-      symbol: 'NVIDIA',
+      symbol: 'NVDA',
       type: 'Common Stock',
       c: 123,
       d: 12
