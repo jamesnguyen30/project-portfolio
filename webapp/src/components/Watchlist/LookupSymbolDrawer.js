@@ -1,68 +1,105 @@
 // import NavBar from "./components/nav/Nav";
 import React, { useState } from 'react'
 import {
-  Box, Typography, Slide, Button, List
+  Box, Typography, Slide, Button, List, CircularProgress
 } from '@mui/material'
 // import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
 import SearchBox from '../searchBox/SearchBox'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import UtilityActionButton from '../buttons/UtilityActionButton'
+import { searchSymbol } from '../../api/market'
+
+// const mockResult = '{"count":22,"result":[{"description":"Apple","displaySymbol":"A3KUT5.DU","symbol":"A3KUT5.DU","type":""},{"description":"Apple","displaySymbol":"APCA.HM","symbol":"APCA.HM","type":""},{"description":"Apple","displaySymbol":"A1Z5RD.MU","symbol":"A1Z5RD.MU","type":""},{"description":"Apple","displaySymbol":"APCU.HM","symbol":"APCU.HM","type":""},{"description":"Apple","displaySymbol":"A2R7JT.BE","symbol":"A2R7JT.BE","type":""},{"description":"Apple","displaySymbol":"A2R7JT.DU","symbol":"A2R7JT.DU","type":""},{"description":"Apple","displaySymbol":"A19C0M.BE","symbol":"A19C0M.BE","type":""},{"description":"Apple","displaySymbol":"A2R7JV.BE","symbol":"A2R7JV.BE","type":""},{"description":"Apple","displaySymbol":"APCT.HA","symbol":"APCT.HA","type":""},{"description":"Apple","displaySymbol":"APC5.MU","symbol":"APC5.MU","type":""},{"description":"Apple","displaySymbol":"APCL.BE","symbol":"APCL.BE","type":""},{"description":"Apple","displaySymbol":"A3KUT3.MU","symbol":"A3KUT3.MU","type":""},{"description":"Apple","displaySymbol":"APCT.HM","symbol":"APCT.HM","type":""},{"description":"Apple","displaySymbol":"APCX.BE","symbol":"APCX.BE","type":""},{"description":"Apple","displaySymbol":"APC5.DU","symbol":"APC5.DU","type":""},{"description":"Apple","displaySymbol":"A19C0M.HM","symbol":"A19C0M.HM","type":""},{"description":"Apple","displaySymbol":"APCT.MU","symbol":"APCT.MU","type":""},{"description":"Apple","displaySymbol":"A1HKKY.DU","symbol":"A1HKKY.DU","type":""},{"description":"Apple","displaySymbol":"APCA.MU","symbol":"APCA.MU","type":""},{"description":"Apple","displaySymbol":"APCU.BE","symbol":"APCU.BE","type":""},{"description":"Apple","displaySymbol":"APCT.BE","symbol":"APCT.BE","type":""},{"description":"Apple","displaySymbol":"A3KUT4.BE","symbol":"A3KUT4.BE","type":""}]}'
 
 const StickerSearchResult = props => {
   return (
     <Box
-    sx={{
-      display: 'flex'
-    }}>
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        borderBottom: 1,
+        borderBottomColor: 'secondary.gray'
+      }}>
       <Typography
-        key ={props.index}
+        key={props.index}
         sx={{
           marginTop: 1,
           marginBottom: 1,
-          flex: 1
+          flex: 1,
+          fontSize: '15px',
+          fontWeight: 'bold'
         }}
       >{props.name}</Typography>
+      <Typography>
+        {props.symbol}
+      </Typography>
       <Button onClick={props.onClick}>
         Add
       </Button>
-
     </Box>
   )
 }
 
 StickerSearchResult.propTypes = {
   name: PropTypes.string.isRequired,
+  symbol: PropTypes.string.isRequired,
   index: PropTypes.number,
   onClick: PropTypes.func
 }
 
 const LookupSymbolDrawer = props => {
   const [stickers, setStickers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
-  const errorApi = false
+  // const errorApi = false
   const apiCallback = (query) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (!errorApi) {
-          console.log('Query ' + query)
-          resolve([
-            { name: 'Title 1' },
-            { name: 'Title 2' },
-            { name: 'Title 3' },
-            { name: 'Title 4' },
-            { name: 'Title 5' }
-          ])
-        } else {
-          reject(new Error('Error thrown'))
-        }
-      })
-    })
+    return searchSymbol(query)
+    // Return mock data
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => resolve(JSON.parse(mockResult)), 5000)
+    // })
   }
 
   const handleResult = result => {
-    // console.log(result)
-    setStickers(result)
+    console.log(result)
+    // Finnhub data format
+    result.result = result.result.slice(0, 15)
+    // Since we're using sandbox
+    // the return result is bullshit
+    // add valid symbols to the result list
+    result.result.splice(0, 0, {
+      description: 'Apple, Inc',
+      symbol: 'AAPL',
+      type: 'Common Stock'
+    })
+    result.result.splice(0, 0, {
+      description: 'Amazon Inc',
+      symbol: 'AMZN',
+      type: 'Common Stock'
+    })
+    result.result.splice(0, 0, {
+      description: 'Tesla Inc',
+      symbol: 'TSLA',
+      type: 'Common Stock'
+    })
+    result.result.splice(0, 0, {
+      description: 'Google Inc',
+      symbol: 'GOOG',
+      type: 'Common Stock'
+    })
+    result.result.splice(0, 0, {
+      description: 'Nvidia Inc',
+      symbol: 'NVIDIA',
+      type: 'Common Stock'
+    })
+
+    const stickerResult = result.result.map(x => ({
+      company: x.description,
+      symbol: x.symbol,
+      type: x.type
+    }))
+    setStickers(stickerResult)
   }
 
   const handleError = error => {
@@ -71,7 +108,6 @@ const LookupSymbolDrawer = props => {
 
   const handleClear = () => {
     setStickers([])
-    // console.log('Search result cleared')
   }
 
   const handleAdd = (item) => {
@@ -80,6 +116,7 @@ const LookupSymbolDrawer = props => {
 
   const setLoading = isLoading => {
     console.log(isLoading ? 'Loading ... ' : 'Done loading')
+    setIsLoading(isLoading)
   }
 
   const searchBoxProps = {
@@ -132,7 +169,7 @@ const LookupSymbolDrawer = props => {
                 transition: 'backgroundColor 50ms'
               }
             }}
-            icon={<CloseRoundedIcon/>}
+            icon={<CloseRoundedIcon />}
           >
           </UtilityActionButton>
         </Box>
@@ -146,7 +183,22 @@ const LookupSymbolDrawer = props => {
           {...searchBoxProps}
         />
         {
-          stickers.length > 0 && (
+          isLoading && (
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              maxHeight: '300px'
+            }}>
+              <CircularProgress sx={{ color: 'primary.darkPurple' }} />
+              <Typography>Looking up ...</Typography>
+            </Box>
+          )
+        }
+        {
+          !isLoading && stickers.length > 0 && (
             <List sx={{
               overflow: 'auto',
               flex: 1
@@ -157,7 +209,8 @@ const LookupSymbolDrawer = props => {
                     <StickerSearchResult
                       onClick={() => handleAdd(sticker)}
                       key={index}
-                      name={sticker.name}
+                      name={sticker.company}
+                      symbol={sticker.symbol}
                     />
                   )
                 })
@@ -166,7 +219,7 @@ const LookupSymbolDrawer = props => {
           )
         }
         {
-          stickers.length === 0 && (
+          !isLoading && stickers.length === 0 && (
             <Typography>Empty search result</Typography>
           )
         }

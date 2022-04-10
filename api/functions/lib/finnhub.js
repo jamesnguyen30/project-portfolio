@@ -8,6 +8,10 @@ exports.searchSymbol = (q) => {
   return axios.get(`${FINNHUB_URL}/search?q=${q}&token=${finnhubApiKey}`)
 }
 
+exports.quote = (symbol) => {
+  return axios.get(`${FINNHUB_URL}/quote?symbol=${symbol}&token=${finnhubApiKey}`)
+}
+
 exports.candleData = (symbol, days = 30) => {
   var a = new Date()
   //to UNIX Timestamp

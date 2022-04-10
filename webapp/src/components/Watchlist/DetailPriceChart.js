@@ -39,7 +39,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
-  payload: PropTypes.objec
+  payload: PropTypes.array
 }
 const axisXTickerFormatter = (tick) => {
   const date = new Date(tick * 1000)
@@ -54,7 +54,7 @@ const DetailPriceChart = (props) => {
   console.log(props.data)
 
   return (
-    <Box>
+    <Box sx={{ marginTop: 5 }}>
       <AreaChart width={450} height={250} data={props.data}>
         <CartesianGrid strokeDasharray={'5 5'} stroke="#eee"/>
         <linearGradient id={'areaColor'} x1='0' y1='0' x2='0' y2='1'>
@@ -64,7 +64,7 @@ const DetailPriceChart = (props) => {
         <XAxis axisLine={false} type="number" dataKey="date" tickFormatter={axisXTickerFormatter} tickCount={6} domain={['auto', 'auto']}/>
         <YAxis width={35} axisLine={false} type="number" tickFormatter={axisYTickerFormatter} domain={['auto', 'auto']}/>
         <Area type="monotone" dataKey="close" stroke="#43AA8B" fill="url(#areaColor)" fillOpacity={1} />
-        <Tooltip content={<CustomTooltip/>} position={{ y: 255 }}/>
+        <Tooltip content={<CustomTooltip/>} position={{ y: -50 }}/>
       </AreaChart>
 
       <Stack direction={'row'} spacing={3} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -79,7 +79,7 @@ const DetailPriceChart = (props) => {
 }
 
 DetailPriceChart.propTypes = {
-  data: PropTypes.func
+  data: PropTypes.array
 }
 
 export default React.memo(DetailPriceChart)

@@ -1,6 +1,13 @@
 import axios from 'axios'
 import apiConfig from '../constants/config/apiConfig'
 
+const searchSymbol = (query) => {
+  console.log('searching symbol ' + query)
+  return axios.post(`${apiConfig.baseUrl}/searchSymbol`, { q: query }).then(response => {
+    return response.data
+  })
+}
+
 const getCandleData = (symbol, days) => {
   const req = {
     symbol: symbol,
@@ -11,4 +18,4 @@ const getCandleData = (symbol, days) => {
   })
 }
 
-export { getCandleData }
+export { searchSymbol, getCandleData }

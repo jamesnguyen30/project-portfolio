@@ -1,8 +1,12 @@
-const {searchSymbol, candleData} = require("./finnhub")
+const {searchSymbol, candleData, quote} = require("./finnhub")
 const {historicalData} = require("./twelvedata")
 
 exports.searchSymbol = (q) => {
   return searchSymbol(q)
+}
+
+exports.getQuote = (symbol) => {
+  return quote(symbol)
 }
 
 exports.candleData = (symbol, days = 30) => {

@@ -50,13 +50,12 @@ const SearchBox = (props) => {
     setLoading(true)
 
     apiCallback(query).then(data => {
+      setLoading(false)
       handleResult(data)
     }).catch(err => {
       handleError(err)
     })
-
-    setLoading(false)
-  }, 200)
+  }, 500)
 
   const onChange = (event) => {
     const newQuery = event.target.value
@@ -75,7 +74,7 @@ const SearchBox = (props) => {
     }}>
       <SearchInput onClick={onFocus} placeholder={placeHolder} onChange={onChange} onBlur={onBlur}></SearchInput>
       <SearchIconWrapper>
-        <IconButton>
+        <IconButton disableRipple>
           <SearchIcon/>
         </IconButton>
       </SearchIconWrapper>

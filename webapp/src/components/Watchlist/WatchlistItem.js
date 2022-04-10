@@ -1,16 +1,10 @@
 import { React } from 'react'
-import { Box, Typography, Divider } from '@mui/material'
-import {
-  AreaChart,
-  Area,
-  YAxis,
-  ReferenceLine
-} from 'recharts'
-import _ from 'lodash'
+import { Box, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
+// import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import UtilityActionButton from '../buttons/UtilityActionButton'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 
 // An item in watch list featured a daily stock chart
 // @props [] data (required): daily data for a sticker to render chart
@@ -18,7 +12,6 @@ import UtilityActionButton from '../buttons/UtilityActionButton'
 const WatchlistItem = (props) => {
   // Just a test variable for a straightline
   // Will use 52-week price instead in production
-  const getAverage = _.mean(props.data.map(x => x.close))
   return (
     <Box
       {...props}
@@ -37,76 +30,61 @@ const WatchlistItem = (props) => {
           : {},
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
-        margin: 1
+        margin: 1,
+        padding: 1
       }}>
-      {
-        props.editing && (
-          <UtilityActionButton
-            sx={{
-              padding: 1,
-              marginRight: 1,
-              color: 'primary.red',
-              backgroundColor: 'transparent'
-            }}
-            icon={<DeleteForeverRoundedIcon sx={{ color: 'primary.red' }} />}
-          />
-        )
-      }
-      <Box sx={{ flex: props.editing ? 1 : 0 }}>
-        <Typography style={{ fontWeight: 'bold' }}>AAPL {props.index}</Typography>
-        <Typography variant="subtitle1">$190.13</Typography>
+      <Box sx={{
+        paddingLeft: 2,
+        paddingRight: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1
+      }}>
+        <ArrowDropUpIcon sx={{ color: 'primary.darkGreen' }}/>
+        <Typography style={{
+          fontWeight: 'bold',
+          fontSize: '15px',
+          flex: 1
+        }}>{props.symbol}</Typography>
+        <Typography sx={{
+          fontSize: '15px',
+          fontWeight: 'bold',
+          color: 'primary.green'
+        }}>${props.price}</Typography>
+        <Typography sx={{
+          fontSize: '12px',
+          color: 'primary.darkGreen',
+          textAlign: 'right'
+        }}>+ ${props.change}%</Typography>
+        {
+          props.editing && (
+            <UtilityActionButton
+              sx={{
+                paddingLeft: 1,
+                marginLeft: 1,
+                color: 'primary.red',
+                backgroundColor: 'transparent'
+              }}
+              icon={<DeleteForeverRoundedIcon sx={{ color: 'primary.red' }} />}
+            />
+          )
+        }
       </Box>
-      {
-        !props.editing && (
-          <AreaChart width={120} height={60} data={props.data}>
-            <defs>
-              <linearGradient id={'areaColor'} x1='0' y1='0' x2='0' y2='1'>
-                <stop offset="5%" stopColor="#43AA8B" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#43AA8B" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <YAxis width={0} axisLine={false} type="number"
-              domain={['dataMin', 'dataMax']} />
-            <Area type="monotone" dataKey="close" stroke="#43AA8B" fill="url(#areaColor)" fillOpacity={1} />
-            <ReferenceLine y={getAverage} stroke={'#43AA8B'} strokeDasharray="3 3"></ReferenceLine>
-          </AreaChart>
-
-        )
-      }
-      <Box style={{ justifyContent: 'flex-end' }}>
-        <Typography sx={{ color: 'primary.darkGreen', fontWeight: 'bold', textAlign: 'right' }}>+$999.9</Typography>
-        <Typography variant="subtitle2" sx={{ color: 'primary.darkGreen', textAlign: 'right' }}>$99.9%</Typography>
-      </Box>
-      {
-        props.editing && (
-          <Box
-            sx={{
-              padding: 1,
-              marginLeft: 1,
-              color: 'primary.black',
-              backgroundColor: 'transparent'
-            }}>
-              <MenuRoundedIcon/>
-            </Box>
-        )
-      }
-      <Divider />
     </Box>
   )
 }
 
 WatchlistItem.propTypes = {
-  data: PropTypes.object.isRequired,
+  symbol: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  change: PropTypes.number.isRequired,
   editing: PropTypes.bool,
-  onClick: PropTypes.func,
-  index: PropTypes.number
-
+  onClick: PropTypes.func
 }
 
 WatchlistItem.defaultValues = {
-  data: [],
   editing: false
 }
 

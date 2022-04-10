@@ -3,7 +3,6 @@ import {
   Divider, Typography, Box, Drawer,
   List, Stack, Collapse
 } from '@mui/material'
-import data from '../../model/mock/aapl'
 import WatchlistItem from './WatchlistItem'
 import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
@@ -12,13 +11,19 @@ import CompanyInformationDrawer from './CompanyInformationDrawer'
 import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
 
-let mockData = data.map(x => ({ date: x.date, close: x.close }))
-mockData = mockData.slice(0, 30)
+// let mockData = data.map(x => ({ date: x.date, close: x.close }))
+// mockData = mockData.slice(0, 30)
+
+const mockStickers = [
+  { company: 'Apple', symbol: 'AAPL', price: 199.99, change: 0.99 },
+  { company: 'Amazon', symbol: 'AMZN', price: 199.99, change: 0.99 },
+  { company: 'Google', symbol: 'GOOG', price: 199.99, change: 0.99 }
+]
 
 const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
   const [showingCompnay, setShowingCompany] = useState(false)
-  const [stickers, setStickers] = useState([1, 2, 3, 4])
+  const [stickers, setStickers] = useState(mockStickers)
   const drawerRef = useRef()
   const listRef = useRef()
 
@@ -31,7 +36,10 @@ const WatchlistDrawer = props => {
   }
 
   const onAddNewSticker = (sticker) => {
-    setStickers([...stickers, stickers.length + 1])
+    const result = stickers.find(x => x.symbol === sticker.symbol)
+    if (result === undefined) {
+      setStickers([...stickers, sticker])
+    }
   }
 
   const onShowCompanyDrawer = () => {
@@ -99,6 +107,7 @@ const WatchlistDrawer = props => {
         }}>
           <Typography variant="h3">LOGO</Typography>
         </Box>
+        <Divider/>
         <Stack
           direction="row"
           sx={{
@@ -109,11 +118,11 @@ const WatchlistDrawer = props => {
             alignItems: 'center'
           }}>
           <Typography
-            variant={'h6'}
             sx={{
+              fontSize: '18px',
               fontWeight: 'bold',
               flex: 1
-            }}>Watchlist</Typography>
+            }}>Watching symbols</Typography>
           <UtilityActionButton
             onClick={editing ? stopEditing : startEditing}
           >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
@@ -124,14 +133,17 @@ const WatchlistDrawer = props => {
         >
           <TransitionGroup>
             {
-              stickers.map((x, index) => (
+              stickers.map((data, index) => (
                 <Collapse key={index}>
                   {
                     !editing && (
                       <WatchlistItem
-                      data={mockData}
-                      editing={editing}
-                      onClick={onShowCompanyDrawer}/>
+                        data={data}
+                        symbol={data.symbol}
+                        price={data.price}
+                        change={data.change}
+                        editing={editing}
+                        onClick={onShowCompanyDrawer} />
                     )
                   }
                   {
@@ -142,8 +154,11 @@ const WatchlistDrawer = props => {
                         index={index}
                         changeIndex={changeIndex}>
                         <WatchlistItem
-                          data={mockData}
-                          index={x}
+                          symbol={data.symbol}
+                          price={data.price}
+                          change={data.change}
+                          data={data}
+                          index={index}
                           editing={editing} />
                       </DraggableY>
                     )

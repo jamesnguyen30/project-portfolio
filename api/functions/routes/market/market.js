@@ -2,10 +2,12 @@ const {auth, firestore} = require('../../utils/config')
 const {
   searchSymbol, 
   candleData,
-  historicalData
+  historicalData,
+  getQuote
 } = require('../../lib/marketApi')
 
 const {collection, getDocs, query, where, arrayUnion, arrayRemove, updateDoc} = require('firebase/firestore')
+const { isTemplateLiteralTypeNode } = require('typescript')
 
 exports.searchSymbol = (req,res) => {
   const query = req.body.q
@@ -17,19 +19,42 @@ exports.searchSymbol = (req,res) => {
   })
 }
 
+exports.getQuote = (req,res) => {
+  const {symbol} = req.body
+  getQuote(symbol).then(response=>{
+    return res.json(response.data)
+  }).catch(err=>{
+    console.error(err)
+    return res.status(500).json({message: 'Server error! please check log'})
+  })
+}
+
 exports.getWatchlist = (req,res) => {
   const currentUser = auth.currentUser
 
   const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
   getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(snapshot=>{
+    snapshots.forEach(async snapshot=>{
       const watchlist = snapshot.data().watchlist
-      historicalData(watchlist).then(response=>{
-        return res.status(200).json(response.data)
-      }).catch(err=>{
+
+      try{
+        for(var i = 0;i < watchlist.length;i++) {
+          const quote= await getQuote(watchlist[i])
+          watchlist[i] = {name: watchlist[i], ...quote.data}
+        }
+        console.log(watchlist)
+        
+        return res.json(watchlist)
+      } catch (err) {
         console.error(err)
         return res.status(500).json({message: 'Server error'})
-      })
+      }
+      // historicalData(watchlist).then(response=>{
+      //   return res.status(200).json(response.data)
+      // }).catch(err=>{
+      //   console.error(err)
+      //   return res.status(500).json({message: 'Server error'})
+      // })
     })
   }).catch(err=>{
     console.error(err)
