@@ -22,7 +22,7 @@ const mockStickers = [
 
 const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
-  const [showingCompnay, setShowingCompany] = useState(false)
+  const [showingCompany, setShowingCompany] = useState(false)
   const [stickers, setStickers] = useState(mockStickers)
   const drawerRef = useRef()
   const listRef = useRef()
@@ -43,7 +43,7 @@ const WatchlistDrawer = props => {
   }
 
   const onShowCompanyDrawer = () => {
-    console.log(showingCompnay)
+    console.log(showingCompany)
     setShowingCompany(true)
   }
 
@@ -76,19 +76,20 @@ const WatchlistDrawer = props => {
       open={true}
     >
 
-      <CompanyInformationDrawer
-        drawerWidth={props.drawerWidth}
-        logoHeight={props.logoHeight}
-        show={showingCompnay}
-        onClose={onCloseCompanyDrawer}
-      />
-
       <LookupSymbolDrawer
         drawerWidth={props.drawerWidth}
         logoHeight={props.logoHeight}
         show={editing}
         onClose={stopEditing}
         handleAdd={onAddNewSticker}
+        onShowCompanyDrawer={onShowCompanyDrawer}
+      />
+
+      <CompanyInformationDrawer
+        drawerWidth={props.drawerWidth}
+        logoHeight={props.logoHeight}
+        show={showingCompany}
+        onClose={onCloseCompanyDrawer}
       />
 
       <Box
@@ -107,10 +108,10 @@ const WatchlistDrawer = props => {
         }}>
           <Typography variant="h3">LOGO</Typography>
         </Box>
-        <Divider/>
         <Stack
           direction="row"
           sx={{
+            marginTop: 1,
             marginLeft: 2,
             marginRight: 2,
             marginBottom: 1,
@@ -122,7 +123,7 @@ const WatchlistDrawer = props => {
               fontSize: '18px',
               fontWeight: 'bold',
               flex: 1
-            }}>Watching symbols</Typography>
+            }}>Watchlist</Typography>
           <UtilityActionButton
             onClick={editing ? stopEditing : startEditing}
           >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
