@@ -42,7 +42,6 @@ exports.getWatchlist = (req,res) => {
           const quote= await getQuote(watchlist[i])
           watchlist[i] = {name: watchlist[i], ...quote.data}
         }
-        console.log(watchlist)
         
         return res.json(watchlist)
       } catch (err) {
@@ -82,8 +81,29 @@ exports.addToWatchlist = (req,res) => {
   })
 }
 
+exports.seedWatchlist = (req,res) => {
+  const currentUser = auth.currentUser
+  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
+  
+  getDocs(profileQuery).then(snapshots => {
+    snapshots.forEach(snapshot => {
+      updateDoc(snapshot.ref, {watchlist: ['AAPL', 'AMZN', 'GOOGL', 'TSLA']}).then(_ => {
+        return res.status(200).json({message: 'success'})
+      }).catch(err=>{
+        console.error(err)
+        return res.status(500).json({message: "Server error"})
+      })
+    })
+  }).catch(err=>{
+    console.error(err)
+    return res.status(500).json({message: "Server error"})
+  })
+}
+
+
 exports.deleteFromWatchlist = (req,res) => {
   const {symbol} = req.body
+  console.log(req.body)
   const currentUser = auth.currentUser
   const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
   
