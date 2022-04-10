@@ -5,6 +5,7 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 // import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import UtilityActionButton from '../buttons/UtilityActionButton'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
 // An item in watch list featured a daily stock chart
 // @props [] data (required): daily data for a sticker to render chart
@@ -31,18 +32,26 @@ const WatchlistItem = (props) => {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        margin: 1,
+        marginLeft: 1,
+        marginRight: 1,
         padding: 1
       }}>
       <Box sx={{
-        paddingLeft: 2,
-        paddingRight: 2,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1
       }}>
-        <ArrowDropUpIcon sx={{ color: 'primary.darkGreen' }}/>
+        {
+          props.change > 0 && (
+            <ArrowDropUpIcon sx={{ color: 'primary.darkGreen' }}/>
+          )
+        }
+        {
+          props.change < 0 && (
+            <ArrowDropDownIcon sx={{ color: 'primary.red' }}/>
+          )
+        }
         <Typography style={{
           fontWeight: 'bold',
           fontSize: '15px',
@@ -51,13 +60,14 @@ const WatchlistItem = (props) => {
         <Typography sx={{
           fontSize: '15px',
           fontWeight: 'bold',
-          color: 'primary.green'
+          color: props.change > 0 ? 'primary.darkGreen' : 'primary.red'
         }}>${props.price}</Typography>
         <Typography sx={{
-          fontSize: '12px',
-          color: 'primary.darkGreen',
+          marginLeft: 1,
+          fontSize: '15px',
+          color: props.change > 0 ? 'primary.darkGreen' : 'primary.red',
           textAlign: 'right'
-        }}>+ ${props.change}%</Typography>
+        }}>{props.change > 0 ? '+' : '-'}${Math.abs(props.change)}</Typography>
         {
           props.editing && (
             <UtilityActionButton

@@ -103,33 +103,45 @@ const LookupSymbolDrawer = props => {
     result.result.splice(0, 0, {
       description: 'Apple, Inc',
       symbol: 'AAPL',
-      type: 'Common Stock'
+      type: 'Common Stock',
+      c: 123,
+      d: +12
     })
     result.result.splice(0, 0, {
       description: 'Amazon Inc',
       symbol: 'AMZN',
-      type: 'Common Stock'
+      type: 'Common Stock',
+      c: 123,
+      d: -12
     })
     result.result.splice(0, 0, {
       description: 'Tesla Inc',
       symbol: 'TSLA',
-      type: 'Common Stock'
+      type: 'Common Stock',
+      c: 123,
+      d: -12
     })
     result.result.splice(0, 0, {
       description: 'Google Inc',
       symbol: 'GOOG',
-      type: 'Common Stock'
+      type: 'Common Stock',
+      c: 123,
+      d: 12
     })
     result.result.splice(0, 0, {
       description: 'Nvidia Inc',
       symbol: 'NVIDIA',
-      type: 'Common Stock'
+      type: 'Common Stock',
+      c: 123,
+      d: 12
     })
 
     const stickerResult = result.result.map(x => ({
       company: x.description,
-      symbol: x.symbol,
-      type: x.type
+      name: x.symbol,
+      type: x.type,
+      c: 123,
+      d: 13
     }))
     setStickers(stickerResult)
     setErrorMessage(null)
@@ -287,7 +299,7 @@ const LookupSymbolDrawer = props => {
                       onClick={() => handleAdd(sticker)}
                       key={index}
                       name={sticker.company}
-                      symbol={sticker.symbol}
+                      symbol={sticker.name}
                       onShowCompanyDrawer={props.onShowCompanyDrawer}
                     />
                   )

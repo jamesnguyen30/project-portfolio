@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Divider, Typography, Box, Drawer,
   List, Stack, Collapse
@@ -10,22 +10,38 @@ import LookupSymbolDrawer from './LookupSymbolDrawer'
 import CompanyInformationDrawer from './CompanyInformationDrawer'
 import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
+import { useSelector, useDispatch } from 'react-redux'
+import { getWatchlistAction } from '../../redux/actions/watchlistActions'
+import {
+  WATCHLIST_FETCHED,
+  WATCHLIST_FETCH_FAILED
+} from '../../redux/actions'
 
-// let mockData = data.map(x => ({ date: x.date, close: x.close }))
-// mockData = mockData.slice(0, 30)
-
-const mockStickers = [
-  { company: 'Apple', symbol: 'AAPL', price: 199.99, change: 0.99 },
-  { company: 'Amazon', symbol: 'AMZN', price: 199.99, change: 0.99 },
-  { company: 'Google', symbol: 'GOOG', price: 199.99, change: 0.99 }
+const defaultStickers = [
+  { name: 'Apple', symbol: 'AAPL', c: 199.99, d: 0.99 },
+  { name: 'Amazon', symbol: 'AMZN', c: 199.99, d: 0.99 },
+  { name: 'Google', symbol: 'GOOG', c: 199.99, d: 0.99 }
 ]
+
+// name(pin):"AAPL"
+// c(pin):170.09
+// d(pin):-2.05
+// dp(pin):-1.1909
+// h(pin):171.77
+// l(pin):169.22
+// o(pin):171.78
+// pc(pin):172.14
+// t(pin):1649448004
 
 const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
   const [showingCompany, setShowingCompany] = useState(false)
-  const [stickers, setStickers] = useState(mockStickers)
+  const [stickers, setStickers] = useState(defaultStickers)
   const drawerRef = useRef()
   const listRef = useRef()
+
+  const watchlistState = useSelector(state => state.watchlistReducer)
+  const dispatch = useDispatch()
 
   const startEditing = () => {
     setEditing(true)
@@ -36,7 +52,8 @@ const WatchlistDrawer = props => {
   }
 
   const onAddNewSticker = (sticker) => {
-    const result = stickers.find(x => x.symbol === sticker.symbol)
+    console.log(sticker)
+    const result = stickers.find(x => x.name === sticker.name)
     if (result === undefined) {
       setStickers([...stickers, sticker])
     }
@@ -58,6 +75,16 @@ const WatchlistDrawer = props => {
     console.log(stickers)
     setStickers([...stickers])
   }
+
+  useEffect(() => {
+    if (watchlistState.type === null) {
+      dispatch(getWatchlistAction())
+    } else if (watchlistState.type === WATCHLIST_FETCHED) {
+      setStickers(watchlistState.watchlist)
+    } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
+      setStickers([])
+    }
+  }, [watchlistState])
 
   return (
     <Drawer
@@ -140,9 +167,9 @@ const WatchlistDrawer = props => {
                     !editing && (
                       <WatchlistItem
                         data={data}
-                        symbol={data.symbol}
-                        price={data.price}
-                        change={data.change}
+                        symbol={data.name}
+                        price={data.c}
+                        change={data.d}
                         editing={editing}
                         onClick={onShowCompanyDrawer} />
                     )
@@ -155,9 +182,9 @@ const WatchlistDrawer = props => {
                         index={index}
                         changeIndex={changeIndex}>
                         <WatchlistItem
-                          symbol={data.symbol}
-                          price={data.price}
-                          change={data.change}
+                          symbol={data.name}
+                          price={data.c}
+                          change={data.d}
                           data={data}
                           index={index}
                           editing={editing} />

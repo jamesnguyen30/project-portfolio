@@ -3,12 +3,14 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import authReducer from './reducers/authReducers'
 import profileReducer from './reducers/profileReducer'
+import watchlistReducer from './reducers/watchlistReducer'
 
 // const initState = 0;
 
 const rootReducer = combineReducers({
   authReducer,
-  profileReducer
+  profileReducer,
+  watchlistReducer
 })
 
 const composeEnhancer = composeWithDevTools({

@@ -18,4 +18,11 @@ const getCandleData = (symbol, days) => {
   })
 }
 
-export { searchSymbol, getCandleData }
+const getWatchlist = () => {
+  return axios.get(`${apiConfig.baseUrl}/watchlist`).then(response => {
+    console.log(response.data)
+    return response.data
+  })
+}
+
+export { searchSymbol, getCandleData, getWatchlist }
