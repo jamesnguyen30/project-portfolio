@@ -5,14 +5,14 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
 
-const CommonAlert = ({ open, setOpen, title, severity, message }) => {
+const CommonAlert = ({ open, onClose, title, severity, message }) => {
   return (
     <Box>
       <Collapse in={open}>
         <Alert
         severity={severity}
         action={
-          <IconButton size='small' onClick={() => { setOpen(false) }}>
+          <IconButton size='small' onClick={() => { onClose() }}>
             <CloseIcon />
           </IconButton>
         }>
@@ -26,7 +26,7 @@ const CommonAlert = ({ open, setOpen, title, severity, message }) => {
 
 CommonAlert.propTypes = {
   open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   severity: PropTypes.string,
   message: PropTypes.string

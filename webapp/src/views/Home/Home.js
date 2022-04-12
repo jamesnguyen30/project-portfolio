@@ -6,10 +6,18 @@ import NewsPage from '../News/NewsPage'
 import WatchlistDrawer from '../../components/Watchlist/WatchlistDrawer'
 // import SecondaryDrawer from '../../components/Watchlist/SecondaryDrawer'
 import { useSelector, useDispatch } from 'react-redux'
-import { NOT_SIGNED_IN, SIGNED_IN, PROFILE_FETCHED } from '../../redux/actions/index'
+import {
+  NOT_SIGNED_IN,
+  SIGNED_IN,
+  PROFILE_FETCHED,
+  PROFILE_NOT_FETCHED
+} from '../../redux/actions/index'
 // import { checkSignInAction } from '../../redux/actions/authActions'
 import { getProfileAction } from '../../redux/actions/profileActions'
-import { checkAuthorizationAction } from '../../redux/actions/authActions'
+import { setAuthAction } from '../../redux/actions/authActions'
+// import { checkAuthorizationAction } from '../../redux/actions/authActions'
+import { auth } from '../../api/firebase/config'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const drawerWidth = 300
 const logoHeight = 80
@@ -26,25 +34,41 @@ const Home = props => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (authState.type === null) {
-      // dispatch(checkSignInAction())
-      dispatch(checkAuthorizationAction())
-    } else if (authState.type === SIGNED_IN) {
-      setCheckingAuth(false)
-      setIsSignedIn(true)
-      if (profileState.type === PROFILE_FETCHED) {
-        dispatch(getProfileAction())
+    // observe auth state
+    const unsubcribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        if (authState.type !== SIGNED_IN) {
+          // user logged in
+          console.log('user is logged in ')
+          setCheckingAuth(false)
+          setIsSignedIn(true)
+          dispatch(setAuthAction(user))
+        }
+        if (profileState.type !== PROFILE_FETCHED) {
+          dispatch(getProfileAction(user))
+        }
+      } else {
+        if (authState.type !== NOT_SIGNED_IN) {
+          console.log('user is not logged in ')
+          // user not logged in
+          setCheckingAuth(false)
+          setIsSignedIn(false)
+          dispatch(setAuthAction(user))
+        }
+        if (profileState.type !== PROFILE_NOT_FETCHED) {
+          dispatch(getProfileAction(user))
+        }
       }
-    } else if (authState.type === NOT_SIGNED_IN) {
-      setCheckingAuth(false)
-      setIsSignedIn(false)
+    })
+    return function cleanup () {
+      unsubcribe()
     }
   }, [authState])
 
   return (
     <Box sx={{ display: 'flex', backgroundColor: 'secondary.white' }}>
-      <WatchlistDrawer drawerWidth={drawerWidth} logoHeight={logoHeight}/>
-      {page === 0 && <NewsPage drawerWidth={drawerWidth} isCheckingAuth={checkingAuth} isSignedIn={isSignedIn}/>}
+      <WatchlistDrawer drawerWidth={drawerWidth} logoHeight={logoHeight} />
+      {page === 0 && <NewsPage drawerWidth={drawerWidth} isCheckingAuth={checkingAuth} isSignedIn={isSignedIn} />}
       {page === 2 && <div><Typography>Watchlist page in progress</Typography></div>}
       {page === 3 && <div><Typography>Settings page in progress</Typography></div>}
     </Box>

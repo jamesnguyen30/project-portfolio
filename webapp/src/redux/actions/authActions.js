@@ -1,7 +1,9 @@
 import {
   SIGNED_IN,
+  // SIGN_IN_SUCCESS,
+  // SIGN_IN_FAIL,
   NOT_SIGNED_IN,
-  SIGNED_IN_ERROR,
+  // SIGNED_IN_ERROR,
   SIGN_OUT_ERROR,
   SIGNED_UP_ERROR
 //   SIGN_OUT
@@ -12,7 +14,11 @@ import {
   getIdToken
 } from '../../utils/storage'
 
-import { signUp, signIn, signOut, checkSignin, checkAuthorization } from '../../api/auth'
+import {
+  signUp,
+  // signIn,
+  signOut, checkSignin, checkAuthorization
+} from '../../api/auth'
 
 const signUpAction = (email, password) => {
   return dispatch => {
@@ -30,22 +36,22 @@ const signUpAction = (email, password) => {
   }
 }
 
-const signInAction = (email, password) => {
-  return dispatch => {
-    signIn(email, password).then(idToken => {
-      saveIdToken(idToken)
-      dispatch({
-        type: SIGNED_IN,
-        payload: idToken
-      })
-    }).catch(err => {
-      dispatch({
-        type: SIGNED_IN_ERROR,
-        payload: err.code
-      })
-    })
-  }
-}
+// const signInAction = (email, password) => {
+//   return dispatch => {
+//     signIn(email, password).then(idToken => {
+//       saveIdToken(idToken)
+//       dispatch({
+//         type: SIGN_IN_SUCCESS,
+//         payload: idToken
+//       })
+//     }).catch(err => {
+//       dispatch({
+//         type: SIGN_IN_FAIL,
+//         payload: err.code
+//       })
+//     })
+//   }
+// }
 
 const signOutAction = () => {
   return dispatch => {
@@ -109,11 +115,27 @@ const checkAuthorizationAction = () => {
   }
 }
 
+const setAuthAction = (user) => {
+  return dispatch => {
+    if (user) {
+      dispatch({
+        type: SIGNED_IN,
+        payload: user.accessToken
+      })
+    } else {
+      dispatch({
+        type: NOT_SIGNED_IN
+      })
+    }
+  }
+}
+
 export {
   signUpAction,
-  signInAction,
+  // signInAction,
   signOutAction,
   resetAuthState,
   checkSignInAction,
-  checkAuthorizationAction
+  checkAuthorizationAction,
+  setAuthAction
 }

@@ -88,12 +88,6 @@ const AppBar = (props) => {
     setAnchorEl(null)
   }
 
-  // useEffect(() => {
-  //   if (profileState.type === null) {
-  //     dispatch(getProfileAction())
-  //   }
-  // }, [profileState])
-
   return (
     <AppBarContainer
       sx={{

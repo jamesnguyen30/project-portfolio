@@ -1,4 +1,4 @@
-import { React, useEffect, useCallback, useState } from 'react'
+import { React, useCallback, useState } from 'react'
 import {
   TextField, Button, Typography,
   Box, Stack
@@ -6,21 +6,22 @@ import {
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './styles'
-import { useSelector, useDispatch } from 'react-redux'
-import { signInAction, resetAuthState } from '../../redux/actions/authActions'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { signInAction, resetAuthState } from '../../redux/actions/authActions'
+import { signIn as signInApi } from '../../api/auth'
 import CommonAlert from '../../components/alerts/CommonAlert'
 
-import {
-  SIGNED_IN,
-  SIGNED_IN_ERROR
-} from '../../redux/actions/index'
+// import {
+//   SIGNED_IN,
+//   SIGNED_IN_ERROR
+// } from '../../redux/actions/index'
 
 const SigninPage = (props) => {
-  const [openErrorAlert, setOpenErrorAlert] = useState(false)
-  const [errorTitle, setErrorTitle] = useState()
-  const [errorMessage, setErrorMessage] = useState()
+  // const [openErrorAlert, setOpenErrorAlert] = useState(false)
+  const [errorTitle, setErrorTitle] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const { handleSubmit, control, formState: { errors } } = useForm(
     {
       defaultValues: {
@@ -30,36 +31,50 @@ const SigninPage = (props) => {
     }
   )
 
-  const authState = useSelector(state => state.authReducer)
+  // const authState = useSelector(state => state.authReducer)
 
   const navigation = useNavigate()
 
   const signIn = useCallback((email, password) => {
-    setOpenErrorAlert(false)
-    dispatch(signInAction(email, password))
-  })
-
-  useEffect(() => {
-    if (authState.type === SIGNED_IN) {
+    signInApi(email, password).then(_ => {
       navigation('/')
-    } else if (authState.type === SIGNED_IN_ERROR) {
-      switch (authState.error) {
+    }).catch(err => {
+      switch (err.code) {
         case 'auth/user-not-found':
-          setOpenErrorAlert(true)
-          setErrorTitle('No account found')
-          setErrorMessage('No account registered with this email. Please sign up :)')
+          setErrorTitle('User not found')
+          setErrorMessage('This is email is not signed up')
           break
         case 'auth/wrong-password':
-          setOpenErrorAlert(true)
-          setErrorTitle('Wrong email or password')
-          setErrorMessage('Please try again')
+          setErrorTitle('Invalid credentials')
+          setErrorMessage('Wrong email or password')
           break
         default:
           break
       }
-      dispatch(resetAuthState())
-    }
-  }, [authState])
+    })
+  })
+
+  // useEffect(() => {
+  //   if (authState.type === SIGNED_IN) {
+  //     navigation('/')
+  //   } else if (authState.type === SIGNED_IN_ERROR) {
+  //     switch (authState.error) {
+  //       case 'auth/user-not-found':
+  //         setOpenErrorAlert(true)
+  //         setErrorTitle('No account found')
+  //         setErrorMessage('No account registered with this email. Please sign up :)')
+  //         break
+  //       case 'auth/wrong-password':
+  //         setOpenErrorAlert(true)
+  //         setErrorTitle('Wrong email or password')
+  //         setErrorMessage('Please try again')
+  //         break
+  //       default:
+  //         break
+  //     }
+  //     dispatch(resetAuthState())
+  //   }
+  // }, [authState])
 
   const onSubmit = (data) => {
     signIn(data.email, data.password)
@@ -75,7 +90,8 @@ const SigninPage = (props) => {
           height: '100vh'
         }}>
         <Box>
-          <CommonAlert open={openErrorAlert} setOpen={setOpenErrorAlert}
+          <CommonAlert open={errorTitle !== null}
+            onClose={() => setErrorTitle(null)}
             title={errorTitle}
             severity='error'
             message={errorMessage} />
