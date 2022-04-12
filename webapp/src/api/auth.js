@@ -29,7 +29,11 @@ const signUp = (email, password) => {
 }
 
 const signOut = () => {
-  return firebaseSignout(auth)
+  const uid = auth.currentUser.uid
+  console.log(uid)
+  return axios.post(`${apiConfig.baseUrl}/revokeToken`, { uid: uid }).then(_ => {
+    return firebaseSignout(auth)
+  })
 }
 
 export { signUp, signIn, signOut, checkSignin, checkAuthorization }
