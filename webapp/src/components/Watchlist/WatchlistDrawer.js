@@ -45,6 +45,7 @@ const WatchlistDrawer = props => {
   const [editing, setEditing] = useState(false)
   const [showingCompany, setShowingCompany] = useState(false)
   const [stickers, setStickers] = useState(defaultStickers)
+  const [errorMessage, setErrorMessage] = useState(null)
   const drawerRef = useRef()
   const listRef = useRef()
 
@@ -97,12 +98,15 @@ const WatchlistDrawer = props => {
       dispatch(getWatchlistAction())
     } else if (watchlistState.type === WATCHLIST_FETCHED) {
       setStickers(watchlistState.watchlist)
+      setErrorMessage(null)
       setLoading(false)
     } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
-      setStickers([])
+      setStickers(defaultStickers)
+      setErrorMessage('Oops! error while fetching watchlist')
       setLoading(false)
     } else if (watchlistState.type === WATCHLIST_UPDATE_FAILED) {
       console.error('update watchlist failed')
+      setErrorMessage('Oops! error while updating watchlist')
       setLoading(false)
     }
   }, [watchlistState])
@@ -176,18 +180,40 @@ const WatchlistDrawer = props => {
             onClick={editing ? stopEditing : startEditing}
           >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
         </Stack>
+
+        {
+          errorMessage && (
+            <Box sx={{
+              marginLeft: 2,
+              marginRight: 2
+            }}>
+              <Typography
+                sx={{
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  color: 'primary.red'
+                }}
+              >
+                {
+                  errorMessage
+                }
+              </Typography>
+            </Box>
+          )
+        }
+
         {
           loading && (
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}>
-            <CircularProgress sx={{ color: 'primary.purple' }}/>
-            <Typography>Loading ... </Typography>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <CircularProgress sx={{ color: 'primary.purple' }} />
+              <Typography>Loading ... </Typography>
 
-          </Box>
+            </Box>
 
           )
 

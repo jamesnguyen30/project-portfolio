@@ -160,6 +160,8 @@ const LookupSymbolDrawer = props => {
         default:
           break
       }
+    } else {
+      setErrorMessage('Something really bad happend on the server :P ')
     }
     setLoading(false)
   }

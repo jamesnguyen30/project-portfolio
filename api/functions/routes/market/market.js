@@ -100,10 +100,8 @@ exports.seedWatchlist = (req,res) => {
   })
 }
 
-
 exports.deleteFromWatchlist = (req,res) => {
   const {symbol} = req.body
-  console.log(req.body)
   const currentUser = auth.currentUser
   const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
   

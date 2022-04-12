@@ -9,27 +9,31 @@ import {
 const initState = {
   timeStamp: null,
   type: null,
-  error: null
+  error: null,
+  idToken: null
 }
 
 const authReducer = (state = initState, action) => {
+  console.log('auth reducer commited ')
+  console.log(action)
   switch (action.type) {
     case SIGNED_IN:
       return {
         ...state,
-        timeStamp: Date.now(),
         type: action.type,
-        error: null
+        error: null,
+        idToken: action.payload
       }
     case NOT_SIGNED_IN:
       return {
-        timeStamp: Date.now(),
+        timeStamp: null,
         type: action.type,
-        error: null
+        error: action.payload,
+        idToken: null
       }
     case SIGNED_IN_ERROR: case SIGN_OUT_ERROR: case SIGNED_UP_ERROR:
       return {
-        timeStamp: Date.now(),
+        ...state,
         type: action.type,
         error: action.payload
       }

@@ -68,7 +68,7 @@ const StickerHeaderGroup = (props) => {
 }
 
 StickerHeaderGroup.propTypes = {
-  assetFullname: PropTypes.string.isRequired
+  assetFullname: PropTypes.string
 }
 
 StickerHeaderGroup.defaultProps = {

@@ -6,8 +6,10 @@ import NewsPage from '../News/NewsPage'
 import WatchlistDrawer from '../../components/Watchlist/WatchlistDrawer'
 // import SecondaryDrawer from '../../components/Watchlist/SecondaryDrawer'
 import { useSelector, useDispatch } from 'react-redux'
-import { NOT_SIGNED_IN, SIGNED_IN } from '../../redux/actions/index'
-import { checkSignInAction } from '../../redux/actions/authActions'
+import { NOT_SIGNED_IN, SIGNED_IN, PROFILE_FETCHED } from '../../redux/actions/index'
+// import { checkSignInAction } from '../../redux/actions/authActions'
+import { getProfileAction } from '../../redux/actions/profileActions'
+import { checkAuthorizationAction } from '../../redux/actions/authActions'
 
 const drawerWidth = 300
 const logoHeight = 80
@@ -19,16 +21,20 @@ const Home = props => {
   const [isSignedIn, setIsSignedIn] = useState(false)
 
   const authState = useSelector(state => state.authReducer)
+  const profileState = useSelector(state => state.profileReducer)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('Checking sign in ')
     if (authState.type === null) {
-      dispatch(checkSignInAction())
+      // dispatch(checkSignInAction())
+      dispatch(checkAuthorizationAction())
     } else if (authState.type === SIGNED_IN) {
       setCheckingAuth(false)
       setIsSignedIn(true)
+      if (profileState.type === PROFILE_FETCHED) {
+        dispatch(getProfileAction())
+      }
     } else if (authState.type === NOT_SIGNED_IN) {
       setCheckingAuth(false)
       setIsSignedIn(false)

@@ -7,7 +7,12 @@ import {
 //   SIGN_OUT
 } from './index'
 
-import { signUp, signIn, signOut, checkSignin } from '../../api/auth'
+import {
+  saveIdToken,
+  getIdToken
+} from '../../utils/storage'
+
+import { signUp, signIn, signOut, checkSignin, checkAuthorization } from '../../api/auth'
 
 const signUpAction = (email, password) => {
   return dispatch => {
@@ -26,9 +31,12 @@ const signUpAction = (email, password) => {
 
 const signInAction = (email, password) => {
   return dispatch => {
-    signIn(email, password).then(data => {
+    signIn(email, password).then(idToken => {
+      console.log(idToken)
+      saveIdToken(idToken)
       dispatch({
-        type: SIGNED_IN
+        type: SIGNED_IN,
+        payload: idToken
       })
     }).catch(err => {
       dispatch({
@@ -77,4 +85,35 @@ const checkSignInAction = () => {
   }
 }
 
-export { signUpAction, signInAction, signOutAction, resetAuthState, checkSignInAction }
+const checkAuthorizationAction = () => {
+  const idToken = getIdToken()
+  return dispatch => {
+    if (idToken !== null) {
+      checkAuthorization(idToken).then(response => {
+        dispatch({
+          type: SIGNED_IN,
+          payload: idToken
+        })
+      }).catch(err => {
+        dispatch({
+          type: NOT_SIGNED_IN,
+          payload: err.response.error
+        })
+      })
+    } else {
+      dispatch({
+        type: NOT_SIGNED_IN,
+        payload: 'Need to sign in'
+      })
+    }
+  }
+}
+
+export {
+  signUpAction,
+  signInAction,
+  signOutAction,
+  resetAuthState,
+  checkSignInAction,
+  checkAuthorizationAction
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Divider, Stack, Typography,
   Toolbar, Avatar, Menu, MenuItem, Button
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProfileAction } from '../../redux/actions/profileActions'
+// import { getProfileAction } from '../../redux/actions/profileActions'
 import { signOutAction } from '../../redux/actions/authActions'
 
 const AppBarContainer = styled(MuiAppBar)(({ theme, open, drawerWidth = 250 }) => ({
@@ -88,11 +88,11 @@ const AppBar = (props) => {
     setAnchorEl(null)
   }
 
-  useEffect(() => {
-    if (profileState.type === null) {
-      dispatch(getProfileAction())
-    }
-  }, [profileState])
+  // useEffect(() => {
+  //   if (profileState.type === null) {
+  //     dispatch(getProfileAction())
+  //   }
+  // }, [profileState])
 
   return (
     <AppBarContainer
@@ -125,7 +125,6 @@ const AppBar = (props) => {
         />
 
         <Stack >
-          {/* <MyLink>My_UserName_And_Avatar</MyLink> */}
           {
             props.isSignedIn && (
               <ProfileButton endIcon={<KeyboardArrowDownRoundedIcon />}

@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const {isSignedIn} = require("./middlewares/auth")
+const {isSignedIn, authorize} = require("./middlewares/auth")
 const {seedTest} = require("./utils/seedTest")
 
 //Prevent CORS error in client
@@ -13,8 +13,7 @@ const {
   signUp,
   signIn,
   signOut,
-  persistAuth,
-  // updatePassword,
+  checkSignin
 } = require("./routes/auth/auth");
 
 const {
@@ -39,10 +38,13 @@ app.get("/seedTest", seedTest);
 app.post("/signUp", signUp);
 app.post("/signIn", signIn);
 app.get("/signOut", signOut);
-app.get("/isSignedIn", isSignedIn, (req,res)=>{
-  res.send("Signed In")
-});
-app.post("/testPersist", persistAuth);
+app.get('/isSignedIn', checkSignin)
+app.post('/authorize', authorize, (req,res)=>{
+  return res.send("signed in")
+})
+// app.get("/isSignedIn", isSignedIn, (req,res)=>{
+//   res.send("Signed In")
+// });
 
 app.get('/profile', isSignedIn, getProfile)
 app.post('/profile', isSignedIn, updateProfile)
