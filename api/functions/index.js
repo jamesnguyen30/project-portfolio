@@ -13,7 +13,6 @@ const {
   signUp,
   signIn,
   signOut,
-  checkSignin
 } = require("./routes/auth/auth");
 
 const {
@@ -38,13 +37,9 @@ app.get("/seedTest", seedTest);
 app.post("/signUp", signUp);
 app.post("/signIn", signIn);
 app.get("/signOut", signOut);
-app.get('/isSignedIn', checkSignin)
-app.post('/authorize', authorize, (req,res)=>{
-  return res.send("signed in")
+app.get('/isSignedIn', authorize, (req,res)=>{
+  return res.send("ok")
 })
-// app.get("/isSignedIn", isSignedIn, (req,res)=>{
-//   res.send("Signed In")
-// });
 
 app.get('/profile', isSignedIn, getProfile)
 app.post('/profile', isSignedIn, updateProfile)

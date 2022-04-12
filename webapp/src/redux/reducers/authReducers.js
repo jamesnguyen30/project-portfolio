@@ -7,15 +7,12 @@ import {
 } from '../actions/index'
 
 const initState = {
-  timeStamp: null,
   type: null,
   error: null,
   idToken: null
 }
 
 const authReducer = (state = initState, action) => {
-  console.log('auth reducer commited ')
-  console.log(action)
   switch (action.type) {
     case SIGNED_IN:
       return {
@@ -26,7 +23,6 @@ const authReducer = (state = initState, action) => {
       }
     case NOT_SIGNED_IN:
       return {
-        timeStamp: null,
         type: action.type,
         error: action.payload,
         idToken: null

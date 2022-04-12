@@ -16,7 +16,8 @@ import { signUp, signIn, signOut, checkSignin, checkAuthorization } from '../../
 
 const signUpAction = (email, password) => {
   return dispatch => {
-    signUp(email, password).then(data => {
+    signUp(email, password).then(idToken => {
+      saveIdToken(idToken)
       dispatch({
         type: SIGNED_IN
       })
@@ -32,7 +33,6 @@ const signUpAction = (email, password) => {
 const signInAction = (email, password) => {
   return dispatch => {
     signIn(email, password).then(idToken => {
-      console.log(idToken)
       saveIdToken(idToken)
       dispatch({
         type: SIGNED_IN,

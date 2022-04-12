@@ -12,7 +12,7 @@ exports.isSignedIn = (req, res, next) => {
 };
 
 exports.authorize = (req,res,next) => {
-  const {idToken} = req.body
+  const idToken = req.headers.authorization.split(" ")[1]
   admin.auth().verifyIdToken(idToken).then(decodedToken=>{
     next()
   }).catch(err=>{

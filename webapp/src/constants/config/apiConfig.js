@@ -1,3 +1,4 @@
+import { getIdToken } from '../../utils/storage'
 const LOCAL_HOST_IP = 'localhost'
 const PORT = '5000'
 const LOCAL_HOST = `${LOCAL_HOST_IP}:${PORT}`
@@ -6,7 +7,12 @@ const FIREBASE_PROJECT = 'booksocialnetwork-4e3b7/us-central1/api'
 
 const apiConfig = {
   localhost: LOCAL_HOST,
-  baseUrl: `${HTTP_PROTOCOL}://${LOCAL_HOST}/${FIREBASE_PROJECT}`
+  baseUrl: `${HTTP_PROTOCOL}://${LOCAL_HOST}/${FIREBASE_PROJECT}`,
+  requestConfig: {
+    headers: {
+      Authorization: `Bearer ${getIdToken()}`
+    }
+  }
 }
 
 export default apiConfig

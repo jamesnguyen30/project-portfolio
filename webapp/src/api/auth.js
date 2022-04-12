@@ -12,6 +12,6 @@ const signOut = () => axios.get(`${apiConfig.baseUrl}/signOut`).then(response =>
 
 const checkSignin = () => axios.get(`${apiConfig.baseUrl}/isSignedIn`)
 
-const checkAuthorization = (idToken) => axios.post(`${apiConfig.baseUrl}/authorize`, { idToken: idToken })
+const checkAuthorization = () => axios.get(`${apiConfig.baseUrl}/isSignedIn`, apiConfig.requestConfig)
 
 export { signUp, signIn, signOut, checkSignin, checkAuthorization }

@@ -54,7 +54,6 @@ exports.signIn = (req, res) => {
 
   signInWithEmailAndPassword(auth, user.email, user.password)
     .then((userCredential) => {
-      // const data = getAuthResponse(userCredential)
       auth.currentUser.getIdToken().then(idToken => {
         return res.status(200).json(idToken);
       }).catch(err => {
@@ -76,29 +75,24 @@ exports.signOut = (req, res) => {
   });
 };
 
-exports.checkSignin = (req, res) => {
-  new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        unsubscribe()
-        resolve(true)
-      } else {
-        resolve(false)
-      }
-    })
-  }).then(isSignedIn => {
-    if (isSignedIn) {
-      return res.send('signed in')
-    } else {
-      return res.status(403).send("not signed in")
-    }
-  })
-}
-
-exports.verifyIdToken = (req, res) => {
-  const { idToken } = req.body
-
-}
+// exports.checkSignin = (req, res) => {
+//   new Promise((resolve, reject) => {
+//     const unsubscribe = onAuthStateChanged(auth, user => {
+//       if (user) {
+//         unsubscribe()
+//         resolve(true)
+//       } else {
+//         resolve(false)
+//       }
+//     })
+//   }).then(isSignedIn => {
+//     if (isSignedIn) {
+//       return res.send('signed in')
+//     } else {
+//       return res.status(403).send("not signed in")
+//     }
+//   })
+// }
 
 // exports.updatePassword = (req, res)=>{
 //   const newPassword = req.body.newPassword;
