@@ -36,16 +36,13 @@ const {
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
-// app.post("/signUp", signUp);
-// app.post("/signIn", signIn);
-// app.get("/signOut", signOut);
 app.get('/isSignedIn', authorize, (req,res)=>{
   return res.send("ok")
 })
 app.post('/revokeToken', revokeToken)
 
-// app.get('/profile', isSignedIn, getProfile)
-// app.post('/profile', isSignedIn, updateProfile)
+app.get('/profile', authorize, getProfile)
+app.post('/profile', authorize, updateProfile)
 
 // app.post("/searchSymbol", isSignedIn, searchSymbol)
 // app.get("/watchlist", isSignedIn, getWatchlist)
