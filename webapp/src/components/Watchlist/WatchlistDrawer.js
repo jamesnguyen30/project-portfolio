@@ -22,7 +22,6 @@ import {
   WATCHLIST_UPDATED,
   WATCHLIST_UPDATE_FAILED
 } from '../../redux/actions'
-// import { getQuote } from '../../api/market'
 
 const defaultStickers = [
   { name: 'Apple', symbol: 'AAPL', c: 199.99, d: 0.99 },

@@ -24,7 +24,7 @@ const signUpAction = (email, password) => {
     }).catch(err => {
       dispatch({
         type: SIGNED_UP_ERROR,
-        payload: err.response.data.error
+        payload: err
       })
     })
   }
@@ -41,7 +41,7 @@ const signInAction = (email, password) => {
     }).catch(err => {
       dispatch({
         type: SIGNED_IN_ERROR,
-        payload: err.response.data.error
+        payload: err
       })
     })
   }
