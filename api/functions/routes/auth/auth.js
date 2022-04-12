@@ -1,4 +1,4 @@
-const { auth, firestore } = require("../../utils/config")
+const { auth, firestore, admin } = require("../../utils/config")
 const { collection, addDoc } = require("firebase/firestore")
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } = require('firebase/auth')
 
@@ -6,51 +6,75 @@ exports.healthCheck = (req, res) => {
   res.status(200).json("Healthy API");
 };
 
-// const getAuthResponse = (userCredential) => ({
-//   displayName: userCredential.user.displayName,
-//   photoURL: userCredential.user.photoURL,
-// })
-
 exports.signUp = (req, res) => {
+  const { email, password } = req.body
+  // const newUser = {
+  //   email: req.body.email,
+  //   password: req.body.password,
+  // };
 
-  const newUser = {
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
-    .then(async (userCredential) => {
-      userCredential.user.getIdToken().then(
-        idToken => {
-          const profile = {
-            uid: userCredential.user.uid,
-            watchlist: [],
-          }
-          addDoc(collection(firestore, 'profiles'), profile)
-            .then(result => {
-              return res.status(200).json(idToken);
-            })
-            .catch(err => {
-              console.error(err)
-              return res.status(500).json({ message: "Server error, please check log" })
-            })
-        }
-      ).catch(err => {
-        console.error(err)
-        return res.status(500).json({ message: "Server error, please check log" })
-      })
-    })
-    .catch((error) => {
+  admin.auth().createUser({
+    email: email,
+    password: password,
+    displayName: 'New User 123',
+  }).then(userRecord => {
+    admin.auth().createCustomToken(userRecord.uid).then(idToken => {
+      console.log(idToken)
+      const profile = {
+        uid: userRecord.uid,
+        watchlist: [],
+      }
+      addDoc(collection(firestore, 'profiles'), profile)
+        .then(_ => {
+          return res.status(200).json(idToken);
+        })
+        .catch(err => {
+          console.error(err)
+          return res.status(500).json({ message: "Server error, please check log" })
+        })
+    }).catch(err => {
       console.error(err)
-      return res.status(500).json({ message: "Server error, please check log" })
-    });
+      return res.status(500).send("Couldn't generate id token")
+    })
+  }).catch(err=>{
+    console.error(err)
+    return res.status(401).json(err)
+  })
 };
 
+// createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
+//   .then(async (userCredential) => {
+//     userCredential.user.getIdToken().then(
+//       idToken => {
+//         const profile = {
+//           uid: userCredential.user.uid,
+//           watchlist: [],
+//         }
+//         addDoc(collection(firestore, 'profiles'), profile)
+//           .then(result => {
+//             return res.status(200).json(idToken);
+//           })
+//           .catch(err => {
+//             console.error(err)
+//             return res.status(500).json({ message: "Server error, please check log" })
+//           })
+//       }
+//     ).catch(err => {
+//       console.error(err)
+//       return res.status(500).json({ message: "Server error, please check log" })
+//     })
+//   })
+//   .catch((error) => {
+//     console.error(err)
+//     return res.status(500).json({ message: "Server error, please check log" })
+//   });
+
 exports.signIn = (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
-  };
+  const {email, password} = req.body
+  // const user = {
+  //   email: req.body.email,
+  //   password: req.body.password,
+  // };
 
   signInWithEmailAndPassword(auth, user.email, user.password)
     .then((userCredential) => {
@@ -68,11 +92,14 @@ exports.signIn = (req, res) => {
 };
 
 exports.signOut = (req, res) => {
-  signOut(auth).then(() => {
-    return res.status(200).json({ message: "Ok" });
-  }).catch((err) => {
-    return res.status(500).json({ message: err });
-  });
+  const uid = req.decodedToken.uid
+  admin.auth().revokeRefreshTokens(uid).then(_ => {
+    signOut(auth).then(() => {
+      return res.status(200).json({ message: "Ok" });
+    }).catch((err) => {
+      return res.status(500).json({ message: err });
+    });
+  })
 };
 
 // exports.checkSignin = (req, res) => {

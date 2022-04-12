@@ -16,6 +16,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
     "firebase": "^9.6.6",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0"
