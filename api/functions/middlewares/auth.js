@@ -17,7 +17,6 @@ exports.authorize = (req,res,next) => {
     req.decodedToken = decodedToken
     next()
   }).catch(err=>{
-    console.error(err)
     return res.status(403).send("unauthorized")
   })
 }

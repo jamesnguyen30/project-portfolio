@@ -11,9 +11,10 @@ const app = express();
 
 const {
   healthCheck,
-  signUp,
-  signIn,
-  signOut,
+  // signUp,
+  // signIn,
+  // signOut,
+  revokeToken
 } = require("./routes/auth/auth");
 
 const {
@@ -35,12 +36,13 @@ const {
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
-app.post("/signUp", signUp);
-app.post("/signIn", signIn);
-app.get("/signOut", signOut);
+// app.post("/signUp", signUp);
+// app.post("/signIn", signIn);
+// app.get("/signOut", signOut);
 app.get('/isSignedIn', authorize, (req,res)=>{
   return res.send("ok")
 })
+app.post('/revokeToken', revokeToken)
 
 // app.get('/profile', isSignedIn, getProfile)
 // app.post('/profile', isSignedIn, updateProfile)
