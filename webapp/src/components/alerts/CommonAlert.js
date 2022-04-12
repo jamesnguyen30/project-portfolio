@@ -10,7 +10,7 @@ const CommonAlert = ({ open, onClose, title, severity, message }) => {
     <Box>
       <Collapse in={open}>
         <Alert
-        severity={severity}
+        severity={severity !== null ? severity : 'info'}
         action={
           <IconButton size='small' onClick={() => { onClose() }}>
             <CloseIcon />

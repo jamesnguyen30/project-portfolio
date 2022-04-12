@@ -1,14 +1,9 @@
-import { React, useRef, useCallback, useEffect, useState } from 'react'
+import { React, useRef, useCallback, useState } from 'react'
 import { TextField, Button, Box, Typography, Stack } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import loginStyles from './styles'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { signUpAction, resetAuthState } from '../../redux/actions/authActions'
-import {
-  SIGNED_IN,
-  SIGNED_UP_ERROR
-} from '../../redux/actions'
+import { signUp as signUpApi } from '../../api/auth'
 import CommonAlert from '../../components/alerts/CommonAlert'
 
 const SignupPage = () => {
@@ -19,29 +14,24 @@ const SignupPage = () => {
       repeatPassword: ''
     }
   })
-  const dispatch = useDispatch()
-  const [openAlert, setOpenAlert] = useState(false)
-  const [alertTitle, setAlertTitle] = useState('')
-  const [alertMessage, setAlertMessage] = useState('')
-  const [severity, setSeverity] = useState('')
-
-  const authState = useSelector(state => state.authReducer)
+  const [alertTitle, setAlertTitle] = useState(null)
+  const [alertMessage, setAlertMessage] = useState(null)
+  const [severity, setSeverity] = useState(null)
 
   const navigation = useNavigate()
+  const password = useRef()
+  password.current = watch('password', '')
 
-  useEffect(() => {
-    if (authState.type === SIGNED_IN) {
-      setOpenAlert(true)
+  const signUp = useCallback((email, password) => {
+    signUpApi(email, password).then(_ => {
       setAlertTitle('Woo hoo! Awesome')
       setAlertMessage('You created a new account. Redirecting to home page in 3s ')
       setSeverity('success')
       setTimeout(() => {
         navigation('/')
       }, 3000)
-    } else if (authState.type === SIGNED_UP_ERROR) {
-      setAlertTitle('Error')
-      setSeverity('error')
-      switch (authState.error) {
+    }).catch(err => {
+      switch (err.code) {
         case 'auth/email-already-in-use':
           setAlertMessage('Email has already taken')
           break
@@ -52,16 +42,9 @@ const SignupPage = () => {
           setAlertMessage('Please try again later')
           break
       }
-      setOpenAlert(true)
-      dispatch(resetAuthState())
-    }
-  }, [authState])
-
-  const password = useRef()
-  password.current = watch('password', '')
-
-  const signUp = useCallback((email, password) => {
-    dispatch(signUpAction(email, password))
+      setSeverity('error')
+      setAlertTitle("There's an error :P")
+    })
   })
 
   const onSubmit = data => {
@@ -78,11 +61,12 @@ const SignupPage = () => {
     }}>
       <CommonAlert
         style={{ width: '100px' }}
-        open={openAlert}
-        setOpen={setOpenAlert}
+        open={alertTitle !== null}
+        onClose={() => setAlertTitle(null)}
         message={alertMessage}
         title={alertTitle}
-        severity={severity} />
+        severity={severity}
+        />
 
       <Typography variant="h4">Create a new account</Typography>
       <form onSubmit={e => e.preventDefault()}>
@@ -94,8 +78,7 @@ const SignupPage = () => {
             rules={{ required: 'This field is required' }}
             render={({ field: { onChange, value } }) => (
               <TextField onChange={onChange} value={value} label={'Email'} />
-            )
-            }
+            )}
           />
 
           <p style={loginStyles.FormValidationError}>{errors.email?.message}</p>
