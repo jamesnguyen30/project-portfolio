@@ -1,6 +1,3 @@
-// const firebaseConfig = require("../secrets/firebaseConfig");
-// const {initializeApp} = require("firebase/app")
-// const firebaseApp = initializeApp(firebaseConfig)
 const {getFirestore} = require('firebase-admin/firestore')
 const admin = require("firebase-admin")
 
@@ -10,13 +7,9 @@ admin.initializeApp({
   credential : admin.credential.cert(serviceAccount),
   projectId: 'booksocialnetwork-4e3b7'
 })
-const firestore = getFirestore()
-
-
-// connectFirestoreEmulator(firestore, 'localhost', 8080)
+firestore = getFirestore()
 
 module.exports = {
   firestore, 
   admin,
-  // firebaseApp
 }

@@ -119,8 +119,8 @@ const setAuthAction = (user) => {
   return dispatch => {
     if (user) {
       dispatch({
-        type: SIGNED_IN,
-        payload: user.accessToken
+        type: SIGNED_IN
+        // payload: user.accessToken
       })
     } else {
       dispatch({

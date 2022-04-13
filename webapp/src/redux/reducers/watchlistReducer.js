@@ -2,7 +2,8 @@ import {
   WATCHLIST_FETCHED,
   WATCHLIST_FETCH_FAILED,
   WATCHLIST_UPDATED,
-  WATCHLIST_UPDATE_FAILED
+  WATCHLIST_UPDATE_FAILED,
+  WATCHLIST_NOT_FETCHED
 } from '../actions/index'
 
 const initialState = {
@@ -35,6 +36,12 @@ const watchlistReducer = (state = initialState, action) => {
       return {
         ...state,
         type: action.type
+      }
+    case WATCHLIST_NOT_FETCHED:
+      return {
+        type: action.type,
+        watchlist: [],
+        error: null
       }
     default:
       return state

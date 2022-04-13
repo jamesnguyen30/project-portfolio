@@ -8,8 +8,8 @@ import {
 
 const initState = {
   type: null,
-  error: null,
-  idToken: null
+  error: null
+  // idToken: null
 }
 
 const authReducer = (state = initState, action) => {
@@ -18,14 +18,14 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         type: action.type,
-        error: null,
-        idToken: action.payload
+        error: null
+        // idToken: action.payload
       }
     case NOT_SIGNED_IN:
       return {
         type: action.type,
-        error: action.payload,
-        idToken: null
+        error: action.payload
+        // idToken: null
       }
     case SIGNED_IN_ERROR: case SIGN_OUT_ERROR: case SIGNED_UP_ERROR:
       return {

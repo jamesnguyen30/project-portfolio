@@ -61,13 +61,13 @@ const WatchlistItem = (props) => {
           fontSize: '15px',
           fontWeight: 'bold',
           color: props.change > 0 ? 'primary.darkGreen' : 'primary.red'
-        }}>${props.price}</Typography>
+        }}>${Number.parseFloat(props.price).toFixed(2)}</Typography>
         <Typography sx={{
           marginLeft: 1,
           fontSize: '15px',
           color: props.change > 0 ? 'primary.darkGreen' : 'primary.red',
           textAlign: 'right'
-        }}>{props.change > 0 ? '+' : '-'}${Math.abs(props.change)}</Typography>
+        }}>{props.change > 0 ? '+' : '-'}${Math.abs(Number.parseFloat(props.change).toFixed(2))}</Typography>
         {
           props.editing && (
             <UtilityActionButton

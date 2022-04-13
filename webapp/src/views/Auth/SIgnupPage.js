@@ -9,9 +9,9 @@ import CommonAlert from '../../components/alerts/CommonAlert'
 const SignupPage = () => {
   const { handleSubmit, control, formState: { errors }, watch } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
-      repeatPassword: ''
+      email: 'a@a.com',
+      password: 'password',
+      repeatPassword: 'password'
     }
   })
   const [alertTitle, setAlertTitle] = useState(null)

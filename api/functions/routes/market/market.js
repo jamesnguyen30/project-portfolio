@@ -1,161 +1,164 @@
-const {auth, firestore} = require('../../utils/config')
+const { admin, firestore } = require('../../utils/config')
 const {
-  searchSymbol, 
+  searchSymbol,
   candleData,
-  historicalData,
   getQuote
 } = require('../../lib/marketApi')
 
-const {collection, getDocs, query, where, arrayUnion, arrayRemove, updateDoc} = require('firebase/firestore')
-const { isTemplateLiteralTypeNode } = require('typescript')
 
-exports.searchSymbol = (req,res) => {
+exports.searchSymbol = (req, res) => {
   const query = req.body.q
-  searchSymbol(query).then(response=>{
+  searchSymbol(query).then(response => {
     return res.status(200).json(response.data)
-  }).catch(err=>{
+  }).catch(err => {
     console.error(err)
-    return res.status(500).json({mesasge: "Server error, please check log"})
+    return res.status(500).json({ mesasge: "Server error, please check log" })
   })
 }
 
-exports.getQuote = (req,res) => {
-  const {symbol} = req.body
-  getQuote(symbol).then(response=>{
+exports.getQuote = (req, res) => {
+  const { symbol } = req.body
+  getQuote(symbol).then(response => {
     return res.json(response.data)
-  }).catch(err=>{
+  }).catch(err => {
     console.error(err)
-    return res.status(500).json({message: 'Server error! please check log'})
+    return res.status(500).json({ message: 'Server error! please check log' })
   })
 }
 
-exports.getWatchlist = (req,res) => {
-  const currentUser = auth.currentUser
+const initProfileDoc = (user_id, initData = []) => {
+  return firestore.collection('profile').doc(user_id).set({
+    watchlist: initData
+  })
+}
 
-  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
-  getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(async snapshot=>{
-      const watchlist = snapshot.data().watchlist
+exports.getWatchlist = (req, res) => {
+  const { user_id } = req.decodedToken
 
+  const profileDoc = firestore.collection("profile").doc(user_id)
+
+  profileDoc.get().then(async docRef => {
+    if (docRef.exists) {
+      const { watchlist } = docRef.data()
       try{
-        for(var i = 0;i < watchlist.length;i++) {
-          const quote= await getQuote(watchlist[i])
+        for(var i = 0; i < watchlist.length; i++){
+          const quote = await getQuote(watchlist[i])
           watchlist[i] = {name: watchlist[i], ...quote.data}
         }
-        
         return res.json(watchlist)
-      } catch (err) {
+      } catch (err){
         console.error(err)
-        return res.status(500).json({message: 'Server error'})
+        return res.status(500).send("API server error")
       }
-      // historicalData(watchlist).then(response=>{
-      //   return res.status(200).json(response.data)
-      // }).catch(err=>{
-      //   console.error(err)
-      //   return res.status(500).json({message: 'Server error'})
-      // })
-    })
-  }).catch(err=>{
-    console.error(err)
-    return res.status(500)
-  })
-} 
-
-exports.addToWatchlist = (req,res) => {
-  const {symbol} = req.body
-  const currentUser = auth.currentUser
-  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
-  
-  getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(snapshot => {
-      updateDoc(snapshot.ref, {watchlist: arrayUnion(symbol)}).then(_ => {
-        return res.status(200).json({message: 'success'})
-      }).catch(err=>{
+    } else {
+      initProfileDoc(user_id).then(_ => {
+        return res.json([])
+      }).catch(err => {
         console.error(err)
-        return res.status(500).json({message: "Server error"})
+        return res.status(500).send("Error while creating document")
       })
-    })
-  }).catch(err=>{
+    }
+  }).catch(err => {
     console.error(err)
-    return res.status(500).json({message: "Server error"})
+    return res.send('error')
   })
 }
 
-exports.seedWatchlist = (req,res) => {
-  const currentUser = auth.currentUser
-  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
-  
-  getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(snapshot => {
-      updateDoc(snapshot.ref, {watchlist: ['AAPL', 'AMZN', 'GOOGL', 'TSLA']}).then(_ => {
-        return res.status(200).json({message: 'success'})
-      }).catch(err=>{
+exports.addToWatchlist = (req, res) => {
+
+  const { user_id } = req.decodedToken
+  const { symbol } = req.body
+  const profileDoc = firestore.collection('profile').doc(user_id)
+
+  profileDoc.get().then(docRef => {
+    if (docRef.exists) {
+      profileDoc.update({
+        watchlist: admin.firestore.FieldValue.arrayUnion(symbol)
+      }).then(_ => {
+        return res.send("ok")
+      }).catch(err => {
         console.error(err)
-        return res.status(500).json({message: "Server error"})
+        return res.status(500).send("Error while updating document")
       })
-    })
-  }).catch(err=>{
-    console.error(err)
-    return res.status(500).json({message: "Server error"})
+    } else {
+      initProfileDoc(user_id, [symbol]).then(_ => {
+        return res.send('ok')
+      }).catch(err => {
+        console.error(err)
+        return res.status(500).send("Error while updating document")
+      })
+    }
+  })
+
+}
+
+// exports.seedWatchlist = (req, res) => {
+// }
+
+exports.deleteFromWatchlist = (req, res) => {
+  const { user_id } = req.decodedToken
+  const { symbol } = req.body
+  const profileDoc = firestore.collection('profile').doc(user_id)
+
+  profileDoc.get().then(docRef => {
+    if (docRef.exists) {
+      profileDoc.update({
+        watchlist: admin.firestore.FieldValue.arrayRemove(symbol)
+      }).then(_ => {
+        return res.send("ok")
+      }).catch(err => {
+        console.error(err)
+        return res.status(500).send("Error while updating document")
+      })
+    } else {
+      initProfileDoc(user_id, [symbol]).then(_ => {
+        return res.send('ok')
+      }).catch(err => {
+        console.error(err)
+        return res.status(500).send("Error while updating document")
+      })
+    }
   })
 }
 
-exports.deleteFromWatchlist = (req,res) => {
-  const {symbol} = req.body
-  const currentUser = auth.currentUser
-  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
-  
-  getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(snapshot => {
-      updateDoc(snapshot.ref, {watchlist: arrayRemove(symbol)}).then(_ => {
-        return res.status(200).json({message: 'success'})
-      }).catch(err=>{
-        console.error(err)
-        return res.status(500).json({message: "Server error"})
-      })
-    })
-  }).catch(err=>{
-    console.error(err)
-    return res.status(500).json({message: "Server error"})
-  })
-}
+exports.reorderWatchlist = (req, res) => {
+  const { user_id } = req.decodedToken
+  const { oldIdx, newIdx } = req.body
 
-exports.reorderWatchlist = (req,res) => {
-  const currentUser = auth.currentUser
-  const profileQuery = query(collection(firestore, 'profiles'),where("uid", "==", currentUser.uid))
-  const {oldIdx, newIdx} = req.body
+  const profileDoc = firestore.collection('profile').doc(user_id)
 
-  getDocs(profileQuery).then(snapshots => {
-    snapshots.forEach(snapshot => {
-      let watchlist = snapshot.data().watchlist
-      if(oldIdx < 0 || oldIdx >= watchlist.length || newIdx < 0 || newIdx >= watchlist.length){
-        return res.status(400).json({message: "oldIdx or newIdx is out of range"}) 
+  profileDoc.get().then(docRef => {
+    if(docRef.exists){
+      const {watchlist} = docRef.data()
+      if (oldIdx < 0 || oldIdx >= watchlist.length || newIdx < 0 || newIdx >= watchlist.length) {
+        return res.status(401).json({ message: "oldIdx or newIdx is out of range" })
       }
 
       var tmp = watchlist[oldIdx]
       watchlist[oldIdx] = watchlist[newIdx]
       watchlist[newIdx] = tmp
 
-
-      updateDoc(snapshot.ref, {watchlist: watchlist}).then(_ => {
-        return res.status(200).json({message: 'success'})
-      }).catch(err=>{
+      profileDoc.update({watchlist: watchlist}).then(_ => {
+        return res.send("ok")
+      }).catch(err => {
         console.error(err)
-        return res.status(500).json({message: 'Server error'})
+        return res.status(500).send("Error while updating document")
       })
-    })
+    } else {
+      return res.status(401).send("watchlist is empty")
+    }
   }).catch(err=>{
     console.error(err)
-    return res.status(500).json({message: 'Server error'})
+    return res.status(500).send("server error")
   })
 }
 
-exports.getCandleData = (req,res) => {
-  const {symbol, days} = req.body
-  candleData(symbol, days!== null ? days: 30).then(response=>{
+exports.getCandleData = (req, res) => {
+  const { symbol, days } = req.body
+  candleData(symbol, days !== null ? days : 30).then(response => {
     return res.status(200).json(response.data)
-  }).catch(err=>{
+  }).catch(err => {
     console.error(err)
-    return res.status(500).json({messge: "Server error"})
+    return res.status(500).json({ messge: "Server error" })
   })
 }

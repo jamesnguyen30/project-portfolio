@@ -1,11 +1,16 @@
 import {
   WATCHLIST_FETCHED,
   WATCHLIST_FETCH_FAILED,
+  WATCHLIST_NOT_FETCHED,
   WATCHLIST_UPDATED,
   WATCHLIST_UPDATE_FAILED
 } from './index'
 
-import { getWatchlist, addWatchlistItem, removeWatchlistItem } from '../../api/market'
+import {
+  getWatchlist,
+  addWatchlistItem,
+  removeWatchlistItem
+} from '../../api/market'
 
 const getWatchlistAction = () => {
   return dispatch => {
@@ -57,4 +62,15 @@ const removeWatchlistAction = (symbol) => {
   }
 }
 
-export { getWatchlistAction, addWatchlistAction, removeWatchlistAction }
+const resetWatchlistState = () => {
+  return dispatch => dispatch({
+    type: WATCHLIST_NOT_FETCHED
+  })
+}
+
+export {
+  getWatchlistAction,
+  addWatchlistAction,
+  removeWatchlistAction,
+  resetWatchlistState
+}

@@ -1,9 +1,9 @@
 import axios from 'axios'
-import apiConfig from '../constants/config/apiConfig'
+import { apiConfig, getRequestConfig } from '../constants/config/apiConfig'
 
 const searchSymbol = (query) => {
   console.log('searching symbol ' + query)
-  return axios.post(`${apiConfig.baseUrl}/searchSymbol`, { q: query }).then(response => {
+  return axios.post(`${apiConfig.baseUrl}/searchSymbol`, { q: query }, getRequestConfig()).then(response => {
     return response.data
   })
 }
@@ -19,7 +19,7 @@ const getCandleData = (symbol, days) => {
 }
 
 const getWatchlist = () => {
-  return axios.get(`${apiConfig.baseUrl}/watchlist`).then(response => {
+  return axios.get(`${apiConfig.baseUrl}/watchlist`, getRequestConfig()).then(response => {
     console.log(response.data)
     return response.data
   })

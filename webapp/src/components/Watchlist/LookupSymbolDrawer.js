@@ -87,10 +87,6 @@ const LookupSymbolDrawer = props => {
   // const errorApi = false
   const apiCallback = (query) => {
     return searchSymbol(query)
-    // Return mock data
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => resolve(JSON.parse(mockResult)), 5000)
-    // })
   }
 
   const handleResult = result => {

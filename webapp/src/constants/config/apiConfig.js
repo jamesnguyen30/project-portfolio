@@ -7,12 +7,15 @@ const FIREBASE_PROJECT = 'booksocialnetwork-4e3b7/us-central1/api'
 
 const apiConfig = {
   localhost: LOCAL_HOST,
-  baseUrl: `${HTTP_PROTOCOL}://${LOCAL_HOST}/${FIREBASE_PROJECT}`,
-  requestConfig: {
+  baseUrl: `${HTTP_PROTOCOL}://${LOCAL_HOST}/${FIREBASE_PROJECT}`
+}
+
+const getRequestConfig = () => (
+  {
     headers: {
       Authorization: `Bearer ${getIdToken()}`
     }
   }
-}
+)
 
-export default apiConfig
+export { apiConfig, getRequestConfig }
