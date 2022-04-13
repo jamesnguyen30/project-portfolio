@@ -26,21 +26,21 @@ const getWatchlist = () => {
 }
 
 const addWatchlistItem = (symbol) => {
-  return axios.post(`${apiConfig.baseUrl}/watchlist`, { symbol: symbol }).then(response => {
+  return axios.post(`${apiConfig.baseUrl}/watchlist`, { symbol: symbol }, getRequestConfig()).then(response => {
     return response.data
   })
 }
 
 const removeWatchlistItem = (symbol) => {
   return axios.delete(`${apiConfig.baseUrl}/watchlist`,
-    { data: { symbol: symbol } })
+    { ...getRequestConfig(), data: { symbol: symbol } })
     .then(response => {
       return response.data
     })
 }
 
 const getQuote = (symbol) => {
-  return axios.post(`${apiConfig.baseUrl}/quote`, { symbol: symbol }).then(response =>
+  return axios.post(`${apiConfig.baseUrl}/quote`, { symbol: symbol }, getRequestConfig()).then(response =>
     (response.data))
 }
 

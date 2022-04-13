@@ -14,12 +14,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   // getWatchlistAction,
   addWatchlistAction,
-  removeWatchlistAction
+  removeWatchlistAction,
+  getWatchlistAction
 } from '../../redux/actions/watchlistActions'
 import {
   WATCHLIST_FETCHED,
   WATCHLIST_FETCH_FAILED,
-  // WATCHLIST_UPDATED,
+  WATCHLIST_UPDATED,
   WATCHLIST_UPDATE_FAILED
 } from '../../redux/actions'
 
@@ -93,7 +94,9 @@ const WatchlistDrawer = props => {
 
   useEffect(() => {
     setLoading(true)
-    if (watchlistState.type === WATCHLIST_FETCHED) {
+    if (watchlistState.type === WATCHLIST_UPDATED) {
+      dispatch(getWatchlistAction())
+    } else if (watchlistState.type === WATCHLIST_FETCHED) {
       setStickers(watchlistState.watchlist)
       setErrorMessage(null)
       setLoading(false)
