@@ -1,7 +1,7 @@
 from http.client import HTTP_PORT
 from fastapi import APIRouter, HTTPException, Depends
 # from ..dependencies import get_token_header
-from .validation import NewsModel
+from .model import NewsModel
 from typing import Optional
 from db import news_db
 from db.mongodb.schemas import News
@@ -20,7 +20,6 @@ router = APIRouter(
 def get_all():
     try:
         all_news_objs = db.get_all_news()
-
         data = list()
         for news in all_news_objs:
             data.append(news.parse())
