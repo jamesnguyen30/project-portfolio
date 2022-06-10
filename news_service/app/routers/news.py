@@ -6,6 +6,7 @@ from typing import Optional
 from db import news_db
 from db.mongodb.schemas import News
 from utils import response
+from datetime import datetime
 
 db = news_db.NewsDb()
 
@@ -42,10 +43,18 @@ async def get_by_id(id: str):
 @router.post("/")
 async def save_news(news: NewsModel):
     try:
-        db.save(search_term = news.search_term, title = news.title, text = news.text, authors = news.authors, 
-        source = news.source, url = news.url, image_url = news.image_url, date = news.date
+        is_success = db.save(search_term = news.search_term, title = news.title, 
+        text = news.text, authors = news.authors, 
+        source = news.source, url = news.url, image_url = news.image_url, 
+        date = datetime.fromtimestamp(news.date), summary = news.summary, 
+        keywords=news.keywords, sentiment=news.sentiment
         )
-        return response.generate_body(200, message = 'saved')
+
+        if is_success:
+            return response.generate_body(200, message = 'saved')
+        else:
+            return response.generate_body(200, message = 'not saved, news url is already exists in db')
+
     except Exception as e:
         print(str(e))
         raise HTTPException(status_code = 500, detail = 'internal server error, check log')

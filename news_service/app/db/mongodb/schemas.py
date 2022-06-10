@@ -15,6 +15,9 @@ class News(mongoengine.Document):
     url = mongoengine.StringField(required = True)
     date = mongoengine.DateTimeField(default = datetime.now())
     image_url = mongoengine.StringField(default = None)
+    keywords = mongoengine.ListField(required = True)
+    summary = mongoengine.StringField(default = None)
+    sentiment = mongoengine.StringField(required = None)
 
 
     def parse(self) -> dict:
@@ -26,7 +29,10 @@ class News(mongoengine.Document):
             'source': self.source,
             'url': self.url,
             'date': self.date,
-            'image_url': self.image_url
+            'image_url': self.image_url,
+            'keywords': self.keywords,
+            'summary': self.summary,
+            'sentiment': self.sentiment,
         }
 
 

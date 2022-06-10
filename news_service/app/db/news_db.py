@@ -17,11 +17,16 @@ class NewsDb():
     def save(self, 
         search_term: str,  title: str, text: str, 
         authors: list, source: str, url: str, 
-        image_url: str, date: datetime) -> bool: 
+        image_url: str, date: datetime, keywords: list, 
+        summary: str, sentiment: str ) -> bool: 
+
         to_save = News()
         to_save.date = date 
 
         print("date = ", str(date))
+
+        if self.get_by_url(url):
+            return False
 
         to_save.search_term = search_term 
         to_save.title = title 
@@ -30,10 +35,13 @@ class NewsDb():
         to_save.source = source
         to_save.url = url
         to_save.image_url = image_url
+        to_save.keywords = keywords
+        to_save.summary = summary
+        to_save.sentiment = sentiment
 
         to_save.save()
 
-        return to_save
+        return True
     
     def get_all_news(self) -> list:
         return News.objects().all()
@@ -44,6 +52,10 @@ class NewsDb():
     
     def get_by_title(self, title) -> News:
         news = News.objects(title = title).first()
+        return news
+    
+    def get_by_url(self, url) -> News:
+        news = News.objects(url = url).first()
         return news
 
     def delete(self, obj):
