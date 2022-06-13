@@ -1,7 +1,7 @@
 import { React } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SigninPage from './views/Auth/SigninPage'
-import SignupPage from './views/Auth/SignupPage'
+import SignupPage from './views/Auth/SIgnupPage'
 import Playground from './views/Playground/Playground'
 import Home from './views/Home/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -62,6 +62,7 @@ const theme = createTheme({
 })
 
 function App () {
+  console.log('current folder ' + __dirname)
   return (
     <div className="App">
       <BrowserRouter>

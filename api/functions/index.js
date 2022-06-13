@@ -33,6 +33,10 @@ const {
   seedWatchlist
 } = require("./routes/market/market");
 
+const {
+  todayHeadlines
+} = require('./routes/news/news')
+
 app.use(cors())
 app.get("/healthCheck", healthCheck);
 app.get("/seedTest", seedTest);
@@ -41,10 +45,6 @@ app.get('/isSignedIn', authorize, (req,res)=>{
 })
 app.post('/revokeToken', revokeToken)
 
-// app.get('/profile', authorize, getProfile)
-// app.post('/profile', authorize, updateProfile)
-// app.get('/initProfile', authorize, createProfileData)
-
 app.post("/searchSymbol", authorize, searchSymbol)
 app.get("/watchlist", authorize, getWatchlist)
 app.post("/watchlist", authorize, addToWatchlist)
@@ -52,6 +52,9 @@ app.delete("/watchlist", authorize, deleteFromWatchlist)
 app.put("/watchlist", authorize, reorderWatchlist)
 app.post("/candleData", authorize, getCandleData)
 app.post("/quote", authorize, getQuote)
-// app.get('/seedWatchlist', authorize, seedWatchlist)
+
+app.get('/headlines', authorize, todayHeadlines)
+
+
 
 exports.api = functions.https.onRequest(app);

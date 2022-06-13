@@ -5,6 +5,9 @@ import PropTypes from 'prop-types'
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
 import StickerHeaderGroup from '../../components/News/StickerHeaderGroup'
+import {
+  getTodayHeadlines
+} from '../../api/news'
 
 // const mockSticker = [
 //   {
@@ -108,6 +111,13 @@ const HeadlineSection = (props) => {
     startChangePageAnimation()
   }
 
+  getTodayHeadlines().then(data => {
+    console.log(data)
+  }).catch(err => {
+    console.log(err)
+    print(err)
+  })
+
   return (
     <Box sx={{
       display: 'flex',
@@ -138,15 +148,15 @@ const HeadlineSection = (props) => {
               alignItems: 'center'
             }}>
             <Box>
-              <StickerHeaderGroup/>
+              <StickerHeaderGroup />
               <ImportantNews />
             </Box>
             <Box>
-              <StickerHeaderGroup/>
+              <StickerHeaderGroup />
               <ImportantNews />
             </Box>
             <Box>
-              <StickerHeaderGroup/>
+              <StickerHeaderGroup />
               <ImportantNews />
             </Box>
           </Stack>
@@ -164,7 +174,7 @@ const HeadlineSection = (props) => {
           hideNextButton
           hidePrevButton
           onChange={(event, pageNumber) => toPage(pageNumber)}
-          />
+        />
       </Box>
     </Box>
   )

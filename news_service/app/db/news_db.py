@@ -1,7 +1,7 @@
 from .mongodb.schemas import News
 from .mongodb import config
 from mongoengine import connect, disconnect
-from datetime import datetime
+from datetime import datetime 
 import pandas as pd
 import pathlib
 
@@ -22,8 +22,6 @@ class NewsDb():
 
         to_save = News()
         to_save.date = date 
-
-        print("date = ", str(date))
 
         if self.get_by_url(url):
             return False
@@ -72,6 +70,16 @@ class NewsDb():
         df = pd.DataFrame(news_list, columns = ['title', 'date', 'text', 'authors', 'source', 'url', 'image_url'])
 
         return df 
+    def get_today_headlines(self):
+        '''
+        get today headlines
+        '''
+        start_date = datetime.now().replace(hour = 0, minute = 0, second = 0, microsecond=0)
+        end_date = datetime.now().replace(hour = 23, minute = 59, second = 59)
+        headlines = News.objects(search_term = 'headlines')\
+        .filter(date__gte=start_date, date__lte = end_date)
+    
+        return headlines
 
     def close(self):
         disconnect()
