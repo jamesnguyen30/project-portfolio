@@ -37,7 +37,13 @@ const NewsSource = (props) => {
 
 NewsSource.propTypes = {
   alt: PropTypes.string.isRequired,
-  logoUrl: PropTypes.string
+  logoUrl: PropTypes.string,
+  time: PropTypes.string
+}
+
+NewsSource.defaultProps = {
+  alt: 'Sample News Source',
+  time: 'today'
 }
 
 export default NewsSource

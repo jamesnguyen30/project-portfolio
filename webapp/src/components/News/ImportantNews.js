@@ -4,10 +4,15 @@ import NewsSource from './NewsSource'
 import SummaryButton from './SummaryButton'
 import PropTypes from 'prop-types'
 
-const MOCK_URL = 'https://s.yimg.com/uu/api/res/1.2/umgx_Y8MT6e2Z0LvuwSMqw--~B/Zmk9c3RyaW07aD0zMjA7dz01NzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2022-03/2b7bbc10-ac60-11ec-b498-7d6d499b02df.cf.webp'
+// const MOCK_URL = 'https://s.yimg.com/uu/api/res/1.2/umgx_Y8MT6e2Z0LvuwSMqw--~B/Zmk9c3RyaW07aD0zMjA7dz01NzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2022-03/2b7bbc10-ac60-11ec-b498-7d6d499b02df.cf.webp'
 
 const ImportantNews = (props) => {
   const [openSummary, setOpenSummary] = useState(false)
+
+  const openInNewTab = (url) => {
+    window.open(url)
+  }
+
   const onModalClose = () => {
     setOpenSummary(false)
   }
@@ -15,6 +20,7 @@ const ImportantNews = (props) => {
   const onModalOpen = () => {
     setOpenSummary(true)
   }
+
   return (
     <Box
       sx={{
@@ -52,9 +58,9 @@ const ImportantNews = (props) => {
           borderTopRightRadius: 10
         }}
         component={'img'}
-        src={MOCK_URL} />
+        src={props.image_url} />
 
-      <NewsSource alt={'ABC news'} />
+      <NewsSource alt={props.source}/>
       <Typography
         className="stickerNewsTitle"
         sx={{
@@ -65,10 +71,15 @@ const ImportantNews = (props) => {
           maxHeight: 150,
           fontSize: '15px',
           fontWeight: 'bold',
-          margin: 2
+          margin: 2,
+          ':hover': {
+            textDecoration: 'underline'
+          }
         }}
+        onClick={() => openInNewTab(props.url)}
       >
-        Mortgage rate soars closer to 5% in its second huge jump this week. This should be a very long title and it can take up to 3 lines. When it overflows it should be truncated with ellipsis
+        {/* Mortgage rate soars closer to 5% in its second huge jump this week. This should be a very long title and it can take up to 3 lines. When it overflows it should be truncated with ellipsis */}
+        {props.title}-{props.sentiment}
       </Typography>
       <Box sx={{
         justifyContent: 'flex-end',
@@ -122,10 +133,10 @@ const ImportantNews = (props) => {
                 fontWeight: 'bold',
                 flex: 1,
                 marginRight: 2
-              }}>Summary: How Putin war on Ukraine hurts us all and it should be very long title</Typography>
+              }}>{props.title}</Typography>
               <Box sx={{ display: 'flex' }}>
                 <NewsSource alt={'ABC News'} />
-                <Button>Read full article</Button>
+                <Button onClick={() => openInNewTab(props.url)}>Read full article</Button>
               </Box>
 
             </Box>
@@ -136,20 +147,14 @@ const ImportantNews = (props) => {
                 height: 400,
                 overflow: 'auto'
               }}>
-                {
-                  [1, 2, 3, 4, 5].map((x, index) => (
-                  <ListItem
-                    key={index}>
-                    <Typography>
-                    There’s also an economic cost. Putin is destroying Ukraine and as for what he’s doing to Russia, that can only be described as financial suicide. Then there’s the harm he’s inflicting on the rest of the world, including the U.S.
-                    </Typography>
-                  </ListItem>
-                  ))
-                }
+                <ListItem>
+                  <Typography>
+                    {props.summary}
+                  </Typography>
+                </ListItem>
               </List>
             </Box>
             <Divider/>
-            <Typography sx={{ textAlign: 'right', fontSize: '12px' }}>powered by GPT-3</Typography>
           </Box>
         </Fade>
       </Modal>
@@ -160,7 +165,18 @@ const ImportantNews = (props) => {
 }
 
 ImportantNews.propTypes = {
-  sx: PropTypes.object
+  sx: PropTypes.object,
+  title: PropTypes.string.required,
+  url: PropTypes.string.required,
+  image_url: PropTypes.string.required,
+  source: PropTypes.string.required,
+  sentiment: PropTypes.string,
+  summary: PropTypes.string
+}
+
+ImportantNews.defaultProps = {
+
+  summary: ''
 }
 
 export default ImportantNews
