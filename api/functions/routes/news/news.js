@@ -4,11 +4,9 @@ const {
 
 exports.todayHeadlines = (req,res) => {
     todayHeadlines().then(data => {
-        console.log(data)
         return res.json(data)
     }).catch(err=>{
-        console.log(err)
-        return res.send("oops")
+        return res.status(404).send({'message': 'news api error'})
     })
 }
 

@@ -2,8 +2,14 @@ const axios = require('axios')
 const NEWS_API_URL = 'http://localhost:8000'
 
 exports.todayHeadlines = () => {
-    return axios.get(`${NEWS_API_URL}/news/headlines`).then(data => {
-        return data.data
+    return axios.get(`${NEWS_API_URL}/news/headlines`).then(response => {
+        var processedData = []
+        for(const news of response.data.data){
+            const {text, ...body} = news
+            processedData.push(body)
+        }
+        response.data.data = processedData
+        return response.data
     })
 }
 

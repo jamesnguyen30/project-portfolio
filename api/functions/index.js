@@ -53,7 +53,7 @@ app.put("/watchlist", authorize, reorderWatchlist)
 app.post("/candleData", authorize, getCandleData)
 app.post("/quote", authorize, getQuote)
 
-app.get('/headlines', authorize, todayHeadlines)
+app.get('/headlines', todayHeadlines)
 
 
 
