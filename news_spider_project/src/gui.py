@@ -16,6 +16,7 @@ import sys
 import pandas as pd
 import requests
 import numpy as np
+from collections import Counter
 
 
 SRC = pathlib.Path(__file__).parent
@@ -41,7 +42,7 @@ class MenuBar(tk.Menu):
         menu2.add_command(label = 'Option 2', command = lambda: print("Menu 2 Option 2 clicked"))
         menu2.add_command(label = 'Option 3', command = lambda: print("Menu 2 Option 3 clicked"))
         menu2.add_separator()
-        menu2.add_command(label = 'Option 4', command = lambda: print("Menu 2 Option 4 clicked"))
+        menu2.add_command(label = 'Option 4', command = lambda: print("Menui 2 Option 4 clicked"))
 
         self.add_cascade(label = "Menu 2", menu = menu2)
 
@@ -82,6 +83,7 @@ class MyApp(tk.Tk):
         self.scraper_running = None 
         self.current_keyword_index = None
         self.is_splash_running = None 
+        self.keywords_count = 0
 
         self.load_trending_keywords()
 
@@ -101,6 +103,20 @@ class MyApp(tk.Tk):
 
         except FileNotFoundError as e:
             print("Trending keyword file is not found")
+            traceback.print_exc()
+    
+    def get_following_keywords(self) -> Counter:
+        '''
+        @return
+           Counter following_keywords 
+        '''
+        try:
+            self._add_log_to_controll_panel("[INFO] Loading following keywords")
+            counter = self.news_collector.get_following_keywords()
+            self._add_log_to_controll_panel(f"[SUCCESS] Found {len(counter)} following keywords to scrape")
+            return counter
+        except FileNotFoundError as e:
+            self._add_log_to_controll_panel("[ERROR] following_keywords.txt not found in output dir")
             traceback.print_exc()
 
     def show_controll_panel(self):
@@ -230,17 +246,19 @@ class MyApp(tk.Tk):
             if self.tasks_done == None:
                 print("Starting from index 0")
                 self.current_keyword_index = 0
-                keywords = self.trending_keywords.most_common()
+                keywords = self.get_following_keywords().most_common()
+                self.keywords_count = len(keywords)
                 keyword, rank = keywords[self.current_keyword_index]
                 self.tasks_done = list()
                 self._start_scraper_async(keyword)
+            
                 self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
                 self._add_log_to_controll_panel(f"Scraping with keyword: {keyword}")
             else:
                 if self.check_all_tasks_done() == True:
-                    if self.current_keyword_index < len(self.trending_keywords) - 1:
+                    if self.current_keyword_index < self.keywords_count - 1:
                         self.current_keyword_index += 1
-                        keywords = self.trending_keywords.most_common()
+                        keywords = self.get_following_keywords().most_common()
                         keyword, rank = keywords[self.current_keyword_index]
                         self._start_scraper_async(keyword)
                         self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
@@ -251,9 +269,42 @@ class MyApp(tk.Tk):
                         tock = time.time() - tick
                         self._add_log_to_controll_panel(f"Elapsed time {tock} seconds")
                         self.is_scrapping = False
+                        self.keywords_count = 0
 
         self.main_frame.after(1000, self._loop)
     
+    # def start_scraping_following_keywords(self):
+
+    #     following_keywords = self.get_following_keywords()
+    #     print("following keywords ", following_keywords)
+
+    #     while(self.is_scrapping):
+    #         if self.tasks_done == None:
+    #             print("Starting from index 0")
+    #             self.current_keyword_index = 0
+    #             # keywords = self.trending_keywords.most_common()
+    #             following_keywords = self.get_following_keywords()
+    #             keyword, rank = keywords[self.current_keyword_index]
+    #             self.tasks_done = list()
+    #             self._start_scraper_async(keyword)
+    #             self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
+    #             self._add_log_to_controll_panel(f"Scraping with keyword: {keyword}")
+    #         else:
+    #             if self.check_all_tasks_done() == True:
+    #                 if self.current_keyword_index < len(self.trending_keywords) - 1:
+    #                     self.current_keyword_index += 1
+    #                     keywords = self.trending_keywords.most_common()
+    #                     keyword, rank = keywords[self.current_keyword_index]
+    #                     self._start_scraper_async(keyword)
+    #                     self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
+    #                     self._add_log_to_controll_panel(f"Scraping with keyword: {keyword}")
+    #                 else:
+    #                     self.tasks_done = None 
+    #                     self._add_log_to_controll_panel("Completely scraped all trending keywords")
+    #                     tock = time.time() - tick
+    #                     self._add_log_to_controll_panel(f"Elapsed time {tock} seconds")
+    #                     self.is_scrapping = False
+
     def start_scraping_trending_keywords(self):
         self.is_scrapping = True
     
@@ -337,8 +388,25 @@ class MyApp(tk.Tk):
                 print(row)
                 print("###")
                 print(e)
-
     
+    def merge_news_files(self):
+        try:
+            self._add_log_to_controll_panel("[INFO] Merging all news")
+            self.news_collector.merge_news_csv()
+            self._add_log_to_controll_panel("[SUCCESS] Merged all news successfully")
+        except Exception as e:
+            self._add_log_to_controll_panel("[ERROR] merge news file operation failed")
+            traceback.print_exc()
+    
+    # def process_news_files(self):
+    #     try:
+    #         self._add_log_to_controll_panel("[INFO] Processing news files")
+    #         allnews_file_path = self.news_collector.ALL_NEWS
+
+    #     except Exception as e:
+    #         self._add_log_to_controll_panel("[ERROR] Can't process data")
+    #         traceback.print_exc()
+
 if __name__ == '__main__':
     root = MyApp()
     root.title('My app')

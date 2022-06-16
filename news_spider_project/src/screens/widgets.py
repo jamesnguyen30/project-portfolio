@@ -77,8 +77,12 @@ class ControllPanel(Widget):
         reload_keywords = tk.Button(frame, text = 'reload keywords', command = self.controller.load_trending_keywords)
         reload_keywords.pack()
 
+        merge_news = tk.Button(frame, text = 'merge news', command = self.controller.merge_news_files)
+        merge_news.pack()
+
         process_data_button = tk.Button(frame, text = 'process data', command = self.controller.process_today_data)
         process_data_button.pack()
+
 
         check_db_health = tk.Button(frame, text = 'check api health', command = self.controller.check_api_health)
         check_db_health.pack()

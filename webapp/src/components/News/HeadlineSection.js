@@ -72,7 +72,7 @@ const HeadlineSection = (props) => {
   const [pageCount, setPageCount] = useState(5)
   const [loadingHeadlines, setLoadingHeadlines] = useState(true)
   const [headlinesPage, setHeadlinesPage] = useState(0)
-  const MAX_COUNT_PER_PAGE = 4
+  const MAX_COUNT_PER_PAGE = 3
 
   const newsState = useSelector(state => state.newsReducer)
 

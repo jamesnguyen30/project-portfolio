@@ -53,6 +53,9 @@ class ReutersSpider(scrapy.Spider):
 
         self.search_term = search_term
         self.sections = sections
+
+        if self.sections == None:
+            self.sections = 'business'
         self.start_date = start_date
         self.days_from_start_date = int(days_from_start_date)
 
@@ -101,7 +104,7 @@ class ReutersSpider(scrapy.Spider):
         # number of returned articles
         SIZE = 20
         print("start request")
-        url = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-search-v2?query={"keyword":"' + self.search_term + '","offset":0,"orderby":"display_date:desc","sections":"/' + self.sections+ '","size":' + str(SIZE) +',"website":"reuters"}&d=95&_website=reuters'
+        url = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-search-v2?query={"keyword":"' + self.search_term + '","offset":0,"orderby":"display_date:desc","sections":"/' + self.sections+ '","size":' + str(SIZE) +',"website":"reuters"}&d=99&_website=reuters'
         yield Request(url, callback=self.parse)
     
     def parse(self, response):

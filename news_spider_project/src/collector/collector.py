@@ -13,6 +13,8 @@ from datetime import datetime
 from multiprocessing import Process, Pool
 import sys
 import traceback
+from collections import Counter
+import pandas as pd
 
 now = datetime.now()
 
@@ -32,20 +34,22 @@ class NewsCollector():
 
         self.NEWS_SPIDER_PATH = os.path.join(
             ROOT, 'service', 'news_spider', 'news_spider')
+        self.SPIDER_OUTPUT_DIR = os.path.join(self.NEWS_SPIDER_PATH, 'spiders', 'output')
+
         self.SECRET_DIR = os.path.join(ROOT, 'secrets', 'newsapi_key.txt')
         self.OUTPUT_DIR = os.path.join(CWD, 'output')
+        self.ALL_NEWS = os.path.join(self.OUTPUT_DIR, f'allnews_{now.month}_{now.day}_{now.year}.csv')
 
         self.HEADLINE_CSV_PATH = os.path.join(
             self.OUTPUT_DIR, f'headlines_{now.month}_{now.day}_{now.year}.csv')
         self.SPIDER_NAMES = ['cnn_spider',
                              'market_watch_spider', 'reuters_spider']
 
+
         if os.path.exists(self.OUTPUT_DIR) == False:
             os.mkdir(self.OUTPUT_DIR)
             print(f"created new output dir {self.OUTPUT_DIR}")
 
-        # self.entity_extractor = entity_extractor.EntityExtractor(self.OUTPUT_DIR)
-        # self.trending_keyword_filename = self.entity_extractor.TRENDING_KEYWORDS_FILE
         self.collected_data = collected_data.CollectedData(self.HEADLINE_CSV_PATH)
         self.summarizer = summarizer.SimpleSummarizer()
     
@@ -169,6 +173,18 @@ class NewsCollector():
             print("Trending keywords:")
             print(counter)
             print(f"Trending keywords saved to {self.OUTPUT_DIR}")
+    
+    def get_following_keywords(self, debug = False):
+        counter = Counter()
+        with open(os.path.join(self.OUTPUT_DIR, 'following_keywords.txt'), 'r') as file:
+            for line in file.readlines():
+                line = line.strip()
+                if line == "": 
+                    continue
+                key, value = line.split(":")
+                value = int(value)
+                counter[key]=value
+        return counter
 
     def cnbc_parser(self, link):
         '''
@@ -282,6 +298,34 @@ class NewsCollector():
             'start_date': start_date,
             'days_from_start_date': days_from_start_date
         }
-
+    
     def get_fetched_headlines(self):
         return self.collected_data.df
+    
+    def merge_news_csv(self):
+
+        # output_path = os.path.join(self.OUTPUT_DIR, 'allnews.csv')
+        print(f"Merging news in directory: {self.ALL_NEWS}")
+        merged:pd.DataFrame = None
+
+        try:
+            merged = pd.read_csv(self.ALL_NEWS)
+        except FileNotFoundError as e:
+            print("allnews.csv is not found. A new one will be created")
+        
+        print(f"Loading csv files from {self.SPIDER_OUTPUT_DIR}")
+        
+        for subdirs, dirs, files in os.walk(self.SPIDER_OUTPUT_DIR):
+            for file in files:
+                if file.endswith('.csv'):
+                    df = pd.read_csv(os.path.join(subdirs, file))
+                    if merged is not None:
+                        merged = pd.concat([merged, df], ignore_index=True)
+                    else:
+                        merged = df
+
+        if merged is not None: 
+            merged = merged.dropna(subset=['text'])  
+            merged = merged.drop_duplicates()
+            merged.to_csv(self.ALL_NEWS)
+            print(f"Saved allnews.csv to {self.ALL_NEWS}")

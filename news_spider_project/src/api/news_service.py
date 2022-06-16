@@ -8,7 +8,7 @@ from datetime import datetime
 class NewsService():
     SRC = pathlib.Path(__file__).parent.parent
     DOTENV_PATH = os.path.join(SRC, 'secrets', 'dotenv')
-    DOTENV_PATH = '/home/nguyen/Desktop/news_spider_project/src/secrets/dotenv'
+    # DOTENV_PATH = '/home/nguyen/Desktop/news_spider_project/src/secrets/dotenv'
 
     if os.path.exists(DOTENV_PATH) == False:
         raise Exception('dotenv is not found. abort')

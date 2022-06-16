@@ -3,7 +3,7 @@ import {
   Divider, Stack, Typography,
   Toolbar, Avatar, Menu, MenuItem, Button
 } from '@mui/material'
-import SearchBox from '../../components/searchBox/SearchBox'
+// import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import PropTypes from 'prop-types'
@@ -101,12 +101,12 @@ const AppBar = (props) => {
       <Toolbar>
         <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
           <MyLink active={true}>Headlines</MyLink>
-          <MyLink>Latest</MyLink>
-          <MyLink>Analysis</MyLink>
-          <MyLink>Trends</MyLink>
+          {/* <MyLink>Following</MyLink> */}
+          <MyLink>Following</MyLink>
+          <MyLink>About Developer</MyLink>
         </Stack>
 
-        <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
+        {/* <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
           placeHolder={'Search news ...'}
         // onFocus={onSearchBoxFocus}
         // apiCallback={testApiCall}
@@ -116,7 +116,7 @@ const AppBar = (props) => {
         // setLoading={testLoading}
         // onFocus={onSearchBoxFocus}
         // onBlur={onSearchBoxBlur}
-        />
+        /> */}
 
         <Stack >
           {
