@@ -167,7 +167,8 @@ const LookupSymbolDrawer = props => {
   }
 
   const handleAdd = (item) => {
-    props.handleAdd(item)
+    console.log(item)
+    props.handleAdd(item.name, item.company)
   }
 
   const setLoading = isLoading => {

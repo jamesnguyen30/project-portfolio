@@ -46,12 +46,12 @@ const addWatchlistAction = (symbol, description) => {
   }
 }
 
-const removeWatchlistAction = (symbol) => {
+const removeWatchlistAction = (symbol, description) => {
   return dispatch => {
-    removeWatchlistItem(symbol).then(data => {
+    removeWatchlistItem(symbol, description).then(data => {
       dispatch({
         type: WATCHLIST_UPDATED,
-        payload: symbol
+        payload: { name: { symbol, description } }
       })
     }).catch(err => {
       dispatch({

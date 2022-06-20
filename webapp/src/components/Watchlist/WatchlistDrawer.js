@@ -60,18 +60,20 @@ const WatchlistDrawer = props => {
     setEditing(false)
   }
 
-  const onAddNewSticker = (sticker) => {
-    const result = stickers.find(x => x.name === sticker.name)
+  const onAddNewSticker = (symbol, description) => {
+    console.log(symbol, description)
+    const result = stickers.find(x => x.name.symbol === symbol)
     if (result === undefined) {
-      dispatch(addWatchlistAction(sticker.name, sticker.company))
+      dispatch(addWatchlistAction(symbol, description))
     }
   }
 
-  const onRemovedSticker = (name) => {
-    console.log('removing ' + name)
-    const result = stickers.find(x => x.name === name)
+  const onRemovedSticker = (symbol, description) => {
+    console.log('removing ')
+    const result = stickers.find(x => x.name.symbol === symbol)
     if (result !== undefined) {
-      dispatch(removeWatchlistAction(name))
+      console.log('hit api')
+      dispatch(removeWatchlistAction(symbol, description))
     }
   }
 
@@ -231,6 +233,7 @@ const WatchlistDrawer = props => {
                     !editing && (
                       <WatchlistItem
                         symbol={data.name.symbol}
+                        description={data.name.description}
                         price={data.c}
                         change={data.d}
                         editing={editing}
@@ -246,6 +249,7 @@ const WatchlistDrawer = props => {
                         changeIndex={changeIndex}>
                         <WatchlistItem
                           symbol={data.name.symbol}
+                          description={data.name.description}
                           price={data.c}
                           change={data.d}
                           data={data}

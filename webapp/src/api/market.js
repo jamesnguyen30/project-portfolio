@@ -31,9 +31,9 @@ const addWatchlistItem = (symbol, description) => {
   })
 }
 
-const removeWatchlistItem = (symbol) => {
+const removeWatchlistItem = (symbol, description) => {
   return axios.delete(`${apiConfig.baseUrl}/watchlist`,
-    { ...getRequestConfig(), data: { symbol: symbol } })
+    { ...getRequestConfig(), data: { symbol: symbol, description: description } })
     .then(response => {
       return response.data
     })

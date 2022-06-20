@@ -96,13 +96,13 @@ exports.addToWatchlist = (req, res) => {
 
 exports.deleteFromWatchlist = (req, res) => {
   const { user_id } = req.decodedToken
-  const { symbol } = req.body
+  const { symbol , description } = req.body
   const profileDoc = firestore.collection('profile').doc(user_id)
 
   profileDoc.get().then(docRef => {
     if (docRef.exists) {
       profileDoc.update({
-        watchlist: admin.firestore.FieldValue.arrayRemove(symbol)
+        watchlist: admin.firestore.FieldValue.arrayRemove({symbol, description})
       }).then(_ => {
         return res.send("ok")
       }).catch(err => {
