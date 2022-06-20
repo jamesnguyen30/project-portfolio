@@ -1,10 +1,13 @@
 import {
-  HEADLINES_FETCHED, HEADLINES_NOT_FETCHED
-//   HEADLINES_NOT_FETCHED
+  HEADLINES_FETCHED,
+  HEADLINES_NOT_FETCHED,
+  NEWS_FETCHED,
+  NEWS_NOT_FETCHED
 } from '../actions/index'
 
 import {
-  getTodayHeadlines
+  getTodayHeadlines,
+  getNewsByTerm
 } from '../../api/news'
 
 const getTodayHeadlinesAction = () => {
@@ -24,6 +27,24 @@ const getTodayHeadlinesAction = () => {
   }
 }
 
+const getNewsByTermAction = (term) => {
+  return dispatch => {
+    getNewsByTerm(term).then(response => {
+      dispatch({
+        type: NEWS_FETCHED,
+        payload: response.data
+      })
+    }).catch(err => {
+      console.log(err)
+      dispatch({
+        type: NEWS_NOT_FETCHED,
+        error: err
+      })
+    })
+  }
+}
+
 export {
-  getTodayHeadlinesAction
+  getTodayHeadlinesAction,
+  getNewsByTermAction
 }

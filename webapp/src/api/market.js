@@ -25,8 +25,8 @@ const getWatchlist = () => {
   })
 }
 
-const addWatchlistItem = (symbol) => {
-  return axios.post(`${apiConfig.baseUrl}/watchlist`, { symbol: symbol }, getRequestConfig()).then(response => {
+const addWatchlistItem = (symbol, description) => {
+  return axios.post(`${apiConfig.baseUrl}/watchlist`, { symbol: symbol, description: description }, getRequestConfig()).then(response => {
     return response.data
   })
 }

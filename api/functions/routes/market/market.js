@@ -42,7 +42,7 @@ exports.getWatchlist = (req, res) => {
       const { watchlist } = docRef.data()
       try{
         for(var i = 0; i < watchlist.length; i++){
-          const quote = await getQuote(watchlist[i])
+          const quote = await getQuote(watchlist[i].symbol)
           watchlist[i] = {name: watchlist[i], ...quote.data}
         }
         return res.json(watchlist)
@@ -67,13 +67,13 @@ exports.getWatchlist = (req, res) => {
 exports.addToWatchlist = (req, res) => {
 
   const { user_id } = req.decodedToken
-  const { symbol } = req.body
+  const { symbol, description } = req.body
   const profileDoc = firestore.collection('profile').doc(user_id)
 
   profileDoc.get().then(docRef => {
     if (docRef.exists) {
       profileDoc.update({
-        watchlist: admin.firestore.FieldValue.arrayUnion(symbol)
+        watchlist: admin.firestore.FieldValue.arrayUnion({'symbol': symbol, 'description': description})
       }).then(_ => {
         return res.send("ok")
       }).catch(err => {
@@ -89,7 +89,6 @@ exports.addToWatchlist = (req, res) => {
       })
     }
   })
-
 }
 
 // exports.seedWatchlist = (req, res) => {

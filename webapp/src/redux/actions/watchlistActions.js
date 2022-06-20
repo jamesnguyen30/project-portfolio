@@ -30,12 +30,12 @@ const getWatchlistAction = () => {
   }
 }
 
-const addWatchlistAction = (symbol) => {
+const addWatchlistAction = (symbol, description) => {
   return dispatch => {
-    addWatchlistItem(symbol).then(data => {
+    addWatchlistItem(symbol, description).then(data => {
       dispatch({
         type: WATCHLIST_UPDATED,
-        payload: symbol
+        payload: { name: { symbol: symbol, description: description } }
       })
     }).catch(err => {
       dispatch({

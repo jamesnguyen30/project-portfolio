@@ -25,9 +25,9 @@ import {
 } from '../../redux/actions'
 
 const defaultStickers = [
-  { name: 'Apple', symbol: 'AAPL', c: 199.99, d: 0.99 },
-  { name: 'Amazon', symbol: 'AMZN', c: 199.99, d: 0.99 },
-  { name: 'Google', symbol: 'GOOG', c: 199.99, d: 0.99 }
+  { name: { description: 'Apple', symbol: 'AAPL' }, c: 199.99, d: 0.99 },
+  { name: { description: 'Amazon', symbol: 'AMZN' }, c: 199.99, d: 0.99 },
+  { name: { description: 'Google', symbol: 'GOOGL' }, c: 199.99, d: 0.99 }
 ]
 
 // name(pin):"AAPL"
@@ -63,7 +63,7 @@ const WatchlistDrawer = props => {
   const onAddNewSticker = (sticker) => {
     const result = stickers.find(x => x.name === sticker.name)
     if (result === undefined) {
-      dispatch(addWatchlistAction(sticker.name))
+      dispatch(addWatchlistAction(sticker.name, sticker.company))
     }
   }
 
@@ -97,6 +97,7 @@ const WatchlistDrawer = props => {
     if (watchlistState.type === WATCHLIST_UPDATED) {
       dispatch(getWatchlistAction())
     } else if (watchlistState.type === WATCHLIST_FETCHED) {
+      console.log('Setting stickers')
       setStickers(watchlistState.watchlist)
       setErrorMessage(null)
       setLoading(false)
@@ -229,8 +230,7 @@ const WatchlistDrawer = props => {
                   {
                     !editing && (
                       <WatchlistItem
-                        data={data}
-                        symbol={data.name}
+                        symbol={data.name.symbol}
                         price={data.c}
                         change={data.d}
                         editing={editing}
@@ -245,7 +245,7 @@ const WatchlistDrawer = props => {
                         index={index}
                         changeIndex={changeIndex}>
                         <WatchlistItem
-                          symbol={data.name}
+                          symbol={data.name.symbol}
                           price={data.c}
                           change={data.d}
                           data={data}

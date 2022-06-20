@@ -7,6 +7,13 @@ const getTodayHeadlines = () => {
   })
 }
 
+const getNewsByTerm = (term) => {
+  return axios.get(`${apiConfig.baseUrl}/term/${term}`, getRequestConfig()).then(response => {
+    return response.data
+  })
+}
+
 export {
-  getTodayHeadlines
+  getTodayHeadlines,
+  getNewsByTerm
 }

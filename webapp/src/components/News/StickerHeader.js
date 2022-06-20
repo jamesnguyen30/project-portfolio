@@ -43,7 +43,7 @@ const StickerHeader = (props) => {
             fontWeight: 'bold',
             marginRight: 2
           }}
-        >{props.assetFullname} ({props.sticker})</Typography>
+        >{props.assetFullname}</Typography>
         <Typography
           sx={{
             fontSize: '15px',
@@ -58,7 +58,7 @@ const StickerHeader = (props) => {
             marginRight: 1,
             color: 'primary.green'
           }}
-        >+${props.change} (+99.9%)</Typography>
+        >+${props.change} ({props.changePercent}%)</Typography>
       </Box>
       <UtilityActionButton icon={<AddRoundedIcon/>}>Follow</UtilityActionButton>
 
@@ -67,10 +67,11 @@ const StickerHeader = (props) => {
 }
 
 StickerHeader.propTypes = {
-  assetFullname: PropTypes.string.isRequired,
-  sticker: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  change: PropTypes.number.isRequired
+  assetFullname: PropTypes.object,
+  sticker: PropTypes.string,
+  price: PropTypes.number,
+  change: PropTypes.number,
+  changePercent: PropTypes.number
 }
 
 StickerHeader.defaultProps = {

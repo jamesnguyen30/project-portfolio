@@ -3,6 +3,7 @@ import { Stack, Divider } from '@mui/material'
 // import PropTypes from 'prop-types'
 import ImportantNews from './ImportantNews'
 import CommonNews from './CommonNews'
+// import PropTypes from 'prop-types'
 
 // Render News according to received data
 const WatchingNewsSection = (props) => {
@@ -49,7 +50,6 @@ const WatchingNewsSection = (props) => {
 }
 
 WatchingNewsSection.propTypes = {
-
 }
 
 export default WatchingNewsSection

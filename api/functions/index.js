@@ -34,7 +34,8 @@ const {
 } = require("./routes/market/market");
 
 const {
-  todayHeadlines
+  todayHeadlines,
+  newsByTerm
 } = require('./routes/news/news')
 
 app.use(cors())
@@ -54,6 +55,7 @@ app.post("/candleData", authorize, getCandleData)
 app.post("/quote", authorize, getQuote)
 
 app.get('/headlines', todayHeadlines)
+app.get('/newsByTerm', newsByTerm)
 
 
 

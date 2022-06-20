@@ -9,16 +9,20 @@ import WatchingNewsSection from '../../components/News/WatchingNewsSection'
 import StickerHeader from '../../components/News/StickerHeader'
 import AppBar from '../../components/AppBar/AppBar'
 
-const mockSticker =
-  {
-    assetFullname: 'APPLE, Inc',
-    sticker: 'AAPL',
-    price: 1313.9,
-    change: 1.9
-  }
+import { useSelector } from 'react-redux'
+
+// const mockSticker =
+//   {
+//     assetFullname: 'APPLE, Inc',
+//     sticker: 'AAPL',
+//     price: 1313.9,
+//     change: 1.9
+//   }
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
+
+  const watchlistState = useSelector(state => state.watchlistReducer)
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
@@ -30,13 +34,18 @@ const NewsPage = (props) => {
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <HeadlineSection />
         </Box>
-
-        <StickerHeader full {...mockSticker}/>
-
-        <Divider />
-        <Box sx={{ marginTop: 1 }}>
-          <WatchingNewsSection />
-        </Box>
+        {
+          watchlistState.watchlist.map((item, index) => {
+            console.log(item)
+            return (
+            <Box key ={index} sx={{ marginTop: 1 }}>
+              <Divider />
+              <StickerHeader full assetFullname={item.name.description} symbol = {item.name.symbol} price = {item.c} change = {item.d} changePercent={item.dp}/>
+              <WatchingNewsSection />
+            </Box>
+            )
+          })
+        }
       </ContentBody>
     </Box>
   )

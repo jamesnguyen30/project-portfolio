@@ -90,7 +90,6 @@ const LookupSymbolDrawer = props => {
   }
 
   const handleResult = result => {
-    console.log(result)
     // Finnhub data format
     result.result = result.result.slice(0, 15)
     // Since we're using sandbox

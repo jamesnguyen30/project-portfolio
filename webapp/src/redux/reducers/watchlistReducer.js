@@ -6,6 +6,15 @@ import {
   WATCHLIST_NOT_FETCHED
 } from '../actions/index'
 
+// const defaultWatchlist = [
+//   'Apple',
+//   'Amazon',
+//   'Google',
+//   'Tesla',
+//   'Nvidia',
+//   'Netflix'
+// ]
+
 const initialState = {
   type: null,
   watchlist: [],
