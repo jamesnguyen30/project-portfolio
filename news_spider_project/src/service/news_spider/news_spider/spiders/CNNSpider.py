@@ -78,12 +78,13 @@ class CNNSpider(scrapy.Spider):
 
         elif self.start_date == 'yesterday':
             self.start_date = datetime.now() - timedelta(days = 1)        
+            self.start_date.replace(hour = 23, minute = 59, second = 59)
 
         else:
             self.start_date = datetime.strptime(self.start_date, '%m-%d-%Y')
         
         if self.days_from_start_date == None:
-            self.days_from_start_date = 1
+            self.days_from_start_date = 0
         
         self.end_date = self.start_date - timedelta(days = self.days_from_start_date)
         self.end_date = self.end_date.replace(hour = 0, minute = 0, second = 0)
@@ -151,7 +152,7 @@ class CNNSpider(scrapy.Spider):
             href = div.find("h3", {'class': 'cnn-search__result-headline'}).find('a').attrs['href']
             date = div.find('div', {'class': 'cnn-search__result-publish-date'}).find_all('span')[1].text
             date_obj = datetime.strptime(date, "%b %d, %Y")
-            if date_obj < self.end_date:
+            if date_obj <= self.end_date or date_obj >= self.start_date:
                 continue
             links.append('https:' + href)
 
@@ -161,8 +162,16 @@ class CNNSpider(scrapy.Spider):
 
         for link in links:
             data =  self._fetch_article(link)
-            self.collected_data.add_data(data['title'], data['text'], data['date'], 
-            data['authors'], data['source'], data['url'], data['image_url'], data['search_term'])
+            self.collected_data.add_data(
+                data['title'], 
+                data['text'], 
+                datetime.timestamp(data['date']), 
+                data['authors'], 
+                data['source'], 
+                data['url'], 
+                data['image_url'], 
+                data['search_term']
+            )
         
         self.collected_data.to_csv(self.OUTPUT_FILE)
     

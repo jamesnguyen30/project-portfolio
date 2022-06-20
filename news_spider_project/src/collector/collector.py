@@ -102,7 +102,14 @@ class NewsCollector():
                     article.parse()
                     headline['content'] = article.text
 
-                cleaned_title = headline['title'].split("-")[0].strip()
+                #Cleaning the title
+                index = 0
+                title = headline['title']
+                for i in range(len(title) - 1, 0, -1):
+                    if title[i] == '-':
+                        index = i
+                        break
+                cleaned_title = title[:index].strip()
                 print(f"Extracted content for {cleaned_title}")
 
                 date = datetime.strptime(headline['publishedAt'], '%Y-%m-%dT%H:%M:%SZ')
@@ -318,7 +325,8 @@ class NewsCollector():
         for subdirs, dirs, files in os.walk(self.SPIDER_OUTPUT_DIR):
             for file in files:
                 if file.endswith('.csv'):
-                    df = pd.read_csv(os.path.join(subdirs, file))
+                    df = pd.read_csv(os.path.join(subdirs, file) )
+                    df.reset_index(drop=True, inplace=True)
                     if merged is not None:
                         merged = pd.concat([merged, df], ignore_index=True)
                     else:
@@ -326,6 +334,6 @@ class NewsCollector():
 
         if merged is not None: 
             merged = merged.dropna(subset=['text'])  
-            merged = merged.drop_duplicates()
-            merged.to_csv(self.ALL_NEWS)
+            merged = merged.drop_duplicates(subset=['url'])
+            merged.to_csv(self.ALL_NEWS, index= False)
             print(f"Saved allnews.csv to {self.ALL_NEWS}")

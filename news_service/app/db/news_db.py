@@ -78,8 +78,18 @@ class NewsDb():
         end_date = datetime.now().replace(hour = 23, minute = 59, second = 59)
         headlines = News.objects(search_term = 'headlines')\
         .filter(date__gte=start_date, date__lte = end_date)
-    
         return headlines
+
+    def get_by_search_term(self, search_term):
+        '''
+        get all the news by search term
+        @params
+            string search_term
+        @return
+            list 
+        '''
+        news = News.objects(search_term = search_term).all()
+        return news
 
     def close(self):
         disconnect()

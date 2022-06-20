@@ -48,7 +48,6 @@ def get_headlines():
     except Exception as e:
         print(str(e))
 
-
 @router.get('/{id}')
 async def get_by_id(id: str):
     try:
@@ -59,6 +58,21 @@ async def get_by_id(id: str):
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code = 500, detail = 'internal server error, check log')
+
+@router.get("/term/{term}")
+async def get_by_term(term: str):
+    try:
+        all_news_objs = db.get_by_search_term(term)
+
+        if all_news_objs == None:
+            return response.generate_body(200, messge = 'term does not exist')
+        data = list()
+        for n in all_news_objs:
+            data.append(n.parse())
+        return response.generate_body(200, data)
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code = 500, detail = "internal server error, check log" )
 
 @router.post("/")
 async def save_news(news: NewsModel):

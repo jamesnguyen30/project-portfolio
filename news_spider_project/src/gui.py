@@ -329,7 +329,7 @@ class MyApp(tk.Tk):
         self.trending_keywords = self.data_processor.get_trending_keyword()
         self.control_panel.update_trending_keywords(self.trending_keywords)
     
-    def process_today_data(self):
+    def process_today_trending(self):
         try:
             today_headlines_file = self.data_processor.get_today_headlines_file()
             self._add_log_to_controll_panel(f'Processing today data from {today_headlines_file} ...')
@@ -342,9 +342,15 @@ class MyApp(tk.Tk):
             self._add_log_to_controll_panel(f"Error! Couldn't find {today_headlines_file} to process")
             print(str(e))
     
-    def save_headlines_to_db(self):
-        df = self.news_collector.get_fetched_headlines()
-        print(f'Saving {self.news_collector.HEADLINE_CSV_PATH} to database')
+    def save_following_news_to_db(self):
+        self.save_csv_to_db(self.news_collector.ALL_NEWS)
+
+    def save_csv_to_db(self, csv_path):
+
+        df = pd.read_csv(csv_path)
+
+        #Drop duplicates
+        df = df.drop_duplicates(subset=['url'])
 
         for index, row in df.iterrows():
             print(row['title'])
@@ -389,7 +395,56 @@ class MyApp(tk.Tk):
                 print("###")
                 print(e)
     
-    def merge_news_files(self):
+    def save_headlines_to_db(self):
+        print(f'Saving {self.news_collector.HEADLINE_CSV_PATH} to database')
+        self.save_csv_to_db(self.news_collector.HEADLINE_CSV_PATH)
+
+        # df = self.news_collector.get_fetched_headlines()
+
+        # for index, row in df.iterrows():
+        #     print(row['title'])
+
+        #     row['authors'] = str(row['authors'])
+        #     row['keywords'] = str(row['keywords'])
+
+        #     if row['authors'] == 'nan':
+        #         row['authors'] = '' 
+
+        #     if row['keywords'] == 'nan':
+        #         row['keywords'] = '' 
+
+        #     authors = row['authors'].split(",")
+        #     for author in authors:
+        #         author = author.strip()
+            
+        #     keywords = row['keywords'].split(",")
+        #     for keyword in keywords:
+        #         keyword = keyword.strip()
+
+        #     try:
+        #         response = self.api.save_news(
+        #             search_term = str(row['search_term']),
+        #             title= str(row['title']),
+        #             text = str(row['text']),
+        #             authors = authors,
+        #             source = str(row['source']),
+        #             url = str(row['url']),
+        #             image_url = str(row['image_url']),
+        #             timestamp = row['date'],
+        #             summary = str(row['summary']),
+        #             keywords = keywords,
+        #             sentiment = str(row['sentiment'])
+        #         )
+        #         print(response.content)
+        #     except requests.exceptions.HTTPError as e:
+        #         print("###")
+        #         print("Error while saving to db")
+        #         print("data")
+        #         print(row)
+        #         print("###")
+        #         print(e)
+    
+    def merge_following_news(self):
         try:
             self._add_log_to_controll_panel("[INFO] Merging all news")
             self.news_collector.merge_news_csv()
@@ -398,14 +453,15 @@ class MyApp(tk.Tk):
             self._add_log_to_controll_panel("[ERROR] merge news file operation failed")
             traceback.print_exc()
     
-    # def process_news_files(self):
-    #     try:
-    #         self._add_log_to_controll_panel("[INFO] Processing news files")
-    #         allnews_file_path = self.news_collector.ALL_NEWS
+    def process_today_following(self):
+        try:
+            self._add_log_to_controll_panel("[INFO] Processing today news ... ")
+            allnews_file_path = self.news_collector.ALL_NEWS
+            self.data_processor.process_data(allnews_file_path, True)
 
-    #     except Exception as e:
-    #         self._add_log_to_controll_panel("[ERROR] Can't process data")
-    #         traceback.print_exc()
+        except Exception as e:
+            self._add_log_to_controll_panel("[ERROR] Can't process data")
+            traceback.print_exc()
 
 if __name__ == '__main__':
     root = MyApp()

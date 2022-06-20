@@ -77,18 +77,24 @@ class ControllPanel(Widget):
         reload_keywords = tk.Button(frame, text = 'reload keywords', command = self.controller.load_trending_keywords)
         reload_keywords.pack()
 
-        merge_news = tk.Button(frame, text = 'merge news', command = self.controller.merge_news_files)
+        merge_news = tk.Button(frame, text = 'merge following news', command = self.controller.merge_following_news)
         merge_news.pack()
 
-        process_data_button = tk.Button(frame, text = 'process data', command = self.controller.process_today_data)
-        process_data_button.pack()
+        process_headlines = tk.Button(frame, text = 'process headlines', command = self.controller.process_today_trending)
+        process_headlines.pack()
+
+        process_following = tk.Button(frame, text = 'process following', command = self.controller.process_today_following)
+        process_following.pack()
 
 
         check_db_health = tk.Button(frame, text = 'check api health', command = self.controller.check_api_health)
         check_db_health.pack()
 
-        save_data_to_db = tk.Button(frame, text = 'save headlines to db', command = self.controller.save_headlines_to_db)
-        save_data_to_db.pack()
+        save_headlines_to_db = tk.Button(frame, text = 'save headlines to db', command = self.controller.save_headlines_to_db)
+        save_headlines_to_db.pack()
+        
+        save_following_to_db = tk.Button(frame, text = 'save following news to db', command = self.controller.save_following_news_to_db)
+        save_following_to_db.pack()
 
     
     def _setup_docker_controler_buttons(self, frame):

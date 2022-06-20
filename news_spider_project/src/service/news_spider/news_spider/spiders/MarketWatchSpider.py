@@ -61,12 +61,13 @@ class MarketWatchSpider(scrapy.Spider):
 
         elif self.start_date == 'yesterday':
             self.start_date = datetime.now() - timedelta(days = 1)        
+            self.start_date.replace(hour = 23, minute = 59, second = 59)
 
         else:
             self.start_date = datetime.strptime(self.start_date, '%m-%d-%Y')
         
         if self.days_from_start_date == None:
-            self.days_from_start_date = 1
+            self.days_from_start_date = 0 
         
         self.end_date = self.start_date - timedelta(days = self.days_from_start_date)
         self.end_date = self.end_date.replace(hour = 0, minute = 0, second = 0)
@@ -115,9 +116,17 @@ class MarketWatchSpider(scrapy.Spider):
         for link in links:
             try:
                 data = self._fetch_article(link)
-                self.collected_data.add_data(data['title'], data['text'], data['date'], 
-                data['authors'], data['source'], data['url'], data['image_url'], data['search_term'])
-
+                self.collected_data.add_data(
+                    data['title'], 
+                    data['text'], 
+                    data['date'], 
+                    data['authors'], 
+                    data['source'], 
+                    data['url'], 
+                    data['image_url'], 
+                    data['search_term'])
+                
+                break
                 # self._save_article(parsed_data)
             except Exception as e:
                 print(str(e))
@@ -150,7 +159,8 @@ class MarketWatchSpider(scrapy.Spider):
 
             dateobj = datetime.fromtimestamp(timestamp)
 
-            if dateobj < self.end_date:
+            if dateobj <= self.end_date and dateobj >= self.start_date:
+                # Out of date range
                 continue
 
             valid_links.append({'published_date': dateobj, 'link': href})
@@ -171,6 +181,7 @@ class MarketWatchSpider(scrapy.Spider):
 
         link = link_data['link']
         date = link_data['published_date']
+
         try:
 
             article = Article(link)
@@ -189,12 +200,12 @@ class MarketWatchSpider(scrapy.Spider):
                 processed_text += line + '\n'
             article.text = processed_text
 
-            text += f'link {link}\n'
-            text += f'title {article.title}\n'
-            text += f'text {article.text}\n'
-            text += f'date {str(date)}\n'
-            text += f'authors {article.authors}\n'
-            text += "#######\n"
+            # text += f'link {link}\n'
+            # text += f'title {article.title}\n'
+            # text += f'text {article.text}\n'
+            # text += f'date {str(date)}\n'
+            # text += f'authors {article.authors}\n'
+            # text += "#######\n"
 
             authors = list()
             for author in article.authors:
@@ -204,7 +215,7 @@ class MarketWatchSpider(scrapy.Spider):
                 'url': link,
                 'title': article.title,
                 'text': article.text,
-                'date': str(date),
+                'date': datetime.timestamp(date),
                 'authors': authors,
                 'image_url': article.top_image,
                 'search_term': self.search_term,

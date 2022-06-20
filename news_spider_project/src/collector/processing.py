@@ -50,8 +50,8 @@ class DataProcessor():
 
         for index, row in df.iterrows():
             print(f"Extracting keywords and summary for {row['title']}")
-            if debug:
-                print(f"Extracting keywords from {row['title']} and add summary")
+            # if debug:
+            #     print(f"Extracting keywords from {row['title']} and add summary")
             counter = self.entity_extractor.count_entities(row['text']) 
             keywords = list()
             for key, value in counter.most_common():

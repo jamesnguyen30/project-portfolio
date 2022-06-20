@@ -29,7 +29,7 @@ class CollectedData:
     def add_data(self, 
         title: str, 
         text: str, 
-        date: datetime, 
+        date: int, 
         authors: list, 
         source: str, 
         url: str, 
