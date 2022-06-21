@@ -1,0 +1,8 @@
+apple
+tesla
+microsoft
+nvidia
+amazon
+crypto
+bitcoin
+ethereum

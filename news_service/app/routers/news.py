@@ -36,7 +36,6 @@ def get_all():
 def get_headlines():
     '''
     get healines, default will be today headlines 
-
     '''
     try:
         headline_news = db.get_today_headlines()
@@ -62,6 +61,7 @@ async def get_by_id(id: str):
 @router.get("/term/{term}")
 async def get_by_term(term: str):
     try:
+        term = term.lower()
         all_news_objs = db.get_by_search_term(term)
 
         if all_news_objs == None:

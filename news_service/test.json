@@ -1,0 +1,266 @@
+{
+    "status": "ok",
+    "totalResults": 28832,
+    "articles": [
+        {
+            "source": {
+                "id": null,
+                "name": "Macworld"
+            },
+            "author": "Martyn Casserly",
+            "title": "How to edit and unsend messages on iPhone",
+            "description": "At Apple\u2019s recent WWDC 2022 event, one of the most eye-catching features announced for iOS 16 was the ability to either edit or recall messages that have already been sent. Not only could this save you embarrassment when calling a work colleague an accidental\u2026",
+            "url": "https://www.macworld.com/article/793097/how-edit-unsend-messages-iphone.html",
+            "urlToImage": "https://www.macworld.com/wp-content/uploads/2022/06/How-to-edit-and-unsend-text-messages-on-iPhone-MAIN.jpg?quality=50&strip=all&w=1024",
+            "publishedAt": "2022-06-21T16:24:40Z",
+            "content": "Skip to contentType your search and hit enter\r\nAt Apple\u2019s recent WWDC 2022 event, one of the most eye-catching features announced for iOS 16 was the ability to either edit or recall messages that hav\u2026 [+2878 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "9to5Mac"
+            },
+            "author": "Zac Hall",
+            "title": "Apple adds Unabomber audio series to its growing roster of original podcasts",
+            "description": "A new audio series called Project Unabom is joining Apple\u2019s growing list of original podcasts next week. The true crime podcast is based on new original reporting over serial bomber Ted Kaczynski. Kaczynski, better recognized as the Unabomber, spent 18 years \u2026",
+            "url": "https://9to5mac.com/2022/06/21/apple-unabomber-podcast/",
+            "urlToImage": "https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2022/06/project-unabom-apple-podcast.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1",
+            "publishedAt": "2022-06-21T16:22:57Z",
+            "content": "A new audio series called Project Unabom is joining Apple\u2019s growing list of original podcasts next week. The true crime podcast is based on new original reporting over serial bomber Ted Kaczynski.\r\nK\u2026 [+1424 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Deadline"
+            },
+            "author": "Baz Bamigboye",
+            "title": "Sylvester Stallone, Kevin Costner, Tim McGraw, Faith Hill, Jessica Chastain & Michael Shannon Take Their Seats To Support BAFTA In London",
+            "description": "EXCLUSIVE:\u00a0They have the best seats in the house. A-listers Sylvester Stallone, Kevin Costner, Tim McGraw, Faith Hill, Jessica Chastain and Michael Shannon dedicated seats Tuesday in the plush Princess Anne Theatre in BAFTA\u2019s Piccadilly headquarters in centra\u2026",
+            "url": "https://deadline.com/2022/06/sylvester-stallone-kevin-costner-tim-mcgraw-faith-hill-jessica-chastain-and-michael-shannon-bafta-london-1235049056/",
+            "urlToImage": "https://deadline.com/wp-content/uploads/2022/06/189BD2EE-C152-4728-8EF8-0038EB0B7245.jpeg?w=1024",
+            "publishedAt": "2022-06-21T16:18:14Z",
+            "content": "EXCLUSIVE:\u00a0They have the best seats in the house.\r\nA-listers Sylvester Stallone, Kevin Costner, Tim McGraw, Faith Hill, Jessica Chastain and Michael Shannon dedicated seats Tuesday in the plush Princ\u2026 [+2619 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Daily Mail"
+            },
+            "author": "Stacy Liberatore",
+            "title": "Apple's new iOS 16 will let you skip annoying CAPTCHAs that ask you to prove you are a human",
+            "description": "The feature, called automatic verification, will automatically verify that the user is a human and not a robot. Eliminating the need to select specific objects in a range of images.",
+            "url": "https://www.dailymail.co.uk/sciencetech/article-10938659/Apples-new-iOS-16-let-skip-annoying-CAPTCHAs-ask-prove-human.html",
+            "urlToImage": "https://i.dailymail.co.uk/1s/2022/06/21/17/59350775-0-image-a-4_1655828170977.jpg",
+            "publishedAt": "2022-06-21T16:17:52Z",
+            "content": "Apple is putting an end to the annoying CAPTCHAs that make users prove they are in fact human and not a robot.\r\nCAPTCHAs that's 'completely automated public Turing test to tell computers and humans a\u2026 [+3223 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Gizmodo.com"
+            },
+            "author": "Phillip Tracy",
+            "title": "Apple Patent Explores MacBook Keyboard That Will Charge Your Phone",
+            "description": "Apple\u2019s MacBooks haven\u2019t changed much over the past decade or so. Some of the latest models were recently redesigned with modern features, but their form remains that of traditional laptops. That isn\u2019t due to a lack of ideas. Between each model refresh is a f\u2026",
+            "url": "https://gizmodo.com/apple-patent-macbook-touch-keyboard-iphone-wireless-cha-1849088239",
+            "urlToImage": "https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/d52cfe86f738a444b851bc7e0f4058aa.jpg",
+            "publishedAt": "2022-06-21T16:15:00Z",
+            "content": "Apples MacBooks havent changed much over the past decade or so. Some of the latest models were recently redesigned with modern features, but their form remains that of traditional laptops. That isnt \u2026 [+3471 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Wccftech"
+            },
+            "author": "Ali Salman",
+            "title": "iOS 16 Will Integrate the iPhone\u2019s Built-In Music Recognition With the Shazam App",
+            "description": "Apple recently announce its upcoming iOS 16 and iPadOS 16 updates to the world. All compatible iPhone models will receive major updates later this year with a plethora of front-facing features. The highlight of the update for iOS 16 is the new Lock Screen wit\u2026",
+            "url": "https://wccftech.com/ios-16-will-integrate-the-iphones-built-in-music-recognition-with-the-shazam-app/",
+            "urlToImage": "https://cdn.wccftech.com/wp-content/uploads/2022/06/iOS-16-Shazam.jpg",
+            "publishedAt": "2022-06-21T16:10:13Z",
+            "content": "Apple recently announce its upcoming iOS 16 and iPadOS 16 updates to the world. All compatible iPhone models will receive major updates later this year with a plethora of front-facing features. The h\u2026 [+1752 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Eonline.com"
+            },
+            "author": "Allison Crist",
+            "title": "See RHONY's Bethenny Frankel and Jill Zarin Reunite After Years-Long Feud",
+            "description": "The Real Housewives of New York alums Bethenny Frankel and Jill Zarin had a surprisingly sweet moment after running into each other. See the photo that has fans hoping for a reconciliation.",
+            "url": "https://www.eonline.com/news/1335210/see-rhonys-bethenny-frankel-and-jill-zarin-reunite-after-years-long-feud",
+            "urlToImage": "https://akns-images.eonline.com/eol_images/Entire_Site/2022521/rs_1200x1200-220621085815-1200-jill-zarin-bethenny-franekl-rhof-ny.jpg?fit=around%7C1080:566&output-quality=90&crop=1080:566;center,top",
+            "publishedAt": "2022-06-21T16:09:12Z",
+            "content": "The\u00a0relationship between former apple holders Bethenny Frankel and Jill Zarin is anything but rotten.\r\nOn June 21, the Real Housewives of New York City's friends-turned-enemies\u00a0shocked fans by postin\u2026 [+1026 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Dealnews.com"
+            },
+            "author": null,
+            "title": "16.5-Foot Wireless Endoscope Camera with LED Lighting for $33 + free shipping",
+            "description": "Most stores charge over $50. Buy Now at UntilGone \r\n Features\r\n <ul> <li>can work with both Android and Apple iOS</li> <li>Also works on Windows-based PC and Mac</li> <li>2-megapixel CMOS HD cameras and three adjustable resolutions</li> <li>8 adjustable LED l\u2026",
+            "url": "https://www.dealnews.com/16-5-Foot-Wireless-Endoscope-Camera-with-LED-Lighting-for-33-free-shipping/20298119.html",
+            "urlToImage": "https://cdlnws.a.ssl.fastly.net/image/upload/f_auto,t_maximum,q_auto/content/oeeb6hj3djztej8e5ikk.png",
+            "publishedAt": "2022-06-21T16:07:55Z",
+            "content": "Save on a very large selection of electronics including cameras and accessories, TVs, laptops, headphones, flash drives and hard drives, and much more. Shop Now at B&amp;H Photo Video"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "9to5google.com"
+            },
+            "author": "Damien Wilde",
+            "title": "Xiaomi Mi Band 7 review: Retaining the budget fitness wearable crown [Video]",
+            "description": "Few wearables beyond the Apple Watch have taken the market quite like the Xiaomi Mi Band series. A mixture of price, battery, form and function combine to ensure that the Mi Band 7 remains Xiaomi\u2019s best budget product for yet another year. While you might fir\u2026",
+            "url": "https://9to5google.com/2022/06/21/xiaomi-mi-band-7-review/",
+            "urlToImage": "https://9to5google.com/wp-content/uploads/sites/4/2022/06/Xiaomi-Mi-Band-7-9.jpg?quality=82&strip=all",
+            "publishedAt": "2022-06-21T16:05:00Z",
+            "content": "Few wearables beyond the Apple Watch have taken the market quite like the Xiaomi Mi Band series. A mixture of price, battery, form and function combine to ensure that the Mi Band 7 remains Xiaomi\u2019s b\u2026 [+7835 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Variety"
+            },
+            "author": "Elizabeth Wagmeister",
+            "title": "Jesse Collins Entertainment Receives Minority Investment From Fulwell 73",
+            "description": "Jesse Collins Entertainment has received a minority investment from Fulwell 73,\u00a0Variety has learned. The deal expands opportunities for both companies, which will continue to produce independently, in addition to collaborating. Both companies are known for pr\u2026",
+            "url": "https://variety.com/2022/tv/news/jesse-collins-entertainment-fulwell-73-investment-1235299600/",
+            "urlToImage": "https://variety.com/wp-content/uploads/2022/04/group-shot-h_8.01878064.jpg?w=1000",
+            "publishedAt": "2022-06-21T16:00:38Z",
+            "content": "Jesse Collins Entertainment has received a minority investment from Fulwell 73,\u00a0Variety has learned.\r\nThe deal expands opportunities for both companies, which will continue to produce independently, \u2026 [+3562 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Deadline"
+            },
+            "author": "peterdeadline",
+            "title": "Apple Preps Unabomber Podcast Series As Tech Giant\u2019s Latest Move Into Original Audio",
+            "description": "EXCLUSIVE: Apple is launching Project Unabom \u2013 a podcast series about serial bomber Ted Kaczynski. The series is the latest original audio series for the tech giant, which has been dipping its toes into original podcasts with shows such as Run, Bambi, Run, Wi\u2026",
+            "url": "https://deadline.com/2022/06/apple-preps-unabomber-podcast-series-1235048738/",
+            "urlToImage": "https://deadline.com/wp-content/uploads/2022/06/AP1604041859125362.jpg?w=1024",
+            "publishedAt": "2022-06-21T16:00:16Z",
+            "content": "EXCLUSIVE: Apple is launching Project Unabom \u2013 a podcast series about serial bomber Ted Kaczynski.\r\nThe series is the latest original audio series for the tech giant, which has been dipping its toes \u2026 [+1584 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Lifehacker.com"
+            },
+            "author": "Pranay Parab",
+            "title": "7 Apple Watch Accessibility Features That Everyone Should Consider Using",
+            "description": "Your Apple Watch comes with accessibility features that are must-haves for people with disabilities, but many of them can be useful for anyone\u2014if you know how to use them and where to find them. Here are some of the best accessibility features of the Apple Wa\u2026",
+            "url": "https://lifehacker.com/7-apple-watch-accessibility-features-that-everyone-shou-1849084821",
+            "urlToImage": "https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/6b36bb44ab0dcf4436a0f9000125a15b.jpg",
+            "publishedAt": "2022-06-21T16:00:00Z",
+            "content": "Your Apple Watch has gesture-based navigation that you can use to answer phone calls, move through menus, and select options on your screen. To enable hand gestures, go to the Watch app on your iPhon\u2026 [+397 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Cnblogs.com"
+            },
+            "author": "SportSky",
+            "title": "ShardingSphere-proxy-5.0.0\u5206\u5e03\u5f0f\u54c8\u5e0c\u53d6\u6a21\u5206\u7247\u5b9e\u73b0(\u56db) - SportSky",
+            "description": "\u4e00\u3001\u8bf4\u660e \u4e3b\u8981\u662f\u5bf9\u5b57\u7b26\u4e32\u7684\u5b57\u6bb5\u8fdb\u884chash\u53d6\u6a21 \u4e8c\u3001\u4fee\u6539\u914d\u7f6e\u6587\u4ef6config-sharding.yaml\uff0c\u5e76\u91cd\u542f\u670d\u52a1 # # Licensed to the Apache Software Foundation (ASF) under one or more # contributor licens",
+            "url": "https://www.cnblogs.com/sportsky/p/16398716.html",
+            "urlToImage": null,
+            "publishedAt": "2022-06-21T16:00:00Z",
+            "content": "hash\r\nconfig-sharding.yaml\r\n#\r\n# Licensed to the Apache Software Foundation (ASF) under one or more\r\n# contributor license agreements. See the NOTICE file distributed with\r\n# this work for additional\u2026 [+5388 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Yahoo Entertainment"
+            },
+            "author": "GlobalData UK Ltd",
+            "title": "Importance of AR Growing Exponentially in the Consumer Sector | Globaldata Plc",
+            "description": "The global augmented reality (AR) market was worth nearly $7 billion in 2020LONDON, June 21, 2022 (GLOBE NEWSWIRE) -- The AR market is expected to grow at a ...",
+            "url": "https://finance.yahoo.com/news/importance-ar-growing-exponentially-consumer-160000855.html",
+            "urlToImage": "https://s.yimg.com/uu/api/res/1.2/42_oku4rs5inagxAjOE_Uw--~B/aD0yMzQ7dz0xMTY4O2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/globenewswire.com/2e5af4fb0b702b355ba5e1157b78d8d5",
+            "publishedAt": "2022-06-21T16:00:00Z",
+            "content": "The global augmented reality (AR) market was worth nearly $7 billion in 2020\r\nLONDON, June 21, 2022 (GLOBE NEWSWIRE) -- The AR market is expected to grow at a CAGR of more than 35% over the next 10 y\u2026 [+7201 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Yahoo Entertainment"
+            },
+            "author": "Steven Symes",
+            "title": "Shreveport Police Have A Need For Mopar Speed",
+            "description": "A plan was proposed for multiple Hellcats\u2026",
+            "url": "https://autos.yahoo.com/shreveport-police-mopar-speed-160000213.html",
+            "urlToImage": "https://s.yimg.com/ny/api/res/1.2/5UcGKmMTgUcmMwErEryRFg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU-/https://s.yimg.com/uu/api/res/1.2/Qw_KbSImmA5Jnket2.kDtA--~B/aD0xMDgwO3c9MTkyMDthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/motorious_297/4e5db22ca8c1635a5fe197576ed4b77c",
+            "publishedAt": "2022-06-21T16:00:00Z",
+            "content": "Read the full article on Motorious\r\nThe Shreveport City Council has been debating about outfitting the police department with high-speed muscle cars. Originally, the proposal was to buy 4-6 Dodge Cha\u2026 [+1843 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "MMA Fighting"
+            },
+            "author": "Mike Heck",
+            "title": "Heck of a Morning: Nate Diaz calls out the UFC again, UFC 278 lineup, UFC Austin fallout, more",
+            "description": "Topics include whether or not Nate Diaz will get what he wants from the UFC, the fallout of a memorable UFC Austin card, and more.",
+            "url": "https://www.mmafighting.com/2022/6/21/23176935/heck-of-a-morning-nate-diaz-calls-out-the-ufc-again-ufc-278-lineup-ufc-austin-fallout-more",
+            "urlToImage": "https://cdn.vox-cdn.com/thumbor/NXjcIOUNcaFjtkJ9vEpBPxF2_ms=/0x152:5472x3017/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/23641962/1175801697.jpg",
+            "publishedAt": "2022-06-21T16:00:00Z",
+            "content": "Photo by Michael Owens/Zuffa LLC/Zuffa LLC\r\n\n \n\n Nate Diaz is taking the UFC to task once again, but is the promotion going to do anything about the latest gripe from one of the sport\u2019s biggest stars\u2026 [+973 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "9to5Mac"
+            },
+            "author": "Jos\u00e9 Adorno",
+            "title": "iWork update brings new features to Pages, Numbers, and Keynote with version 12.1",
+            "description": "After two months, the iWork suite is being updated from version 12.0 to 12.1. With that, Pages, Numbers, and Keynote are receiving general improvements and new functions so iPhone, iPad, and Mac users can take advantage of them.\n more\u2026\nThe post iWork update b\u2026",
+            "url": "https://9to5mac.com/2022/06/21/iwork-update-pages-numbers-keynote/",
+            "urlToImage": "https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2022/04/iwork-01.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1",
+            "publishedAt": "2022-06-21T15:56:36Z",
+            "content": "After two months, the iWork suite is being updated from version 12.0 to 12.1. With that, Pages, Numbers, and Keynote are receiving general improvements and new functions so iPhone, iPad, and Mac user\u2026 [+1811 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Macdailynews.com"
+            },
+            "author": "MacDailyNews",
+            "title": "Apple will let Mac, iPad, and iPhone users skip annoying CAPTCHAs",
+            "description": "CAPTCHA verification that forces users to prove they're not a robot will become an annoyance of the past for Mac, iPad, and iPhone users\u2026\nThe post Apple will let Mac, iPad, and iPhone users skip annoying CAPTCHAs appeared first on MacDailyNews.",
+            "url": "https://macdailynews.com/2022/06/21/apple-will-let-mac-ipad-and-iphone-users-skip-annoying-captchas/",
+            "urlToImage": "https://149359564.v2.pressablecdn.com/wp-content/uploads/2022/06/220621_captcha.png",
+            "publishedAt": "2022-06-21T15:56:35Z",
+            "content": "CAPTCHA verification that forces users to prove they\u2019re not a robot by identifying squiggly letters or clicking on images of traffic lights will become an annoyance of the past for Mac, iPad, and iPh\u2026 [+1135 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Theparisreview.org"
+            },
+            "author": "Ellyn Gaydos",
+            "title": "Solstice Diaries",
+            "description": "\u201cLast night I hit a deer, a fawn actually.\u201d",
+            "url": "https://www.theparisreview.org/blog/2022/06/21/solstice-diaries/",
+            "urlToImage": "https://www.theparisreview.org/blog/wp-content/uploads/2022/06/img_1219-scaled.jpg",
+            "publishedAt": "2022-06-21T15:56:15Z",
+            "content": "Last night I hit a deer, a fawn actually. Just a ragged thing still with its spots, it couldve been born that day. Its mother stood on the side of the road. I saw her first and only the fawn when it \u2026 [+6926 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "ValueWalk"
+            },
+            "author": "Anna Peel",
+            "title": "The Average Investor Could Lose Over \u00a31.2k On Broker Fees Per Year",
+            "description": "Over a decade, the average UK investor could lose \u00a312.4k on broker fees A beginner investor trading \u00a350 a week faces annual fees ranging from \u00a32.60 to \u00a3647.50 21, June, 2022, LONDON \u2013\u00a0The average investor makes 38 trades per year, buying or selling an average\u2026",
+            "url": "https://www.valuewalk.com/the-average-investor-could-lose-over-12k-on-broker-fees-per-year/",
+            "urlToImage": "https://www.valuewalk.com/wp-content/uploads/2022/06/Broker-Fees.png",
+            "publishedAt": "2022-06-21T15:55:07Z",
+            "content": "<ul><li>Over a decade, the average UK investor could lose \u00a312.4k on broker fees</li><li>A beginner investor trading \u00a350 a week faces annual fees ranging from \u00a32.60 to \u00a3647.50</li></ul>21, June, 2022,\u2026 [+5104 chars]"
+        }
+    ]
+}

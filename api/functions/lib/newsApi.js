@@ -13,7 +13,7 @@ exports.todayHeadlines = () => {
     })
 }
 
-exports.newsByterm = (term) => {
+exports.newsByTerm = (term) => {
     return axios.get(`${NEWS_API_URL}/news/term/${term}`).then(response => {
         var processedData = []
         for(const news of response.data.data){

@@ -30,9 +30,10 @@ const getTodayHeadlinesAction = () => {
 const getNewsByTermAction = (term) => {
   return dispatch => {
     getNewsByTerm(term).then(response => {
+      console.log(response)
       dispatch({
         type: NEWS_FETCHED,
-        payload: response.data
+        payload: { term: term, news: response.data }
       })
     }).catch(err => {
       console.log(err)

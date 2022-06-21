@@ -221,24 +221,6 @@ class MyApp(tk.Tk):
             self._add_log_to_controll_panel("Docker is not running, all scraping process will be hold")
             self.main_frame.after(1000, self._loop)
             return
-
-        # scraping hours:
-        # 6 A.M
-        # 8 A.M
-        # 10 A.M
-        # 12 A.M
-        # 2 P.M
-        # 4 P.M
-        # 6 P.M
-        # 8 P.M
-        # 10 P.M
-
-        # now = datetime.now()
-
-        # current_hour = now.hour
-
-        # if current_hour in self.scraping_hours:
-        #     self.is_scrapping = True
         
         if self.is_scrapping == True:
             #Initiate scraping process if is_scraping = True
@@ -273,38 +255,6 @@ class MyApp(tk.Tk):
 
         self.main_frame.after(1000, self._loop)
     
-    # def start_scraping_following_keywords(self):
-
-    #     following_keywords = self.get_following_keywords()
-    #     print("following keywords ", following_keywords)
-
-    #     while(self.is_scrapping):
-    #         if self.tasks_done == None:
-    #             print("Starting from index 0")
-    #             self.current_keyword_index = 0
-    #             # keywords = self.trending_keywords.most_common()
-    #             following_keywords = self.get_following_keywords()
-    #             keyword, rank = keywords[self.current_keyword_index]
-    #             self.tasks_done = list()
-    #             self._start_scraper_async(keyword)
-    #             self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
-    #             self._add_log_to_controll_panel(f"Scraping with keyword: {keyword}")
-    #         else:
-    #             if self.check_all_tasks_done() == True:
-    #                 if self.current_keyword_index < len(self.trending_keywords) - 1:
-    #                     self.current_keyword_index += 1
-    #                     keywords = self.trending_keywords.most_common()
-    #                     keyword, rank = keywords[self.current_keyword_index]
-    #                     self._start_scraper_async(keyword)
-    #                     self.control_panel.update_scraping_keywords_index(self.current_keyword_index)
-    #                     self._add_log_to_controll_panel(f"Scraping with keyword: {keyword}")
-    #                 else:
-    #                     self.tasks_done = None 
-    #                     self._add_log_to_controll_panel("Completely scraped all trending keywords")
-    #                     tock = time.time() - tick
-    #                     self._add_log_to_controll_panel(f"Elapsed time {tock} seconds")
-    #                     self.is_scrapping = False
-
     def start_scraping_trending_keywords(self):
         self.is_scrapping = True
     
@@ -398,51 +348,6 @@ class MyApp(tk.Tk):
     def save_headlines_to_db(self):
         print(f'Saving {self.news_collector.HEADLINE_CSV_PATH} to database')
         self.save_csv_to_db(self.news_collector.HEADLINE_CSV_PATH)
-
-        # df = self.news_collector.get_fetched_headlines()
-
-        # for index, row in df.iterrows():
-        #     print(row['title'])
-
-        #     row['authors'] = str(row['authors'])
-        #     row['keywords'] = str(row['keywords'])
-
-        #     if row['authors'] == 'nan':
-        #         row['authors'] = '' 
-
-        #     if row['keywords'] == 'nan':
-        #         row['keywords'] = '' 
-
-        #     authors = row['authors'].split(",")
-        #     for author in authors:
-        #         author = author.strip()
-            
-        #     keywords = row['keywords'].split(",")
-        #     for keyword in keywords:
-        #         keyword = keyword.strip()
-
-        #     try:
-        #         response = self.api.save_news(
-        #             search_term = str(row['search_term']),
-        #             title= str(row['title']),
-        #             text = str(row['text']),
-        #             authors = authors,
-        #             source = str(row['source']),
-        #             url = str(row['url']),
-        #             image_url = str(row['image_url']),
-        #             timestamp = row['date'],
-        #             summary = str(row['summary']),
-        #             keywords = keywords,
-        #             sentiment = str(row['sentiment'])
-        #         )
-        #         print(response.content)
-        #     except requests.exceptions.HTTPError as e:
-        #         print("###")
-        #         print("Error while saving to db")
-        #         print("data")
-        #         print(row)
-        #         print("###")
-        #         print(e)
     
     def merge_following_news(self):
         try:

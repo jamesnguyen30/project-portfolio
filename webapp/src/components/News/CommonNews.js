@@ -2,8 +2,9 @@ import React from 'react'
 import { Box, Typography, Tooltip } from '@mui/material'
 import SummaryButton from './SummaryButton'
 import NewsSource from './NewsSource'
+import PropTypes from 'prop-types'
 
-const MOCK_IMAGE = 'https://image.cnbcfm.com/api/v1/image/107037798-1648503081608-GettyImages-1205519775r.jpg?v=1648503136&w=740&h=416&ffmt=webp'
+// const MOCK_IMAGE = 'https://image.cnbcfm.com/api/v1/image/107037798-1648503081608-GettyImages-1205519775r.jpg?v=1648503136&w=740&h=416&ffmt=webp'
 
 const CommonNews = (props) => {
   return (
@@ -32,7 +33,7 @@ const CommonNews = (props) => {
       <Box
         className="commonNewsImage"
         component="img"
-        src={MOCK_IMAGE}
+        src={props.image_url}
         sx={{
           width: 150,
           borderTopLeftRadius: 10,
@@ -53,7 +54,7 @@ const CommonNews = (props) => {
               fontSize: '15px',
               fontWeight: 'bold'
             }}
-          >The bond market is flashing a warning sign a recession may be coming. Here’s why. Also this is very long so it should be truncated with elipsis and when it even more than 5 lines it should be truncated</Typography>
+          >{props.title}</Typography>
         </Box>
         <NewsSource alt={'ABC News'}/>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -76,6 +77,16 @@ const CommonNews = (props) => {
 
     </Box>
   )
+}
+
+CommonNews.propTypes = {
+  sx: PropTypes.object,
+  title: PropTypes.string.required,
+  url: PropTypes.string.required,
+  image_url: PropTypes.string.required,
+  source: PropTypes.string.required,
+  sentiment: PropTypes.string,
+  summary: PropTypes.string
 }
 
 export default CommonNews

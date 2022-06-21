@@ -9,7 +9,10 @@ import WatchingNewsSection from '../../components/News/WatchingNewsSection'
 import StickerHeader from '../../components/News/StickerHeader'
 import AppBar from '../../components/AppBar/AppBar'
 
-import { useSelector } from 'react-redux'
+import {
+  useSelector
+  //  useDispatch
+} from 'react-redux'
 
 // const mockSticker =
 //   {
@@ -23,6 +26,7 @@ const NewsPage = (props) => {
   const { drawerWidth } = props
 
   const watchlistState = useSelector(state => state.watchlistReducer)
+  // const dispatch = useDispatch()
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>
@@ -41,7 +45,7 @@ const NewsPage = (props) => {
             <Box key ={index} sx={{ marginTop: 1 }}>
               <Divider />
               <StickerHeader full assetFullname={item.name.description} symbol = {item.name.symbol} price = {item.c} change = {item.d} changePercent={item.dp}/>
-              <WatchingNewsSection />
+              <WatchingNewsSection term={item.name.description}/>
             </Box>
             )
           })
@@ -63,4 +67,4 @@ NewsPage.defaultProps = {
   isSignedIn: false
 }
 
-export default NewsPage
+export default React.memo(NewsPage)

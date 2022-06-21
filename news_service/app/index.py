@@ -2,7 +2,7 @@ from fastapi import FastAPI, Query
 from typing import Optional
 from pydantic import BaseModel
 from db import news_db
-from routers import news
+from routers import news, command
 import sys
 import pathlib
 import uvicorn
@@ -20,6 +20,7 @@ app = FastAPI()
 db =  news_db.NewsDb()
 
 app.include_router(news.router)
+app.include_router(command.router)
 
 @app.get('/')
 def health_check():

@@ -55,7 +55,7 @@ app.post("/candleData", authorize, getCandleData)
 app.post("/quote", authorize, getQuote)
 
 app.get('/headlines', todayHeadlines)
-app.get('/newsByTerm', newsByTerm)
+app.get('/news', newsByTerm)
 
 
 

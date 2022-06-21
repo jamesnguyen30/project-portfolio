@@ -212,4 +212,4 @@ HeadlineSection.propTypes = {
 
 }
 
-export default HeadlineSection
+export default React.memo(HeadlineSection)

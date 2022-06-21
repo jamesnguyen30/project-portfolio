@@ -9,16 +9,15 @@ class News(mongoengine.Document):
     }
     search_term = mongoengine.StringField(required = True)
     title = mongoengine.StringField(required = True)
-    text = mongoengine.StringField(required = True)
-    authors = mongoengine.ListField(required = True)
+    text = mongoengine.StringField()
+    authors = mongoengine.StringField(required = True)
     source = mongoengine.StringField(required = True)
     url = mongoengine.StringField(required = True)
     date = mongoengine.DateTimeField(default = datetime.now())
     image_url = mongoengine.StringField(default = None)
-    keywords = mongoengine.ListField(required = True)
-    summary = mongoengine.StringField(default = None)
-    sentiment = mongoengine.StringField(required = None)
-
+    keywords = mongoengine.ListField()
+    summary = mongoengine.StringField()
+    sentiment = mongoengine.StringField()
 
     def parse(self) -> dict:
         return {

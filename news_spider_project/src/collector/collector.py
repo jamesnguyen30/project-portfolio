@@ -297,7 +297,7 @@ class NewsCollector():
         proc.poll()
         return {'spider': spider_name, 'return_code': proc.returncode, 'params': data, 'pid': os.getpid()}
 
-    def get_spider_data(self, search_term: str, sections: str, retry: bool = False, start_date: str = 'today', days_from_start_date: int = 1):
+    def get_spider_data(self, search_term: str, sections: str, retry: bool = False, start_date: str = 'today', days_from_start_date: int = 5):
         return {
             'search_term': search_term,
             'sections': sections,

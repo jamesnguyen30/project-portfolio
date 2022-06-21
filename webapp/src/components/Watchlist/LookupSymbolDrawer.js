@@ -96,35 +96,35 @@ const LookupSymbolDrawer = props => {
     // the return result is bullshit
     // add valid symbols to the result list
     result.result.splice(0, 0, {
-      description: 'Apple, Inc',
+      description: 'Apple',
       symbol: 'AAPL',
       type: 'Common Stock',
       c: 123,
       d: +12
     })
     result.result.splice(0, 0, {
-      description: 'Amazon Inc',
+      description: 'Amazon',
       symbol: 'AMZN',
       type: 'Common Stock',
       c: 123,
       d: -12
     })
     result.result.splice(0, 0, {
-      description: 'Tesla Inc',
+      description: 'Tesla',
       symbol: 'TSLA',
       type: 'Common Stock',
       c: 123,
       d: -12
     })
     result.result.splice(0, 0, {
-      description: 'Google Inc',
+      description: 'Google',
       symbol: 'GOOG',
       type: 'Common Stock',
       c: 123,
       d: 12
     })
     result.result.splice(0, 0, {
-      description: 'Nvidia Inc',
+      description: 'Nvidia',
       symbol: 'NVDA',
       type: 'Common Stock',
       c: 123,

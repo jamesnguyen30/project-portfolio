@@ -1,6 +1,6 @@
 const {
     todayHeadlines,
-    newsByterm
+    newsByTerm
 } = require('../../lib/newsApi')
 
 exports.todayHeadlines = (req,res) => {
@@ -12,8 +12,9 @@ exports.todayHeadlines = (req,res) => {
 }
 
 exports.newsByTerm = (req,res) => {
-    const {term} = req.body
-    newsByterm(term).then(data => {
+    const {term} = req.query
+    // const {term} = req.body
+    newsByTerm(term).then(data => {
         return res.json(data)
     }).catch(err=>{
         return res.status(500).send({'message': 'news api error'})
