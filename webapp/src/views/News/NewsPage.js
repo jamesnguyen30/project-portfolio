@@ -11,22 +11,12 @@ import AppBar from '../../components/AppBar/AppBar'
 
 import {
   useSelector
-  //  useDispatch
 } from 'react-redux'
-
-// const mockSticker =
-//   {
-//     assetFullname: 'APPLE, Inc',
-//     sticker: 'AAPL',
-//     price: 1313.9,
-//     change: 1.9
-//   }
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
 
   const watchlistState = useSelector(state => state.watchlistReducer)
-  // const dispatch = useDispatch()
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', width: `calc(100% - ${drawerWidth}px)` }}>

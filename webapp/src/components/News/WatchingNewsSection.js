@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, Box, CircularProgress } from '@mui/material'
-// import PropTypes from 'prop-types'
+import UtilityActionButton from '../buttons/UtilityActionButton'
 import ImportantNews from './ImportantNews'
-// import CommonNews from './CommonNews'
 import PropTypes from 'prop-types'
 
 import { getNewsByTermAction } from '../../redux/actions/newsActions'
@@ -12,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 // Render News according to received data
 const WatchingNewsSection = (props) => {
-  const [news, setNews] = useState()
+  const [news, setNews] = useState([])
   const [loading, setLoading] = useState(true)
 
   const newsState = useSelector(state => state.newsReducer)
@@ -28,8 +27,12 @@ const WatchingNewsSection = (props) => {
       }, 2000)
     } else if (newsState.type === NEWS_FETCHED) {
       setLoading(false)
-      setNews(newsState.news)
-      console.log(newsState.news)
+      for (const newsObject of newsState.news) {
+        if (newsObject.term === props.term) {
+          setNews(newsObject.news)
+          console.log(newsObject.news)
+        }
+      }
     } else if (newsState.type === NEWS_NOT_FETCHED) {
       // show error
       setLoading(false)
@@ -47,33 +50,28 @@ const WatchingNewsSection = (props) => {
         )
       }
       {
-        !loading && (
-          <Grid container rowSpacing = {2} columnSpacing = {{ md: 2 }} sx={{ maxWidth: 'lg' }}>
-            <Grid item md = {4}>
-              <Box>
-                <ImportantNews/>
-              </Box>
-              <Box>
-                <ImportantNews/>
-              </Box>
+        !loading && news.length > 0 && (
+          <Box sx ={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Grid container rowSpacing = {3} sx={{ maxWidth: 'lg' }}>
+              {
+                news.slice(0, 6).map((item, index) => (
+                  <Grid key={index} item xs = {4}>
+                    <Box>
+                      <ImportantNews
+                        title={item.title}
+                        image_url={item.image_url}
+                        url={item.url}
+                        source={item.source}
+                      />
+                    </Box>
+                  </Grid>
+                ))
+              }
             </Grid>
-            <Grid item md = {4}>
-              <Box>
-                <ImportantNews/>
-              </Box>
-              <Box>
-                <ImportantNews/>
-              </Box>
-            </Grid>
-            <Grid item md = {4}>
-              <Box>
-                <ImportantNews/>
-              </Box>
-              <Box>
-                <ImportantNews/>
-              </Box>
-            </Grid>
-          </Grid>
+            <Box sx={{ display: 'flex', width: '100%', margin: 3 }}>
+              <UtilityActionButton sx= {{ backgroundColor: 'primary.main' }}>More news about {props.term}</UtilityActionButton>
+            </Box>
+          </Box>
         )
       }
     </React.Fragment>
