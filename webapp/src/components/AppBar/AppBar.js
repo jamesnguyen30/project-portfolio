@@ -100,7 +100,7 @@ const AppBar = (props) => {
     >
       <Toolbar>
         <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
-          <MyLink active={true}>Headlines</MyLink>
+          <MyLink active={true} onClick={() => props.onHeadlineClicked()}>Headlines</MyLink>
           {/* <MyLink>Following</MyLink> */}
           <MyLink>Following</MyLink>
           <MyLink>About Developer</MyLink>
@@ -196,7 +196,8 @@ const AppBar = (props) => {
 AppBar.propTypes = {
   drawerWidth: PropTypes.number,
   isSignedIn: PropTypes.bool,
-  isCheckingAuth: PropTypes.bool
+  isCheckingAuth: PropTypes.bool,
+  onHeadlineClicked: PropTypes.func
 }
 
 export default React.memo(AppBar)

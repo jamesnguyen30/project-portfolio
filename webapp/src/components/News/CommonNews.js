@@ -1,6 +1,5 @@
 import React from 'react'
-import { Box, Typography, Tooltip } from '@mui/material'
-import SummaryButton from './SummaryButton'
+import { Box, Typography } from '@mui/material'
 import NewsSource from './NewsSource'
 import PropTypes from 'prop-types'
 
@@ -57,22 +56,6 @@ const CommonNews = (props) => {
           >{props.title}</Typography>
         </Box>
         <NewsSource alt={'ABC News'}/>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Tooltip title="Is this article helpful?" placement='top-start'>
-            <Typography
-              sx={{
-                flex: 1,
-                fontSize: '12px',
-                color: 'seconary.black',
-                ':hover': {
-                  textDecoration: 'underline'
-                }
-              }}
-            >Helpful?</Typography>
-          </Tooltip>
-          <SummaryButton />
-        </Box>
-
       </Box>
 
     </Box>

@@ -8,7 +8,7 @@ import {
 const initState = {
   type: null,
   headlines: [],
-  news: [],
+  news: {},
   error: null
 }
 
@@ -33,8 +33,7 @@ const newsReducers = (state = initState, action) => {
       return {
         ...state,
         type: action.type,
-        news: [...state.news, action.payload],
-        error: null
+        news: { ...state.news, [action.payload.term]: action.payload.news }
       }
     case NEWS_NOT_FETCHED:
       return {
