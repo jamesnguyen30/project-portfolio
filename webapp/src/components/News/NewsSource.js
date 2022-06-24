@@ -28,7 +28,7 @@ const NewsSource = (props) => {
             fontSize: '12px',
             textAlign: 'right'
           }}>
-          30 minutes ago
+          {props.time}
         </Typography>
 
     </Box>

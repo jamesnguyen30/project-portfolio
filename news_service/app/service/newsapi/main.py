@@ -3,7 +3,7 @@ import json
 from dotenv import load_dotenv
 import os
 import pathlib
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class NewsApiWrapper():
     def __init__(self):
@@ -33,13 +33,16 @@ class NewsApiWrapper():
         return news
 
     def fetch_news_by_term(self, term):
+        now = datetime.now()
+        from_date = now - timedelta(days = 30)
+
+
         news = self.client.get_everything(
             q = term, 
-            from_param = "2022-05-21", 
+            from_param = from_date.strftime('%Y-%m-%d'), 
             language='en', 
             sort_by= 'relevancy')
 
-        now = datetime.now()
 
         filename = f"fetch_{term}_{now.year}_{now.month}_{now.day}_{now.hour}_{now.minute}_{now.second}.json"
         save_path = os.path.join(self.output_dir , filename)

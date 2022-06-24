@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import {
+  Box,
   Typography,
-  CircularProgress
+  CircularProgress,
+  Stack,
+  Pagination
 } from '@mui/material'
 // import UtilityActionButton from '../buttons/UtilityActionButton'
 // import ImportantNews from './ImportantNews'
@@ -26,21 +29,40 @@ const DetailWatchingNews = (props) => {
 
   return (
     <React.Fragment>
-      <Typography>Detail Watching News</Typography>
       {
         loading && (
           <CircularProgress/>
         )
       }
-      {
-        !loading && news.map((item, index) => (
-          <CommonNews
-            key = {index}
-            title = {item.title}
-            image_url = {item.image_url}
-          />
-        ))
-      }
+      <Typography>Showing {news.length} news </Typography>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <Stack spacing={3}>
+          {
+            !loading && news.slice(0, 10).map((item, index) => {
+              const dateObj = new Date(Date.parse(item.date))
+              // const dateStr = `${dateObj.getMonth()}.${dateObj.getDay()}.${dateObj.getFullYear()}`
+              const dateStr = dateObj.toDateString()
+
+              return (
+              <CommonNews
+                key = {index}
+                title = {item.title}
+                image_url = {item.image_url}
+                source = {item.source}
+                time = {dateStr}
+              />
+              )
+            })
+          }
+        </Stack>
+        <Pagination count = {5} sx ={{ padding: 5 }}/>
+      </Box>
+
     </React.Fragment>
   )
 }

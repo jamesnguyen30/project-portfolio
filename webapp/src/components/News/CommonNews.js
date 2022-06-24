@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 const CommonNews = (props) => {
   return (
     <Box sx={{
-      width: 400,
+      width: 600,
       height: 180,
       border: 1,
       borderColor: 'secondary.gray',
@@ -24,7 +24,7 @@ const CommonNews = (props) => {
         maxHeight: '300'
       },
       ':hover .commonNewsImage': {
-        width: 75,
+        width: 250,
         transition: 'width 100ms'
       },
       backgroundColor: 'primary.white'
@@ -34,7 +34,7 @@ const CommonNews = (props) => {
         component="img"
         src={props.image_url}
         sx={{
-          width: 150,
+          width: 300,
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           objectFit: 'cover'
@@ -55,7 +55,7 @@ const CommonNews = (props) => {
             }}
           >{props.title}</Typography>
         </Box>
-        <NewsSource alt={'ABC News'}/>
+        <NewsSource alt={props.source} time ={props.time}/>
       </Box>
 
     </Box>
@@ -69,7 +69,8 @@ CommonNews.propTypes = {
   image_url: PropTypes.string.required,
   source: PropTypes.string.required,
   sentiment: PropTypes.string,
-  summary: PropTypes.string
+  summary: PropTypes.string,
+  time: PropTypes.string
 }
 
 export default CommonNews
