@@ -20,8 +20,9 @@ const WatchingNewsSection = (props) => {
   if (loading) {
     console.log('fetching ' + props.term)
     setTimeout(() => {
-      getNewsByTerm(props.term).then(response => {
-        setNews(response.data)
+      getNewsByTerm(props.term, 10).then(response => {
+        console.log(response)
+        setNews(response.data.data)
         setLoading(false)
       })
     }, 2000)
@@ -62,18 +63,25 @@ const WatchingNewsSection = (props) => {
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Grid container rowSpacing={3} sx={{ maxWidth: 'lg' }}>
               {
-                news.slice(0, 6).map((item, index) => (
-                  <Grid key={index} item xs={4}>
-                    <Box>
-                      <ImportantNews
-                        title={item.title}
-                        image_url={item.image_url}
-                        url={item.url}
-                        source={item.source}
-                      />
-                    </Box>
-                  </Grid>
-                ))
+
+                news.slice(0, 6).map((item, index) => {
+                  const dateObj = new Date(Date.parse(item.date))
+                  const dateStr = dateObj.toDateString()
+                  return (
+                    <Grid key={index} item xs={4}>
+                      <Box>
+                        <ImportantNews
+                          title={item.title}
+                          image_url={item.image_url}
+                          url={item.url}
+                          source={item.source}
+                          date={dateStr}
+                        />
+                      </Box>
+                    </Grid>
+                  )
+                }
+                )
               }
             </Grid>
             <Box sx={{ display: 'flex', width: '100%', margin: 3, justifyContent: 'center' }}>

@@ -12,9 +12,9 @@ exports.todayHeadlines = (req,res) => {
 }
 
 exports.newsByTerm = (req,res) => {
-    const {term} = req.query
+    const {term, limit, page} = req.query
     // const {term} = req.body
-    newsByTerm(term).then(data => {
+    newsByTerm(term, limit, page).then(data => {
         return res.json(data)
     }).catch(err=>{
         return res.status(500).send({'message': 'news api error'})

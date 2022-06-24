@@ -53,7 +53,7 @@ const ImportantNews = (props) => {
         component={'img'}
         src={props.image_url} />
 
-      <NewsSource alt={props.source}/>
+      <NewsSource alt={props.source} time={props.date}/>
       <Typography
         className="stickerNewsTitle"
         sx={{
@@ -73,7 +73,6 @@ const ImportantNews = (props) => {
         {props.title}
       </Typography>
     </Box>
-
   )
 }
 
@@ -82,7 +81,8 @@ ImportantNews.propTypes = {
   title: PropTypes.string.required,
   url: PropTypes.string.required,
   image_url: PropTypes.string.required,
-  source: PropTypes.string.required
+  source: PropTypes.string.required,
+  date: PropTypes.string
 }
 
 ImportantNews.defaultProps = {

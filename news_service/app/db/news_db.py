@@ -88,7 +88,8 @@ class NewsDb():
         @return
             list 
         '''
-        news = News.objects(search_term = search_term).all()
+        news = News.objects(search_term = search_term).all().order_by('-date')
+        
         return news
 
     def close(self):

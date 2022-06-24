@@ -61,7 +61,6 @@ const WatchlistDrawer = props => {
   }
 
   const onAddNewSticker = (symbol, description) => {
-    console.log(symbol, description)
     const result = stickers.find(x => x.name.symbol === symbol)
     if (result === undefined) {
       dispatch(addWatchlistAction(symbol, description))

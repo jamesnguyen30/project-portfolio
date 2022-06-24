@@ -6,6 +6,9 @@ import PropTypes from 'prop-types'
 // const MOCK_IMAGE = 'https://image.cnbcfm.com/api/v1/image/107037798-1648503081608-GettyImages-1205519775r.jpg?v=1648503136&w=740&h=416&ffmt=webp'
 
 const CommonNews = (props) => {
+  const openInNewTab = (url) => {
+    window.open(url)
+  }
   return (
     <Box sx={{
       width: 600,
@@ -28,7 +31,10 @@ const CommonNews = (props) => {
         transition: 'width 100ms'
       },
       backgroundColor: 'primary.white'
-    }}>
+    }}
+    onClick={() => openInNewTab(props.url)}
+    >
+
       <Box
         className="commonNewsImage"
         component="img"

@@ -1,8 +1,8 @@
-def generate_body(status, data:list = [], message:str ='', error:str = ''):
+def generate_body(status, total: int = 0, data:list = [], message:str ='', error:str = ''):
     return {
         'status': status,
         'message': message,
         'error': error,
-        'count': len(data),
+        'total': total,
         'data': data,
     }

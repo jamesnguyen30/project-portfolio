@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Stack, Button, Pagination, Typography, Fade, CircularProgress } from '@mui/material'
 import ImportantNews from './ImportantNews'
 import PropTypes from 'prop-types'
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded'
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded'
+import { getTodayHeadlines } from '../../api/news'
 // import StickerHeaderGroup from '../../components/News/StickerHeaderGroup'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getTodayHeadlinesAction } from '../../redux/actions/newsActions'
-import { HEADLINES_FETCHED } from '../../redux/actions'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { getTodayHeadlinesAction } from '../../redux/actions/newsActions'
+// import { HEADLINES_FETCHED } from '../../redux/actions'
 
 const ChangePageButton = (props) => (
   <Button
@@ -69,14 +70,17 @@ StickerInfo.propTypes = {
 const HeadlineSection = (props) => {
   const [pageAnimation, setPageAnimation] = useState(true)
   // const [page, setPage] = useState(0)
-  const [pageCount, setPageCount] = useState(5)
-  const [loadingHeadlines, setLoadingHeadlines] = useState(true)
+  // const [count] = useState(3)
+  const [total, setTotal] = useState(5)
+  const [loading, setLoading] = useState(true)
   const [headlinesPage, setHeadlinesPage] = useState(0)
+  const [news, setNews] = useState([])
+  // const [page, setPage]= useState(0)
   const MAX_COUNT_PER_PAGE = 3
 
-  const newsState = useSelector(state => state.newsReducer)
+  // const newsState = useSelector(state => state.newsReducer)
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const startChangePageAnimation = () => {
     setPageAnimation(false)
@@ -84,8 +88,8 @@ const HeadlineSection = (props) => {
   }
 
   const nextPage = () => {
-    // setPage((page + 1) % pageCount)
-    if (headlinesPage < pageCount) {
+    console.log(Math.floor(total / MAX_COUNT_PER_PAGE))
+    if (headlinesPage < total) {
       setHeadlinesPage(headlinesPage + 1)
       startChangePageAnimation()
     }
@@ -105,32 +109,41 @@ const HeadlineSection = (props) => {
     startChangePageAnimation()
   }
 
-  const getHeadlinesIndexToShow = () => {
-    const count = newsState.headlines.length
-    const pages = []
+  // const getHeadlinesIndexToShow = () => {
+  //   // const count = newsState.headlines.length
+  //   const pages = []
 
-    let page = MAX_COUNT_PER_PAGE * headlinesPage
+  //   let page = MAX_COUNT_PER_PAGE * headlinesPage
+  //   for (let i = 0; i < MAX_COUNT_PER_PAGE && page < total; i++) {
+  //     pages.push(page)
+  //     page += 1
+  //   }
+  //   return pages
+  // }
 
-    for (let i = 0; i < MAX_COUNT_PER_PAGE && page < count; i++) {
-      pages.push(page)
-      page += 1
-    }
-    return pages
+  if (loading) {
+    setTimeout(() => {
+      getTodayHeadlines().then(response => {
+        setTotal(response.total)
+        setNews(response.data)
+        setLoading(false)
+      })
+    })
   }
 
-  useEffect(() => {
-    if (newsState.type === null) {
-      setLoadingHeadlines(true)
-      console.log('fetching headlines')
-      setTimeout(() => {
-        dispatch(getTodayHeadlinesAction())
-      }, 2000)
-    } else if (newsState.type === HEADLINES_FETCHED) {
-      setLoadingHeadlines(false)
-      const headlinesCount = Math.floor(newsState.headlines.length / MAX_COUNT_PER_PAGE) - 1
-      setPageCount(headlinesCount)
-    }
-  })
+  // useEffect(() => {
+  //   if (newsState.type === null) {
+  //     setLoadingHeadlines(true)
+  //     console.log('fetching headlines')
+  //     setTimeout(() => {
+  //       dispatch(getTodayHeadlinesAction())
+  //     }, 2000)
+  //   } else if (newsState.type === HEADLINES_FETCHED) {
+  //     setLoadingHeadlines(false)
+  //     const headlinesCount = Math.floor(newsState.headlines.length / MAX_COUNT_PER_PAGE) - 1
+  //     setPageCount(headlinesCount)
+  //   }
+  // })
 
   return (
     <Box sx={{
@@ -150,7 +163,7 @@ const HeadlineSection = (props) => {
       >
         <ChangePageButton onClick={previousPage} />
         {
-          loadingHeadlines && (
+          loading && (
             <Box>
               <CircularProgress />
               <Typography>Fetching headlines</Typography>
@@ -158,7 +171,7 @@ const HeadlineSection = (props) => {
           )
         }
         {
-          !loadingHeadlines && (
+          !loading && (
             <Fade
               in={pageAnimation}
             >
@@ -172,18 +185,24 @@ const HeadlineSection = (props) => {
                   alignItems: 'center'
                 }}>
                   {
-                    getHeadlinesIndexToShow().map(index => (
+                    news.slice(headlinesPage * MAX_COUNT_PER_PAGE, headlinesPage * MAX_COUNT_PER_PAGE + MAX_COUNT_PER_PAGE)
+                      .map((item, index) => {
+                        const dateObj = new Date(Date.parse(item.date))
+                        const dateStr = dateObj.toDateString()
+
+                        return (
                       <Box key={index}>
                         <ImportantNews
-                        title={newsState.headlines[index].title}
-                        image_url={newsState.headlines[index].image_url}
-                        url={newsState.headlines[index].url}
-                        source={newsState.headlines[index].source}
-                        summary={newsState.headlines[index].summary}
-                        sentiment={newsState.headlines[index].sentiment}
+                        title={item.title}
+                        image_url={item.image_url}
+                        url={item.url}
+                        source= {item.source}
+                        date={dateStr}
                         />
                       </Box>
-                    ))
+                        )
+                      }
+                      )
                   }
               </Stack>
             </Fade>
@@ -194,14 +213,14 @@ const HeadlineSection = (props) => {
 
       <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', margin: 2 }}>
         <Pagination
-          page={headlinesPage}
-          boundaryCount={pageCount}
-          count={pageCount}
+          page={headlinesPage + 1}
+          // boundaryCount={total}
+          count={Math.ceil(total / 3)}
           shape={'rounded'}
           size={'small'}
-          hideNextButton
-          hidePrevButton
-          onChange={(event, pageNumber) => setPage(pageNumber)}
+          // hideNextButton
+          // hidePrevButton
+          onChange={(event, pageNumber) => setPage(pageNumber - 1)}
         />
       </Box>
     </Box>

@@ -42,7 +42,7 @@ def get_headlines():
         data = list()
         for news in headline_news:
             data.append(news.parse())
-        return response.generate_body(200, data)
+        return response.generate_body(200, len(data), data)
 
     except Exception as e:
         print(str(e))
@@ -58,18 +58,20 @@ async def get_by_id(id: str):
         traceback.print_exc()
         raise HTTPException(status_code = 500, detail = 'internal server error, check log')
 
-@router.get("/term/{term}")
-async def get_by_term(term: str):
+@router.get("/term/")
+async def get_by_term(term: str, limit: int = None, page: int = 0):
     try:
         term = term.lower()
         all_news_objs = db.get_by_search_term(term)
+        total = len(all_news_objs) 
+        all_news_objs = all_news_objs[page * limit : page * limit + limit]
 
         if all_news_objs == None:
             return response.generate_body(200, messge = 'term does not exist')
         data = list()
         for n in all_news_objs:
             data.append(n.parse())
-        return response.generate_body(200, data)
+        return response.generate_body(200, total = total, data = data)
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code = 500, detail = "internal server error, check log" )
