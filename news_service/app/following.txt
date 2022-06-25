@@ -4,5 +4,4 @@ microsoft
 nvidia
 amazon
 crypto
-bitcoin
-ethereum
+google

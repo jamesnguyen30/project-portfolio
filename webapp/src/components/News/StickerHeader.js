@@ -4,7 +4,6 @@ import { Box, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import UtilityActionButton from '../buttons/UtilityActionButton'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const StickerHeader = (props) => {
   return (
@@ -60,7 +59,9 @@ const StickerHeader = (props) => {
           }}
         >+${props.change} ({props.changePercent}%)</Typography>
       </Box>
-      <UtilityActionButton icon={<AddRoundedIcon/>}>Follow</UtilityActionButton>
+      <UtilityActionButton
+        onClick={() => props.onReadMoreClicked(props.assetFullname)}
+      >More news about {props.assetFullname}</UtilityActionButton>
 
     </Box>
   )
@@ -71,7 +72,8 @@ StickerHeader.propTypes = {
   sticker: PropTypes.string,
   price: PropTypes.number,
   change: PropTypes.number,
-  changePercent: PropTypes.number
+  changePercent: PropTypes.number,
+  onReadMoreClicked: PropTypes.func
 }
 
 StickerHeader.defaultProps = {

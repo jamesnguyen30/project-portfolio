@@ -54,7 +54,7 @@ const NewsPage = (props) => {
                   return (
                     <Box key ={index} sx={{ marginTop: 1 }}>
                       <Divider />
-                      <StickerHeader full assetFullname={item.name.description} symbol = {item.name.symbol} price = {item.c} change = {item.d} changePercent={item.dp}/>
+                      <StickerHeader full assetFullname={item.name.description} symbol = {item.name.symbol} price = {item.c} change = {item.d} changePercent={item.dp} onReadMoreClicked={goToDetailPage}/>
                       <WatchingNewsSection term={item.name.description} onReadMoreClicked = {goToDetailPage}/>
                     </Box>
                   )
@@ -65,7 +65,7 @@ const NewsPage = (props) => {
         }
         {
           detailPage && (
-            <DetailWatchingNews term={term} />
+            <DetailWatchingNews term={term} onBackToHeadline={goToHeadlinePage}/>
           )
         }
       </ContentBody>

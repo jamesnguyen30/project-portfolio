@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid, Box, CircularProgress } from '@mui/material'
-import UtilityActionButton from '../buttons/UtilityActionButton'
+// import UtilityActionButton from '../buttons/UtilityActionButton'
 import ImportantNews from './ImportantNews'
 import PropTypes from 'prop-types'
 
@@ -52,7 +52,7 @@ const WatchingNewsSection = (props) => {
   // })
 
   return (
-    <React.Fragment>
+    <Box sx={{ margin: 1 }}>
       {
         loading && (
           <CircularProgress />
@@ -61,39 +61,40 @@ const WatchingNewsSection = (props) => {
       {
         !loading && news.length > 0 && (
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <Grid container rowSpacing={3} sx={{ maxWidth: 'lg' }}>
+            <Grid container rowSpacing={3} columnSpacing={{ xs: 3, sm: 3, md: 3 }} sx={{ maxWidth: 'lg' }}>
               {
 
                 news.slice(0, 6).map((item, index) => {
                   const dateObj = new Date(Date.parse(item.date))
                   const dateStr = dateObj.toDateString()
                   return (
-                    <Grid key={index} item xs={4}>
-                      <Box>
-                        <ImportantNews
-                          title={item.title}
-                          image_url={item.image_url}
-                          url={item.url}
-                          source={item.source}
-                          date={dateStr}
-                        />
-                      </Box>
+                    <Grid
+                    key={index}
+                    item xs={4}
+                    sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <ImportantNews
+                        title={item.title}
+                        image_url={item.image_url}
+                        url={item.url}
+                        source={item.source}
+                        date={dateStr}
+                      />
                     </Grid>
                   )
                 }
                 )
               }
             </Grid>
-            <Box sx={{ display: 'flex', width: '100%', margin: 3, justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', width: '100%', margin: 3, justifyContent: 'center' }}>
               <UtilityActionButton
                 sx={{ backgroundColor: 'primary.main' }}
                 onClick={() => props.onReadMoreClicked(props.term)}
               >More news about {props.term}</UtilityActionButton>
-            </Box>
+            </Box> */}
           </Box>
         )
       }
-    </React.Fragment>
+    </Box>
   )
 }
 

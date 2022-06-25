@@ -11,6 +11,8 @@ import {
 // import { getNewsByTermAction } from '../../redux/actions/newsActions'
 // import { NEWS_FETCHED, NEWS_NOT_FETCHED } from '../../redux/actions'
 // import { useSelector } from 'react-redux'
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
+import UtilityActionButton from '../buttons/UtilityActionButton'
 import { getNewsByTerm } from '../../api/news'
 import CommonNews from './CommonNews'
 
@@ -37,15 +39,21 @@ const DetailWatchingNews = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <Box sx={{ marginTop: 2 }}>
       {
         loading && (
           <CircularProgress/>
         )
       }
-      <Typography>
-        Back to headlines button
-      </Typography>
+      <Box sx={{ display: 'flex' }}>
+        <UtilityActionButton
+        sx={{ padding: 1 }}
+        preIcon={<ArrowBackIosRoundedIcon/>}
+        onClick={() => props.onBackToHeadline()}>
+          Back to headlines
+        </UtilityActionButton>
+      </Box>
+
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -89,12 +97,13 @@ const DetailWatchingNews = (props) => {
         shape={'rounded'}/>
       </Box>
 
-    </React.Fragment>
+    </Box>
   )
 }
 
 DetailWatchingNews.propTypes = {
-  term: PropTypes.string.isRequired
+  term: PropTypes.string.isRequired,
+  onBackToHeadline: PropTypes.func
 }
 
 export default React.memo(DetailWatchingNews)

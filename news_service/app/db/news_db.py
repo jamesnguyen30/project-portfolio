@@ -77,7 +77,7 @@ class NewsDb():
         start_date = datetime.now().replace(hour = 0, minute = 0, second = 0, microsecond=0)
         end_date = datetime.now().replace(hour = 23, minute = 59, second = 59)
 
-        headlines = News.objects(search_term = 'headlines').filter(date__gte=start_date, date__lte = end_date)
+        headlines = News.objects(search_term = 'headlines').order_by('-date').filter(date__gte=start_date, date__lte = end_date)
         return headlines
 
     def get_by_search_term(self, search_term):

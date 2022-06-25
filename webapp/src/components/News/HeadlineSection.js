@@ -218,8 +218,8 @@ const HeadlineSection = (props) => {
           count={Math.ceil(total / 3)}
           shape={'rounded'}
           size={'small'}
-          // hideNextButton
-          // hidePrevButton
+          hideNextButton
+          hidePrevButton
           onChange={(event, pageNumber) => setPage(pageNumber - 1)}
         />
       </Box>

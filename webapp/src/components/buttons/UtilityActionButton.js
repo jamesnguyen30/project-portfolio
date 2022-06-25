@@ -31,6 +31,9 @@ const UtilityActionButton = props => {
         ...props.sx
       }}
     >
+      {
+        props.preIcon && (props.preIcon)
+      }
       <Typography sx={{ fontSize: '15px' }}>
         {props.children}
       </Typography>
@@ -44,11 +47,13 @@ const UtilityActionButton = props => {
 UtilityActionButton.propTypes = {
   sx: PropTypes.object,
   icon: PropTypes.object,
+  preIcon: PropTypes.object,
   children: PropTypes.string
 }
 
 UtilityActionButton.defaultProps = {
   text: 'Add',
+  preIcon: null,
   icon: null
 }
 
