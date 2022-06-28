@@ -3,14 +3,12 @@ import {
   Divider, Stack, Typography,
   Toolbar, Avatar, Menu, MenuItem, Button
 } from '@mui/material'
-// import SearchBox from '../../components/searchBox/SearchBox'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import { useSelector, useDispatch } from 'react-redux'
-// import { getProfileAction } from '../../redux/actions/profileActions'
 import { signOutAction } from '../../redux/actions/authActions'
 
 const AppBarContainer = styled(MuiAppBar)(({ theme, open, drawerWidth = 250 }) => ({
@@ -100,23 +98,8 @@ const AppBar = (props) => {
     >
       <Toolbar>
         <Stack spacing={5} direction="row" style={{ display: 'flex', flex: 1 }}>
-          <MyLink active={true} onClick={() => props.onHeadlineClicked()}>Headlines</MyLink>
-          {/* <MyLink>Following</MyLink> */}
-          <MyLink>Following</MyLink>
-          <MyLink>About Developer</MyLink>
+          <MyLink active={true} onClick={() => props.onHeadlineClicked()}>News</MyLink>
         </Stack>
-
-        {/* <SearchBox style={{ marginLeft: 50, marginRight: 50, flex: 1 }}
-          placeHolder={'Search news ...'}
-        // onFocus={onSearchBoxFocus}
-        // apiCallback={testApiCall}
-        // handleResult={testHandleResult}
-        // handleClear={testClear}
-        // handleError={testError}
-        // setLoading={testLoading}
-        // onFocus={onSearchBoxFocus}
-        // onBlur={onSearchBoxBlur}
-        /> */}
 
         <Stack >
           {

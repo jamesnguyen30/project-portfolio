@@ -19,13 +19,11 @@ const WatchingNewsSection = (props) => {
 
   if (loading) {
     console.log('fetching ' + props.term)
-    setTimeout(() => {
-      getNewsByTerm(props.term, 10).then(response => {
-        console.log(response)
-        setNews(response.data.data)
-        setLoading(false)
-      })
-    }, 2000)
+    getNewsByTerm(props.term, 10).then(response => {
+      console.log(response)
+      setNews(response.data.data)
+      setLoading(false)
+    })
   }
 
   // const newsState = useSelector(state => state.newsReducer)
@@ -55,7 +53,10 @@ const WatchingNewsSection = (props) => {
     <Box sx={{ margin: 1 }}>
       {
         loading && (
-          <CircularProgress />
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
+
         )
       }
       {

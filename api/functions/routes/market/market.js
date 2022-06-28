@@ -5,6 +5,17 @@ const {
   getQuote
 } = require('../../lib/marketApi')
 
+const defaultWatchlist = [
+{symbol: "AAPL", description: 'Apple'},
+{symbol: "NVDA", description: 'Nvidia'},
+{symbol: "TSLA", description: 'Tesla'},
+{symbol: "GOOG", description: 'Google'},
+{symbol: "META", description: 'Meta'},
+{symbol: "MSFT", description: 'Microsoft'},
+{symbol: "AMZN", description: 'Amazon'},
+{symbol: "NDAQ", description: 'Nasdaq'},
+]
+
 
 exports.searchSymbol = (req, res) => {
   const query = req.body.q
@@ -26,10 +37,24 @@ exports.getQuote = (req, res) => {
   })
 }
 
-const initProfileDoc = (user_id, initData = []) => {
+const initProfileDoc = (user_id, initData = defaultWatchlist) => {
   return firestore.collection('profile').doc(user_id).set({
     watchlist: initData
   })
+}
+
+exports.getGuestWatchlist = async (req,res) => {
+  try{
+    var data = []
+    for(var watchlist of defaultWatchlist){
+      const quote = await getQuote(watchlist.symbol)
+      data.push({name: watchlist, ...quote.data})
+    }
+    return res.json(data)
+  } catch (err){
+    console.error(err)
+    return res.status(500).send("API server error")
+  }
 }
 
 exports.getWatchlist = (req, res) => {

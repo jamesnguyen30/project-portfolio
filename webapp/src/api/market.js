@@ -20,7 +20,12 @@ const getCandleData = (symbol, days) => {
 
 const getWatchlist = () => {
   return axios.get(`${apiConfig.baseUrl}/watchlist`, getRequestConfig()).then(response => {
-    console.log(response.data)
+    return response.data
+  })
+}
+
+const getGuestWatchlist = () => {
+  return axios.get(`${apiConfig.baseUrl}/watchlist/guest`, getRequestConfig()).then(response => {
     return response.data
   })
 }
@@ -48,6 +53,7 @@ export {
   searchSymbol,
   getCandleData,
   getWatchlist,
+  getGuestWatchlist,
   addWatchlistItem,
   removeWatchlistItem,
   getQuote

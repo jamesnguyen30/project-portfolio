@@ -2,10 +2,11 @@ import { React } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SigninPage from './views/Auth/SigninPage'
 import SignupPage from './views/Auth/SIgnupPage'
-import Playground from './views/Playground/Playground'
+// import Playground from './views/Playground/Playground'
+// import ProtectedPlayground from './views/Playground/index'
+import AboutPage from './views/About/AboutPage'
 import Home from './views/Home/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import ProtectedPlayground from './views/Playground/index'
 
 const theme = createTheme({
   palette: {
@@ -71,8 +72,7 @@ function App () {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SigninPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/playground" element={<Playground />} />
-            <Route path="/testAuth" element={<ProtectedPlayground/>} />
+            <Route path="/about" element={<AboutPage/>} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

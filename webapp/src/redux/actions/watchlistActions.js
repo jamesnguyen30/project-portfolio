@@ -8,6 +8,7 @@ import {
 
 import {
   getWatchlist,
+  getGuestWatchlist,
   addWatchlistItem,
   removeWatchlistItem
 } from '../../api/market'
@@ -22,6 +23,23 @@ const getWatchlistAction = () => {
       })
     }).catch(err => {
       console.error(err)
+      dispatch({
+        type: WATCHLIST_FETCH_FAILED,
+        payload: err
+      })
+    })
+  }
+}
+
+const getGuestWatchlistAction = () => {
+  return dispatch => {
+    getGuestWatchlist().then(data => {
+      console.log(data)
+      dispatch({
+        type: WATCHLIST_FETCHED,
+        payload: data
+      })
+    }).catch(err => {
       dispatch({
         type: WATCHLIST_FETCH_FAILED,
         payload: err
@@ -70,6 +88,7 @@ const resetWatchlistState = () => {
 
 export {
   getWatchlistAction,
+  getGuestWatchlistAction,
   addWatchlistAction,
   removeWatchlistAction,
   resetWatchlistState

@@ -15,41 +15,34 @@ import {
   // getWatchlistAction,
   addWatchlistAction,
   removeWatchlistAction,
-  getWatchlistAction
+  getWatchlistAction,
+  getGuestWatchlistAction
 } from '../../redux/actions/watchlistActions'
 import {
+  SIGNED_IN,
   WATCHLIST_FETCHED,
   WATCHLIST_FETCH_FAILED,
   WATCHLIST_UPDATED,
   WATCHLIST_UPDATE_FAILED
 } from '../../redux/actions'
 
-const defaultStickers = [
-  { name: { description: 'Apple', symbol: 'AAPL' }, c: 199.99, d: 0.99 },
-  { name: { description: 'Amazon', symbol: 'AMZN' }, c: 199.99, d: 0.99 },
-  { name: { description: 'Google', symbol: 'GOOGL' }, c: 199.99, d: 0.99 }
-]
-
-// name(pin):"AAPL"
-// c(pin):170.09
-// d(pin):-2.05
-// dp(pin):-1.1909
-// h(pin):171.77
-// l(pin):169.22
-// o(pin):171.78
-// pc(pin):172.14
-// t(pin):1649448004
+// const defaultStickers = [
+//   { name: { description: 'Apple', symbol: 'AAPL' }, c: 199.99, d: 0.99 },
+//   { name: { description: 'Amazon', symbol: 'AMZN' }, c: 199.99, d: 0.99 },
+//   { name: { description: 'Google', symbol: 'GOOGL' }, c: 199.99, d: 0.99 }
+// ]
 
 const WatchlistDrawer = props => {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(false)
   const [showingCompany, setShowingCompany] = useState(false)
-  const [stickers, setStickers] = useState(defaultStickers)
+  const [stickers, setStickers] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const drawerRef = useRef()
   const listRef = useRef()
 
   const watchlistState = useSelector(state => state.watchlistReducer)
+  const authState = useSelector(state => state.authReducer)
   const dispatch = useDispatch()
 
   const startEditing = () => {
@@ -95,21 +88,35 @@ const WatchlistDrawer = props => {
 
   useEffect(() => {
     setLoading(true)
-    if (watchlistState.type === WATCHLIST_UPDATED) {
-      dispatch(getWatchlistAction())
-    } else if (watchlistState.type === WATCHLIST_FETCHED) {
-      console.log('Setting stickers')
-      setStickers(watchlistState.watchlist)
-      setErrorMessage(null)
-      setLoading(false)
-    } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
-      setStickers(defaultStickers)
-      setErrorMessage('Oops! error while fetching watchlist')
-      setLoading(false)
-    } else if (watchlistState.type === WATCHLIST_UPDATE_FAILED) {
-      console.error('update watchlist failed')
-      setErrorMessage('Oops! error while updating watchlist')
-      setLoading(false)
+    console.log(authState)
+    if (authState.type === SIGNED_IN) {
+      if (watchlistState.type === WATCHLIST_UPDATED) {
+        dispatch(getWatchlistAction())
+      } else if (watchlistState.type === WATCHLIST_FETCHED) {
+        console.log('Setting stickers')
+        setStickers(watchlistState.watchlist)
+        setErrorMessage(null)
+        setLoading(false)
+      } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
+        // setStickers(defaultStickers)
+        dispatch(getGuestWatchlistAction())
+        // setErrorMessage('Oops! error while fetching watchlist')
+        // setLoading(false)
+      } else if (watchlistState.type === WATCHLIST_UPDATE_FAILED) {
+        console.error('update watchlist failed')
+        setErrorMessage('Oops! error while updating watchlist')
+        setLoading(false)
+      }
+    } else {
+      if (watchlistState.type === null) {
+        console.log('fetching guest')
+        dispatch(getGuestWatchlistAction())
+      } else if (watchlistState.type === WATCHLIST_FETCHED) {
+        console.log('Setting stickers')
+        setStickers(watchlistState.watchlist)
+        setErrorMessage(null)
+        setLoading(false)
+      }
     }
   }, [watchlistState])
 
@@ -178,9 +185,13 @@ const WatchlistDrawer = props => {
               fontWeight: 'bold',
               flex: 1
             }}>Watchlist</Typography>
-          <UtilityActionButton
-            onClick={editing ? stopEditing : startEditing}
-          >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
+          {
+            authState.type === SIGNED_IN && (
+              <UtilityActionButton
+                onClick={editing ? stopEditing : startEditing}
+              >{editing ? 'Done' : 'Edit'}</UtilityActionButton>
+            )
+          }
         </Stack>
 
         {

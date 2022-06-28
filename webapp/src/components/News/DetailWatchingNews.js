@@ -6,11 +6,6 @@ import {
   Stack,
   Pagination
 } from '@mui/material'
-// import UtilityActionButton from '../buttons/UtilityActionButton'
-// import ImportantNews from './ImportantNews'
-// import { getNewsByTermAction } from '../../redux/actions/newsActions'
-// import { NEWS_FETCHED, NEWS_NOT_FETCHED } from '../../redux/actions'
-// import { useSelector } from 'react-redux'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 import UtilityActionButton from '../buttons/UtilityActionButton'
 import { getNewsByTerm } from '../../api/news'
@@ -40,11 +35,6 @@ const DetailWatchingNews = (props) => {
 
   return (
     <Box sx={{ marginTop: 2 }}>
-      {
-        loading && (
-          <CircularProgress/>
-        )
-      }
       <Box sx={{ display: 'flex' }}>
         <UtilityActionButton
         sx={{ padding: 1 }}
@@ -72,6 +62,14 @@ const DetailWatchingNews = (props) => {
             fontWeight: 'bold'
           }}
           >Showing {page * limit} - {(page * limit + limit) < total ? (page * limit + limit) : total} of all {total} news about {props.term} </Typography>
+          {
+            loading && (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress/>
+              </Box>
+
+            )
+          }
           {
             !loading && news.slice(0, 10).map((item, index) => {
               const dateObj = new Date(Date.parse(item.date))

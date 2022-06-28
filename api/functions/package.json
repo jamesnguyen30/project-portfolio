@@ -20,7 +20,8 @@
     "firebase": "^9.8.3",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.21.2",
-    "firebase-tools": "^11.0.1"
+    "firebase-tools": "^11.0.1",
+    "optionator": "^0.9.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.18.0",
