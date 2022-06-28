@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import {
-  Divider, Typography, Box
+  Divider, Typography, Box, CircularProgress
 } from '@mui/material'
 import PropTypes from 'prop-types'
 import ContentBody from '../../components/ContentBody/ContentBody'
 import HeadlineSection from '../../components/News/HeadlineSection'
 import WatchingNewsSection from '../../components/News/WatchingNewsSection'
-import DetailWatchingNews from '../../components/News/DetailWatchingNews'
 import StickerHeader from '../../components/News/StickerHeader'
+import DetailWatchingNews from '../../components/News/DetailWatchingNews'
 import AppBar from '../../components/AppBar/AppBar'
 
 import {
   useSelector
 } from 'react-redux'
+import { getNewsByTerm } from '../../api/news'
 
 const NewsPage = (props) => {
   const { drawerWidth } = props
@@ -22,6 +23,8 @@ const NewsPage = (props) => {
   const [term, setTerm] = useState()
   const [headlinePage, setHeadlinePage] = useState(true)
   const [detailPage, setDetailPage] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [news, setNews] = useState([])
 
   const goToDetailPage = (term) => {
     setDetailPage(true)
@@ -33,6 +36,40 @@ const NewsPage = (props) => {
     setDetailPage(false)
     setHeadlinePage(true)
     setTerm(null)
+  }
+
+  if (loading) {
+    console.log('fetching')
+    const terms = []
+    for (const watchlist of watchlistState.watchlist) {
+      terms.push(watchlist.name.description)
+    }
+    const newsData = {}
+    if (terms.length > 0) {
+      getNewsByTerm(terms.join(','), 10).then(response => {
+        for (const n of response.data.data) {
+          if ((n.search_term in newsData) === false) {
+            newsData[n.search_term] = []
+          }
+          newsData[n.search_term].push(n)
+        }
+        console.log('fetched news ')
+        setNews(newsData)
+        setLoading(false)
+      })
+    }
+  } else {
+    console.log('news in newspage')
+    console.log(news)
+  }
+
+  const findSticker = (description) => {
+    for (const watchlist of watchlistState.watchlist) {
+      if (watchlist.name.description.toLowerCase() === description.toLowerCase()) {
+        return watchlist
+      }
+    }
+    return null
   }
 
   return (
@@ -49,13 +86,27 @@ const NewsPage = (props) => {
                 <HeadlineSection />
               </Box>
               {
-                watchlistState.watchlist.map((item, index) => {
-                  console.log(item)
+                loading && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                  </Box>
+
+                )
+              }
+              {
+                !loading && Object.keys(news).map((description, index) => {
+                  console.log(news[description])
+                  // return (
+                  //   <Typography key={index}>{item}</Typography>
+                  // )
+                  const sticker = findSticker(description)
+                  console.log('found sticker ' + sticker)
                   return (
                     <Box key ={index} sx={{ marginTop: 1 }}>
                       <Divider />
-                      <StickerHeader full assetFullname={item.name.description} symbol = {item.name.symbol} price = {item.c} change = {item.d} changePercent={item.dp} onReadMoreClicked={goToDetailPage}/>
-                      <WatchingNewsSection term={item.name.description} onReadMoreClicked = {goToDetailPage}/>
+                      <StickerHeader full assetFullname={sticker.name.description} symbol = {sticker.name.symbol}
+                      price = {sticker.c} change = {sticker.d} changePercent={sticker.dp} onReadMoreClicked={goToDetailPage}/>
+                      <WatchingNewsSection news={news[description]} onReadMoreClicked = {goToDetailPage}/>
                     </Box>
                   )
                 })

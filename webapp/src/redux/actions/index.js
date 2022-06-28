@@ -28,6 +28,9 @@ const NEWS_NOT_FETCHED = 'NEWS_FETCHED'
 const SERVER_ERROR = 'SERVER_ERROR'
 const AUTH_SERVER_ERROR = 'AUTH_SERVER_ERROR'
 
+// Reset all reducers ( Note, use when sign out)
+const RESET = 'RESET'
+
 export {
   SIGNED_IN,
   SIGN_IN_SUCCESS,
@@ -49,5 +52,6 @@ export {
   HEADLINES_FETCHED,
   HEADLINES_NOT_FETCHED,
   NEWS_FETCHED,
-  NEWS_NOT_FETCHED
+  NEWS_NOT_FETCHED,
+  RESET
 }

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Grid, Box, CircularProgress } from '@mui/material'
+import React from 'react'
+import { Grid, Box } from '@mui/material'
 // import UtilityActionButton from '../buttons/UtilityActionButton'
 import ImportantNews from './ImportantNews'
 import PropTypes from 'prop-types'
@@ -10,21 +10,21 @@ import PropTypes from 'prop-types'
 // import { useSelector, useDispatch } from 'react-redux'
 
 // Render News according to received data
-import { getNewsByTerm } from '../../api/news'
+// import { getNewsByTerm } from '../../api/news'
 
 const WatchingNewsSection = (props) => {
   // const [news, setNews] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [news, setNews] = useState([])
+  // const [loading, setLoading] = useState(true)
+  // const [news, setNews] = useState([])
 
-  if (loading) {
-    console.log('fetching ' + props.term)
-    getNewsByTerm(props.term, 10).then(response => {
-      console.log(response)
-      setNews(response.data.data)
-      setLoading(false)
-    })
-  }
+  // if (loading) {
+  // console.log('fetching ' + props.term)
+  // getNewsByTerm(props.term, 10).then(response => {
+  //   console.log(response)
+  //   setNews(response.data.data)
+  //   setLoading(false)
+  // })
+  // }
 
   // const newsState = useSelector(state => state.newsReducer)
   // const dispatch = useDispatch()
@@ -52,20 +52,12 @@ const WatchingNewsSection = (props) => {
   return (
     <Box sx={{ margin: 1 }}>
       {
-        loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <CircularProgress />
-          </Box>
-
-        )
-      }
-      {
-        !loading && news.length > 0 && (
+        props.news.length > 0 && (
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Grid container rowSpacing={3} columnSpacing={{ xs: 3, sm: 3, md: 3 }} sx={{ maxWidth: 'lg' }}>
               {
 
-                news.slice(0, 6).map((item, index) => {
+                props.news.slice(0, 6).map((item, index) => {
                   const dateObj = new Date(Date.parse(item.date))
                   const dateStr = dateObj.toDateString()
                   return (
@@ -100,8 +92,9 @@ const WatchingNewsSection = (props) => {
 }
 
 WatchingNewsSection.propTypes = {
-  term: PropTypes.string.isRequired,
-  onReadMoreClicked: PropTypes.func
+  // term: PropTypes.string.isRequired,
+  onReadMoreClicked: PropTypes.func,
+  news: PropTypes.array
 }
 
 export default React.memo(WatchingNewsSection)

@@ -19,13 +19,11 @@ const authReducer = (state = initState, action) => {
         ...state,
         type: action.type,
         error: null
-        // idToken: action.payload
       }
     case NOT_SIGNED_IN:
       return {
         type: action.type,
         error: action.payload
-        // idToken: null
       }
     case SIGNED_IN_ERROR: case SIGN_OUT_ERROR: case SIGNED_UP_ERROR:
       return {

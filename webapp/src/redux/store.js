@@ -6,8 +6,6 @@ import profileReducer from './reducers/profileReducer'
 import watchlistReducer from './reducers/watchlistReducer'
 import newsReducer from './reducers/newsReducers'
 
-// const initState = 0;
-
 const rootReducer = combineReducers({
   authReducer,
   profileReducer,

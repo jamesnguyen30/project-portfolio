@@ -59,19 +59,23 @@ async def get_by_id(id: str):
         raise HTTPException(status_code = 500, detail = 'internal server error, check log')
 
 @router.get("/term/")
-async def get_by_term(term: str, limit: int = None, page: int = 0):
+async def get_by_term(term: str, limit: int = 10, page: int = 0):
     try:
-        term = term.lower()
-        all_news_objs = db.get_by_search_term(term)
+        term = term.lower().split(",")
+        all_news_objs = list() 
+        total = 0
+        for t in term:
+            result = db.get_by_search_term(t)
+            result = result[page * limit : page * limit + limit]
+            if result == None: 
+                continue
+            for r in result:
+                all_news_objs.append(r.parse())
+            total += len(result)
         total = len(all_news_objs) 
-        all_news_objs = all_news_objs[page * limit : page * limit + limit]
-
-        if all_news_objs == None:
+        if len(all_news_objs) == 0:
             return response.generate_body(200, messge = 'term does not exist')
-        data = list()
-        for n in all_news_objs:
-            data.append(n.parse())
-        return response.generate_body(200, total = total, data = data)
+        return response.generate_body(200, total = total, data = all_news_objs)
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code = 500, detail = "internal server error, check log" )
