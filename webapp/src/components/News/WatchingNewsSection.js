@@ -1,54 +1,9 @@
 import React from 'react'
 import { Grid, Box } from '@mui/material'
-// import UtilityActionButton from '../buttons/UtilityActionButton'
 import ImportantNews from './ImportantNews'
 import PropTypes from 'prop-types'
 
-// import { getNewsByTermAction } from '../../redux/actions/newsActions'
-// import { NEWS_FETCHED, NEWS_NOT_FETCHED } from '../../redux/actions'
-
-// import { useSelector, useDispatch } from 'react-redux'
-
-// Render News according to received data
-// import { getNewsByTerm } from '../../api/news'
-
 const WatchingNewsSection = (props) => {
-  // const [news, setNews] = useState([])
-  // const [loading, setLoading] = useState(true)
-  // const [news, setNews] = useState([])
-
-  // if (loading) {
-  // console.log('fetching ' + props.term)
-  // getNewsByTerm(props.term, 10).then(response => {
-  //   console.log(response)
-  //   setNews(response.data.data)
-  //   setLoading(false)
-  // })
-  // }
-
-  // const newsState = useSelector(state => state.newsReducer)
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   if (newsState.type === null) {
-  //     setLoading(true)
-  //     setTimeout(() => {
-  //       dispatch(getNewsByTermAction(props.term))
-  //     }, 2000)
-  //   } else if (newsState.type === NEWS_FETCHED) {
-  //     setLoading(false)
-  //     setNews(newsState.news[props.term])
-  //     console.log('News fetched')
-  //     console.log(news)
-  //   } else if (newsState.type === NEWS_NOT_FETCHED) {
-  //     // show error
-  //     setLoading(false)
-  //   } else {
-  //     // show unknown error
-  //     setLoading(false)
-  //   }
-  // })
-
   return (
     <Box sx={{ margin: 1 }}>
       {
@@ -78,12 +33,6 @@ const WatchingNewsSection = (props) => {
                 )
               }
             </Grid>
-            {/* <Box sx={{ display: 'flex', width: '100%', margin: 3, justifyContent: 'center' }}>
-              <UtilityActionButton
-                sx={{ backgroundColor: 'primary.main' }}
-                onClick={() => props.onReadMoreClicked(props.term)}
-              >More news about {props.term}</UtilityActionButton>
-            </Box> */}
           </Box>
         )
       }
@@ -92,7 +41,6 @@ const WatchingNewsSection = (props) => {
 }
 
 WatchingNewsSection.propTypes = {
-  // term: PropTypes.string.isRequired,
   onReadMoreClicked: PropTypes.func,
   news: PropTypes.array
 }

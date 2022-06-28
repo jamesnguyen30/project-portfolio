@@ -12,7 +12,6 @@ import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  // getWatchlistAction,
   addWatchlistAction,
   removeWatchlistAction,
   getWatchlistAction,
@@ -25,12 +24,6 @@ import {
   WATCHLIST_UPDATED,
   WATCHLIST_UPDATE_FAILED
 } from '../../redux/actions'
-
-// const defaultStickers = [
-//   { name: { description: 'Apple', symbol: 'AAPL' }, c: 199.99, d: 0.99 },
-//   { name: { description: 'Amazon', symbol: 'AMZN' }, c: 199.99, d: 0.99 },
-//   { name: { description: 'Google', symbol: 'GOOGL' }, c: 199.99, d: 0.99 }
-// ]
 
 const WatchlistDrawer = props => {
   const [loading, setLoading] = useState(true)
@@ -98,10 +91,7 @@ const WatchlistDrawer = props => {
         setErrorMessage(null)
         setLoading(false)
       } else if (watchlistState.type === WATCHLIST_FETCH_FAILED) {
-        // setStickers(defaultStickers)
         dispatch(getGuestWatchlistAction())
-        // setErrorMessage('Oops! error while fetching watchlist')
-        // setLoading(false)
       } else if (watchlistState.type === WATCHLIST_UPDATE_FAILED) {
         console.error('update watchlist failed')
         setErrorMessage('Oops! error while updating watchlist')

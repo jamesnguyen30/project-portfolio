@@ -3,6 +3,8 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+
 import UtilityActionButton from '../buttons/UtilityActionButton'
 
 const StickerHeader = (props) => {
@@ -25,16 +27,30 @@ const StickerHeader = (props) => {
             textDecoration: 'underline'
           },
           ':active .icon': {
-            transform: 'translateY(-5px)',
+            transform: props.change <= 0 ? 'translateY(5px)' : 'translateY(-5px)',
             transition: 'transform 100ms'
           }
         }}
       >
-        <ArrowDropUpIcon
-        className="icon"
-        fontSize="large"
-        sx={{ color: 'primary.darkGreen' }}
-        />
+        {
+          props.change <= 0 && (
+            <ArrowDropDownIcon
+            className="icon"
+            fontSize="large"
+            sx={{ color: 'primary.red' }}
+            />
+          )
+        }
+        {
+          props.change > 0 && (
+            <ArrowDropUpIcon
+            className="icon"
+            fontSize="large"
+            sx={{ color: 'primary.red' }}
+            />
+          )
+        }
+
         <Typography
           className="sticker"
           sx={{
@@ -48,14 +64,14 @@ const StickerHeader = (props) => {
             fontSize: '15px',
             fontWeight: 'bold',
             marginRight: 1,
-            color: 'primary.darkGreen'
+            color: props.change > 0 ? 'primary.darkGreen' : 'primary.red'
           }}
         >${props.price}</Typography>
         <Typography
           sx={{
             fontSize: '15px',
             marginRight: 1,
-            color: 'primary.green'
+            color: props.change > 0 ? 'primary.green' : 'secondary.red'
           }}
         >+${props.change} ({props.changePercent}%)</Typography>
       </Box>
