@@ -4,15 +4,24 @@ from mongoengine import connect, disconnect
 from datetime import datetime 
 import pandas as pd
 import pathlib
-
-CWD = pathlib.Path(__file__).parent.absolute()
+import os
+from dotenv import load_dotenv
 
 class NewsDb():
     def __init__(self):
-        self.init_db(config.NEWS_DB, config.NEWS_COLLECTION)
+        root = pathlib.Path(__file__).parent.parent
+        self.dotenv_path = os.path.join(root, 'dotenv')
+        load_dotenv(self.dotenv_path)
+        self.admin_username = os.getenv("ADMIN_USERNAME")
+        self.admin_password = os.getenv("ADMIN_PASSWORD")
+        self.connection_string = f"mongodb+srv://{self.admin_username}:{self.admin_password}@newsdb.beebw.mongodb.net/?retryWrites=true&w=majority"
 
-    def init_db(self, alias, name):
-        connect(alias = alias, name = name)
+        print(f"Connect db with username={self.admin_username} and password={self.admin_password}")
+
+        self.init_db(self.connection_string)
+
+    def init_db(self, connection_string):
+        connect(host=connection_string, alias='news_db')
 
     def save(self, 
         search_term: str,  title: str, text: str, 
@@ -96,3 +105,5 @@ class NewsDb():
     def close(self):
         disconnect()
 
+if __name__ == '__main__':
+    newsdb = NewsDb()

@@ -18,7 +18,7 @@ class NewsApiWrapper():
         if os.path.exists(self.output_dir) == False:
             os.mkdir(self.output_dir)
 
-        self.client = NewsApiClient(api_key = '65d060beb5aa4b30be79716bc3c6dbf1') 
+        self.client = NewsApiClient(api_key = newsapi_key) 
     
     def fetch_top_headlines(self):
         news = self.client.get_top_headlines(category='business')
@@ -34,7 +34,7 @@ class NewsApiWrapper():
 
     def fetch_news_by_term(self, term):
         now = datetime.now()
-        from_date = now - timedelta(days = 30)
+        from_date = now - timedelta(days = 29)
 
 
         news = self.client.get_everything(

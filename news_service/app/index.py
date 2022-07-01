@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 cwd = pathlib.Path(__file__).parent
 sys.path.append(str(cwd))
-path = os.path.join(cwd, 'secrets', '.env')
+path = os.path.join(cwd, 'dotenv')
 load_dotenv(dotenv_path = path)
 PORT = int(os.getenv("PORT"))
 

@@ -34,8 +34,10 @@ def fetch_headlines():
         # with open(headlines_path, 'r') as file:
         #     headlines = json.load(file)
         
-        # with open(news_path, 'r') as file:
-        #     news = json.load(file)
+        # with open('headlines.json', 'r') as file:
+        #     headlines = json.load(file)
+        with open("headlines.json", 'w') as file:
+            json.dump(headlines, file)
 
         for headline in headlines['articles']:
             date = datetime.strptime(headline['publishedAt'], "%Y-%m-%dT%H:%M:%SZ")
@@ -77,6 +79,8 @@ def fetch_news():
         # news_client.fetch_news_by_term()
         # news_path = '/home/nguyen/Desktop/project-portfolio/news_service/app/output/fetch_2022_6_21_12_57_apple.json'
         all_news = news_client.fetch_all_following_topics()
+        with open("saved.json", 'w') as file:
+            json.dump(all_news, file)
 
         # with open(news_path, 'r') as file:
         #     all_news = json.load(file)
