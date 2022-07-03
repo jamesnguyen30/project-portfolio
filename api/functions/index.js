@@ -12,6 +12,10 @@ const app = express();
 const {healthCheck, revokeToken} = require("./routes/auth/auth");
 
 const {
+  createProfileData,
+} = require("./routes/profile/profile");
+
+const {
   searchSymbol,
   getWatchlist,
   addToWatchlist,
@@ -34,6 +38,9 @@ app.get("/isSignedIn", authorize, (req, res) => {
   return res.send("ok");
 });
 app.post("/revokeToken", revokeToken);
+
+app.get("/createProfile", authorize, createProfileData);
+
 
 app.post("/searchSymbol", authorize, searchSymbol);
 app.get("/watchlist", authorize, getWatchlist);

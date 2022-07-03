@@ -37,11 +37,11 @@ exports.getQuote = (req, res) => {
   });
 };
 
-const initProfileDoc = (userId, initData = defaultWatchlist) => {
-  return firestore.collection("profile").doc(userId).set({
-    watchlist: initData,
-  });
-};
+// const initProfileDoc = (userId, initData = defaultWatchlist) => {
+//   return firestore.collection("profile").doc(userId).set({
+//     watchlist: initData,
+//   });
+// };
 
 exports.getGuestWatchlist = async (req, res) => {
   try {
@@ -58,9 +58,9 @@ exports.getGuestWatchlist = async (req, res) => {
 };
 
 exports.getWatchlist = (req, res) => {
-  const {userId} = req.decodedToken;
+  const {user_id} = req.decodedToken;
 
-  const profileDoc = firestore.collection("profile").doc(userId);
+  const profileDoc = firestore.collection("profile").doc(user_id);
 
   profileDoc.get().then(async (docRef) => {
     if (docRef.exists) {
@@ -76,23 +76,19 @@ exports.getWatchlist = (req, res) => {
         return res.status(500).send("API server error");
       }
     } else {
-      initProfileDoc(userId).then((_) => {
-        return res.json([]);
-      }).catch((err) => {
-        console.error(err);
-        return res.status(500).send("Error while creating document");
-      });
+      console.error("Profile does not exists");
+      return res.status(500).send("server error");
     }
   }).catch((err) => {
     console.error(err);
-    return res.send("error");
+    return res.status(500).send("error");
   });
 };
 
 exports.addToWatchlist = (req, res) => {
-  const {userId} = req.decodedToken;
+  const {user_id} = req.decodedToken;
   const {symbol, description} = req.body;
-  const profileDoc = firestore.collection("profile").doc(userId);
+  const profileDoc = firestore.collection("profile").doc(user_id);
 
   profileDoc.get().then((docRef) => {
     if (docRef.exists) {
@@ -106,13 +102,12 @@ exports.addToWatchlist = (req, res) => {
         return res.status(500).send("Error while updating document");
       });
     } else {
-      initProfileDoc(userId, [symbol]).then((_) => {
-        return res.send("ok");
-      }).catch((err) => {
-        console.error(err);
-        return res.status(500).send("Error while updating document");
-      });
+      console.error("Profile does not exists");
+      return res.status(500).send("server error");
     }
+  }).catch((err)=>{
+    console.error(err);
+    return res.status(500).send("server error");
   });
 };
 
@@ -120,9 +115,9 @@ exports.addToWatchlist = (req, res) => {
 // }
 
 exports.deleteFromWatchlist = (req, res) => {
-  const {userId} = req.decodedToken;
+  const {user_id} = req.decodedToken;
   const {symbol, description} = req.body;
-  const profileDoc = firestore.collection("profile").doc(userId);
+  const profileDoc = firestore.collection("profile").doc(user_id);
 
   profileDoc.get().then((docRef) => {
     if (docRef.exists) {
@@ -137,21 +132,20 @@ exports.deleteFromWatchlist = (req, res) => {
         return res.status(500).send("Error while updating document");
       });
     } else {
-      initProfileDoc(userId, [symbol]).then((_) => {
-        return res.send("ok");
-      }).catch((err) => {
-        console.error(err);
-        return res.status(500).send("Error while updating document");
-      });
+      console.error("Profile does not exists");
+      return res.status(500).send("server error");
     }
+  }).catch((err)=>{
+    console.error(err);
+    return res.status(500).send("server error");
   });
 };
 
 exports.reorderWatchlist = (req, res) => {
-  const {userId} = req.decodedToken;
+  const {user_id} = req.decodedToken;
   const {oldIdx, newIdx} = req.body;
 
-  const profileDoc = firestore.collection("profile").doc(userId);
+  const profileDoc = firestore.collection("profile").doc(user_id);
 
   profileDoc.get().then((docRef) => {
     if (docRef.exists) {
