@@ -39,7 +39,6 @@ const NewsPage = (props) => {
   }
 
   if (loading) {
-    console.log('fetching')
     const terms = []
     for (const watchlist of watchlistState.watchlist) {
       terms.push(watchlist.name.description)
@@ -53,14 +52,10 @@ const NewsPage = (props) => {
           }
           newsData[n.search_term].push(n)
         }
-        console.log('fetched news ')
         setNews(newsData)
         setLoading(false)
       })
     }
-  } else {
-    console.log('news in newspage')
-    console.log(news)
   }
 
   const findSticker = (description) => {
@@ -95,12 +90,7 @@ const NewsPage = (props) => {
               }
               {
                 !loading && Object.keys(news).map((description, index) => {
-                  console.log(news[description])
-                  // return (
-                  //   <Typography key={index}>{item}</Typography>
-                  // )
                   const sticker = findSticker(description)
-                  console.log('found sticker ' + sticker)
                   return (
                     <Box key ={index} sx={{ marginTop: 1 }}>
                       <Divider />

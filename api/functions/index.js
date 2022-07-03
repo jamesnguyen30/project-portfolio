@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const {isSignedIn, authorize} = require("./middlewares/auth");
+const {authorize} = require("./middlewares/auth");
 const {seedTest} = require("./utils/seedTest");
 require("dotenv").config();
 
@@ -12,11 +12,6 @@ const app = express();
 const {healthCheck, revokeToken} = require("./routes/auth/auth");
 
 const {
-  getProfile,
-  createProfileData,
-} = require("./routes/profile/profile");
-
-const {
   searchSymbol,
   getWatchlist,
   addToWatchlist,
@@ -24,7 +19,6 @@ const {
   reorderWatchlist,
   getCandleData,
   getQuote,
-  seedWatchlist,
   getGuestWatchlist,
 } = require("./routes/market/market");
 

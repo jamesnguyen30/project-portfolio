@@ -10,3 +10,4 @@ nasdaq
 amd
 facebook
 nasdaq
+meta

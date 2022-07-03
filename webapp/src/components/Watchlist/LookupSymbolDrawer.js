@@ -95,41 +95,6 @@ const LookupSymbolDrawer = props => {
     // Since we're using sandbox
     // the return result is bullshit
     // add valid symbols to the result list
-    // result.result.splice(0, 0, {
-    //   description: 'Apple',
-    //   symbol: 'AAPL',
-    //   type: 'Common Stock',
-    //   c: 123,
-    //   d: +12
-    // })
-    // result.result.splice(0, 0, {
-    //   description: 'Amazon',
-    //   symbol: 'AMZN',
-    //   type: 'Common Stock',
-    //   c: 123,
-    //   d: -12
-    // })
-    // result.result.splice(0, 0, {
-    //   description: 'Tesla',
-    //   symbol: 'TSLA',
-    //   type: 'Common Stock',
-    //   c: 123,
-    //   d: -12
-    // })
-    // result.result.splice(0, 0, {
-    //   description: 'Google',
-    //   symbol: 'GOOG',
-    //   type: 'Common Stock',
-    //   c: 123,
-    //   d: 12
-    // })
-    // result.result.splice(0, 0, {
-    //   description: 'Nvidia',
-    //   symbol: 'NVDA',
-    //   type: 'Common Stock',
-    //   c: 123,
-    //   d: 12
-    // })
 
     const stickerResult = result.result.map(x => ({
       company: x.description,
@@ -298,7 +263,6 @@ const LookupSymbolDrawer = props => {
                       key={index}
                       name={sticker.company}
                       symbol={sticker.name}
-                      onShowCompanyDrawer={props.onShowCompanyDrawer}
                     />
                   )
                 })

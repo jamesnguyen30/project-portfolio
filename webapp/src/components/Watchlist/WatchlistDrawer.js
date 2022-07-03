@@ -7,7 +7,7 @@ import WatchlistItem from './WatchlistItem'
 import UtilityActionButton from '../../components/buttons/UtilityActionButton'
 import PropTypes from 'prop-types'
 import LookupSymbolDrawer from './LookupSymbolDrawer'
-import CompanyInformationDrawer from './CompanyInformationDrawer'
+// import CompanyInformationDrawer from './CompanyInformationDrawer'
 import { TransitionGroup } from 'react-transition-group'
 import DraggableY from '../../utils/Draggable/DraggableY'
 import { useSelector, useDispatch } from 'react-redux'
@@ -28,7 +28,7 @@ import {
 const WatchlistDrawer = props => {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(false)
-  const [showingCompany, setShowingCompany] = useState(false)
+  // const [showingCompany, setShowingCompany] = useState(false)
   const [stickers, setStickers] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const drawerRef = useRef()
@@ -62,14 +62,14 @@ const WatchlistDrawer = props => {
     }
   }
 
-  const onShowCompanyDrawer = () => {
-    console.log(showingCompany)
-    setShowingCompany(true)
-  }
+  // const onShowCompanyDrawer = () => {
+  //   console.log(showingCompany)
+  //   setShowingCompany(true)
+  // }
 
-  const onCloseCompanyDrawer = () => {
-    setShowingCompany(false)
-  }
+  // const onCloseCompanyDrawer = () => {
+  //   setShowingCompany(false)
+  // }
 
   const changeIndex = (oldIdx, newIdx) => {
     const toInsert = stickers[oldIdx]
@@ -133,15 +133,15 @@ const WatchlistDrawer = props => {
         show={editing}
         onClose={stopEditing}
         handleAdd={onAddNewSticker}
-        onShowCompanyDrawer={onShowCompanyDrawer}
+        // onShowCompanyDrawer={onShowCompanyDrawer}
       />
-
+{/*
       <CompanyInformationDrawer
         drawerWidth={props.drawerWidth}
         logoHeight={props.logoHeight}
         show={showingCompany}
         onClose={onCloseCompanyDrawer}
-      />
+      /> */}
 
       <Box
         ref={drawerRef}
@@ -157,7 +157,7 @@ const WatchlistDrawer = props => {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-          <Typography variant="h3">LOGO</Typography>
+          <Typography variant="h3">News App</Typography>
         </Box>
         <Stack
           direction="row"
@@ -237,7 +237,8 @@ const WatchlistDrawer = props => {
                         price={data.c}
                         change={data.d}
                         editing={editing}
-                        onClick={onShowCompanyDrawer} />
+                        // onClick={onShowCompanyDrawer}
+                        />
                     )
                   }
                   {

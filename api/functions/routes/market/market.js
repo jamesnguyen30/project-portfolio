@@ -1,188 +1,193 @@
-const { admin, firestore } = require('../../utils/config')
+const {admin, firestore} = require("../../utils/config");
 const {
   searchSymbol,
   candleData,
-  getQuote
-} = require('../../lib/marketApi')
+  getQuote,
+} = require("../../lib/marketApi");
 
 const defaultWatchlist = [
-{symbol: "AAPL", description: 'Apple'},
-{symbol: "NVDA", description: 'Nvidia'},
-{symbol: "TSLA", description: 'Tesla'},
-{symbol: "GOOG", description: 'Google'},
-{symbol: "META", description: 'Meta'},
-{symbol: "MSFT", description: 'Microsoft'},
-{symbol: "AMZN", description: 'Amazon'},
-{symbol: "NDAQ", description: 'Nasdaq'},
-]
+  {symbol: "AAPL", description: "Apple"},
+  {symbol: "NVDA", description: "Nvidia"},
+  {symbol: "TSLA", description: "Tesla"},
+  {symbol: "GOOG", description: "Google"},
+  {symbol: "META", description: "Meta"},
+  {symbol: "MSFT", description: "Microsoft"},
+  {symbol: "AMZN", description: "Amazon"},
+  {symbol: "NDAQ", description: "Nasdaq"},
+];
 
 
 exports.searchSymbol = (req, res) => {
-  const query = req.body.q
-  searchSymbol(query).then(response => {
-    return res.status(200).json(response.data)
-  }).catch(err => {
-    console.error(err)
-    return res.status(500).json({ mesasge: "Server error, please check log" })
-  })
-}
+  const query = req.body.q;
+  searchSymbol(query).then((response) => {
+    return res.status(200).json(response.data);
+  }).catch((err) => {
+    console.error(err);
+    return res.status(500).json({mesasge: "Server error, please check log"});
+  });
+};
 
 exports.getQuote = (req, res) => {
-  const { symbol } = req.body
-  getQuote(symbol).then(response => {
-    return res.json(response.data)
-  }).catch(err => {
-    console.error(err)
-    return res.status(500).json({ message: 'Server error! please check log' })
-  })
-}
+  const {symbol} = req.body;
+  getQuote(symbol).then((response) => {
+    return res.json(response.data);
+  }).catch((err) => {
+    console.error(err);
+    return res.status(500).json({message: "Server error! please check log"});
+  });
+};
 
-const initProfileDoc = (user_id, initData = defaultWatchlist) => {
-  return firestore.collection('profile').doc(user_id).set({
-    watchlist: initData
-  })
-}
+const initProfileDoc = (userId, initData = defaultWatchlist) => {
+  return firestore.collection("profile").doc(userId).set({
+    watchlist: initData,
+  });
+};
 
-exports.getGuestWatchlist = async (req,res) => {
-  try{
-    var data = []
-    for(var watchlist of defaultWatchlist){
-      const quote = await getQuote(watchlist.symbol)
-      data.push({name: watchlist, ...quote.data})
+exports.getGuestWatchlist = async (req, res) => {
+  try {
+    const data = [];
+    for (const watchlist of defaultWatchlist) {
+      const quote = await getQuote(watchlist.symbol);
+      data.push({name: watchlist, ...quote.data});
     }
-    return res.json(data)
-  } catch (err){
-    console.error(err)
-    return res.status(500).send("API server error")
+    return res.json(data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("API server error");
   }
-}
+};
 
 exports.getWatchlist = (req, res) => {
-  const { user_id } = req.decodedToken
+  const {userId} = req.decodedToken;
 
-  const profileDoc = firestore.collection("profile").doc(user_id)
+  const profileDoc = firestore.collection("profile").doc(userId);
 
-  profileDoc.get().then(async docRef => {
+  profileDoc.get().then(async (docRef) => {
     if (docRef.exists) {
-      const { watchlist } = docRef.data()
-      try{
-        for(var i = 0; i < watchlist.length; i++){
-          const quote = await getQuote(watchlist[i].symbol)
-          watchlist[i] = {name: watchlist[i], ...quote.data}
+      const {watchlist} = docRef.data();
+      try {
+        for (let i = 0; i < watchlist.length; i++) {
+          const quote = await getQuote(watchlist[i].symbol);
+          watchlist[i] = {name: watchlist[i], ...quote.data};
         }
-        return res.json(watchlist)
-      } catch (err){
-        console.error(err)
-        return res.status(500).send("API server error")
+        return res.json(watchlist);
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("API server error");
       }
     } else {
-      initProfileDoc(user_id).then(_ => {
-        return res.json([])
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while creating document")
-      })
+      initProfileDoc(userId).then((_) => {
+        return res.json([]);
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while creating document");
+      });
     }
-  }).catch(err => {
-    console.error(err)
-    return res.send('error')
-  })
-}
+  }).catch((err) => {
+    console.error(err);
+    return res.send("error");
+  });
+};
 
 exports.addToWatchlist = (req, res) => {
+  const {userId} = req.decodedToken;
+  const {symbol, description} = req.body;
+  const profileDoc = firestore.collection("profile").doc(userId);
 
-  const { user_id } = req.decodedToken
-  const { symbol, description } = req.body
-  const profileDoc = firestore.collection('profile').doc(user_id)
-
-  profileDoc.get().then(docRef => {
+  profileDoc.get().then((docRef) => {
     if (docRef.exists) {
       profileDoc.update({
-        watchlist: admin.firestore.FieldValue.arrayUnion({'symbol': symbol, 'description': description})
-      }).then(_ => {
-        return res.send("ok")
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while updating document")
-      })
+        watchlist: admin.firestore.FieldValue.arrayUnion(
+            {"symbol": symbol, "description": description}),
+      }).then((_) => {
+        return res.send("ok");
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while updating document");
+      });
     } else {
-      initProfileDoc(user_id, [symbol]).then(_ => {
-        return res.send('ok')
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while updating document")
-      })
+      initProfileDoc(userId, [symbol]).then((_) => {
+        return res.send("ok");
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while updating document");
+      });
     }
-  })
-}
+  });
+};
 
 // exports.seedWatchlist = (req, res) => {
 // }
 
 exports.deleteFromWatchlist = (req, res) => {
-  const { user_id } = req.decodedToken
-  const { symbol , description } = req.body
-  const profileDoc = firestore.collection('profile').doc(user_id)
+  const {userId} = req.decodedToken;
+  const {symbol, description} = req.body;
+  const profileDoc = firestore.collection("profile").doc(userId);
 
-  profileDoc.get().then(docRef => {
+  profileDoc.get().then((docRef) => {
     if (docRef.exists) {
       profileDoc.update({
-        watchlist: admin.firestore.FieldValue.arrayRemove({symbol, description})
-      }).then(_ => {
-        return res.send("ok")
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while updating document")
-      })
+        watchlist: admin.firestore.FieldValue.arrayRemove(
+            {symbol, description}
+        ),
+      }).then((_) => {
+        return res.send("ok");
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while updating document");
+      });
     } else {
-      initProfileDoc(user_id, [symbol]).then(_ => {
-        return res.send('ok')
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while updating document")
-      })
+      initProfileDoc(userId, [symbol]).then((_) => {
+        return res.send("ok");
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while updating document");
+      });
     }
-  })
-}
+  });
+};
 
 exports.reorderWatchlist = (req, res) => {
-  const { user_id } = req.decodedToken
-  const { oldIdx, newIdx } = req.body
+  const {userId} = req.decodedToken;
+  const {oldIdx, newIdx} = req.body;
 
-  const profileDoc = firestore.collection('profile').doc(user_id)
+  const profileDoc = firestore.collection("profile").doc(userId);
 
-  profileDoc.get().then(docRef => {
-    if(docRef.exists){
-      const {watchlist} = docRef.data()
-      if (oldIdx < 0 || oldIdx >= watchlist.length || newIdx < 0 || newIdx >= watchlist.length) {
-        return res.status(401).json({ message: "oldIdx or newIdx is out of range" })
+  profileDoc.get().then((docRef) => {
+    if (docRef.exists) {
+      const {watchlist} = docRef.data();
+      if (oldIdx < 0 || oldIdx >= watchlist.length ||
+        newIdx < 0 || newIdx >= watchlist.length) {
+        return res.status(401).json(
+            {message: "oldIdx or newIdx is out of range"}
+        );
       }
 
-      var tmp = watchlist[oldIdx]
-      watchlist[oldIdx] = watchlist[newIdx]
-      watchlist[newIdx] = tmp
+      const tmp = watchlist[oldIdx];
+      watchlist[oldIdx] = watchlist[newIdx];
+      watchlist[newIdx] = tmp;
 
-      profileDoc.update({watchlist: watchlist}).then(_ => {
-        return res.send("ok")
-      }).catch(err => {
-        console.error(err)
-        return res.status(500).send("Error while updating document")
-      })
+      profileDoc.update({watchlist: watchlist}).then((_) => {
+        return res.send("ok");
+      }).catch((err) => {
+        console.error(err);
+        return res.status(500).send("Error while updating document");
+      });
     } else {
-      return res.status(401).send("watchlist is empty")
+      return res.status(401).send("watchlist is empty");
     }
-  }).catch(err=>{
-    console.error(err)
-    return res.status(500).send("server error")
-  })
-}
+  }).catch((err)=>{
+    console.error(err);
+    return res.status(500).send("server error");
+  });
+};
 
 exports.getCandleData = (req, res) => {
-  const { symbol, days } = req.body
-  candleData(symbol, days !== null ? days : 30).then(response => {
-    return res.status(200).json(response.data)
-  }).catch(err => {
-    console.error(err)
-    return res.status(500).json({ messge: "Server error" })
-  })
-}
+  const {symbol, days} = req.body;
+  candleData(symbol, days !== null ? days : 30).then((response) => {
+    return res.status(200).json(response.data);
+  }).catch((err) => {
+    console.error(err);
+    return res.status(500).json({messge: "Server error"});
+  });
+};
